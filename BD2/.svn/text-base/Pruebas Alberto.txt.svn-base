@@ -1,0 +1,462 @@
+set serveroutput on;
+create or replace function assert_equals
+	(salida boolean, salida_esperada boolean) 
+	return varchar2
+is
+begin
+	if salida=salida_esperada then
+		return 'exito';
+	else
+		return 'fallo';
+	end if;
+end;
+
+------------------
+
+create or replace package pruebas_comestibles
+is
+	procedure inicializar;
+	procedure insertar(nombre_prueba varchar2, w_id_comestible varchar2, w_cantidad number, w_precio number,salida_esperada boolean);
+	procedure actualizar(nombre_prueba varchar2, w_id_comestible varchar2, w_cantidad number, w_precio number,salida_esperada boolean);
+	procedure eliminar(nombre_prueba varchar2, w_id_comestible varchar2, salida_esperada boolean);
+
+end;
+
+create or replace package body pruebas_comestibles
+is
+--inicializacion
+	procedure inicializar as
+	begin
+		delete from comestibles;
+		commit;
+	end;
+
+
+--inserccion
+	procedure insertar(nombre_prueba varchar2,w_id_comestible varchar2, w_cantidad number, w_precio number,salida_esperada boolean) as
+		contador integer;
+		salida boolean := false;
+	begin
+	
+		insert into comestibles values(w_id_comestible, 'nombre', w_cantidad, w_precio);
+
+		select count(*) into contador from comestibles where id_comestible=w_id_comestible and cantidad=w_cantidad and precio=w_precio;
+
+		if contador=1 then
+			salida := true;
+		end if;
+
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+
+--actualizacion
+	procedure actualizar(nombre_prueba varchar2,w_id_comestible varchar2, w_cantidad number, w_precio number,salida_esperada boolean) as
+		contador integer;
+		salida boolean := false;
+	begin
+		update comestibles set cantidad=w_cantidad, precio=w_precio where  id_comestible=w_id_comestible ;
+
+		select count(*) into contador from comestibles where id_comestible=w_id_comestible and cantidad=w_cantidad and precio=w_precio;
+
+		if contador=1 then
+			salida := true;
+		end if;
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+--eliminar
+	procedure eliminar(nombre_prueba varchar2, w_id_comestible varchar2, salida_esperada boolean) as 
+e_id_Comestible comestibles.id_comestible%TYPE;
+
+	begin
+		delete from comestibles where id_comestible=w_id_comestible;
+		select id_comestible into e_id_comestible from comestibles where id_comestible=w_id_comestible;
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));	
+		commit work;
+	exception
+	when no_data_found then
+		dbms_output.put_line(nombre_prueba || ':' || assert_equals(true, salida_esperada));
+		commit work;
+	when others then
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+		rollback;
+	end;
+end;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create or replace package pruebas_articulos_comprados
+is
+	procedure inicializar;
+	procedure insertar(nombre_prueba varchar2, w_id_lvp number, w_id_articulo number,salida_esperada boolean);
+	procedure actualizar(nombre_prueba varchar2, w_id_lvp number, w_id_articulo number,salida_esperada boolean);
+	procedure eliminar(nombre_prueba varchar2, w_id_lvp number, w_id_articulo number, salida_esperada boolean);
+
+end;
+
+create or replace package body pruebas_articulos_comprados
+is
+--inicializacion
+	procedure inicializar as
+	begin
+		delete from articulos_comprados;
+		commit;
+	end;
+
+
+--inserccion
+	procedure insertar(nombre_prueba varchar2, w_id_lvp number, w_id_articulo number,salida_esperada boolean) as
+		contador integer;
+		salida boolean := false;
+	begin
+	
+		insert into articulos_comprados values(w_id_lvp, w_id_articulo);
+
+		select count(*) into contador from articulos_comprados where id_lvp=w_id_lvp and id_articulo=w_id_articulo;
+
+		if contador=1 then
+			salida := true;
+		end if;
+
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+
+--actualizacion
+	procedure actualizar(nombre_prueba varchar2, w_id_lvp number, w_id_articulo number,salida_esperada boolean)  as
+		contador integer;
+		salida boolean := false;
+	begin
+		update articulos_comprados set id_lvp=w_id_lvp, id_articulo=w_id_articulo where  id_articulo=w_id_articulo;
+
+		select count(*) into contador from articulos_comprados where id_lvp=w_id_lvp and id_articulo=w_id_articulo;
+
+		if contador=1 then
+			salida := true;
+		end if;
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+--eliminar
+	procedure eliminar(nombre_prueba varchar2, w_id_lvp number, w_id_articulo number, salida_esperada boolean) as 
+	e_id_articulos_comprados articulos_comprados.id_articulo%TYPE;
+
+	begin
+		delete from articulos_comprados where id_articulo=w_id_articulo and id_lvp=w_id_lvp;
+		select id_articulo into e_id_articulos_comprados from articulos_comprados where id_articulo=w_id_articulo and id_lvp=w_id_lvp;
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));	
+		commit work;
+	exception
+	when no_data_found then
+		dbms_output.put_line(nombre_prueba || ':' || assert_equals(true, salida_esperada));
+		commit work;
+	when others then
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+		rollback;
+	end;
+end;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+create or replace package pruebas_rc_lvp
+is
+	procedure inicializar;
+	procedure insertar(nombre_prueba varchar2, w_id_lvp number, w_id_comestible number,salida_esperada boolean);
+	procedure actualizar(nombre_prueba varchar2, w_id_lvp number, w_id_comestible number,salida_esperada boolean);
+	procedure eliminar(nombre_prueba varchar2, w_id_lvp number, w_id_comestible number, salida_esperada boolean);
+
+end;
+
+create or replace package body pruebas_rc_lvp
+is
+--inicializacion
+	procedure inicializar as
+	begin
+		delete from relacion_comestibles_lvp;
+		commit;
+	end;
+
+
+--inserccion
+	procedure insertar(nombre_prueba varchar2, w_id_lvp number, w_id_comestible number,salida_esperada boolean) as
+		contador integer;
+		salida boolean := false;
+	begin
+	
+		insert into relacion_comestibles_lvp values(w_id_lvp, w_id_comestible);
+
+		select count(*) into contador from relacion_comestibles_lvp where id_lvp=w_id_lvp and id_comestible=w_id_comestible;
+
+		if contador=1 then
+			salida := true;
+		end if;
+
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+
+--actualizacion
+	procedure actualizar(nombre_prueba varchar2, w_id_lvp number, w_id_comestible number,salida_esperada boolean)  as
+		contador integer;
+		salida boolean := false;
+	begin
+		update relacion_comestibles_lvp set id_lvp=w_id_lvp, id_comestible=w_id_comestible where  id_comestible=w_id_comestible;
+
+		select count(*) into contador from relacion_comestibles_lvp where id_lvp=w_id_lvp and id_comestible=w_id_comestible;
+
+		if contador=1 then
+			salida := true;
+		end if;
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+--eliminar
+	procedure eliminar(nombre_prueba varchar2, w_id_lvp number, w_id_comestible number, salida_esperada boolean) as 
+	e_id_rc_lvp relacion_comestibles_lvp.id_comestible%TYPE;
+
+	begin
+		delete from relacion_comestibles_lvp where id_comestible=w_id_comestible and id_lvp=w_id_lvp;
+		select id_comestible into e_id_rc_lvp from relacion_comestibles_lvp where id_comestible=w_id_comestible and id_lvp=w_id_lvp;
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));	
+		commit work;
+	exception
+	when no_data_found then
+		dbms_output.put_line(nombre_prueba || ':' || assert_equals(true, salida_esperada));
+		commit work;
+	when others then
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+		rollback;
+	end;
+end;
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+create or replace package pruebas_lineas_vp
+is
+	procedure inicializar;
+	procedure insertar(nombre_prueba varchar2, w_id_lvp number, w_cantidad number, w_id_vp number, salida_esperada boolean);
+	procedure actualizar(nombre_prueba varchar2, w_id_lvp number, w_cantidad number, w_id_vp number, salida_esperada boolean);
+	procedure eliminar(nombre_prueba varchar2, w_id_lvp number, salida_esperada boolean);
+
+end;
+
+create or replace package body pruebas_lineas_vp
+is
+--inicializacion
+	procedure inicializar as
+	begin
+		delete from lineas_ventas_proveedores;
+		commit;
+	end;
+
+
+--inserccion
+	procedure insertar(nombre_prueba varchar2, w_id_lvp number, w_cantidad number,  w_id_vp number, salida_esperada boolean) as
+		contador integer;
+		salida boolean := false;
+	begin
+	
+		insert into lineas_ventas_proveedores values(w_id_lvp, 2, w_cantidad, w_id_vp);
+
+		select count(*) into contador from lineas_ventas_proveedores where id_lvp=w_id_lvp and cantidad=w_cantidad and id_vp=w_id_vp;
+
+		if contador=1 then
+			salida := true;
+		end if;
+
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+
+--actualizacion
+	procedure actualizar(nombre_prueba varchar2, w_id_lvp number, w_cantidad number,  w_id_vp number, salida_esperada boolean) as
+		contador integer;
+		salida boolean := false;
+	begin
+		update lineas_ventas_proveedores set cantidad=w_cantidad, id_vp=w_id_vp where  id_lvp=w_id_lvp;
+
+		select count(*) into contador from lineas_ventas_proveedores where id_lvp=w_id_lvp and cantidad=w_cantidad and id_vp=w_id_vp;
+
+		if contador=1 then
+			salida := true;
+		end if;
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+--eliminar
+	procedure eliminar(nombre_prueba varchar2, w_id_lvp number, salida_esperada boolean) as 
+e_id_lvp lineas_ventas_proveedores.id_lvp%TYPE;
+
+	begin
+		delete from lineas_ventas_proveedores where id_lvp=w_id_lvp;
+		select id_lvp into e_id_lvp from lineas_ventas_proveedores where id_lvp=w_id_lvp;
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));	
+		commit work;
+	exception
+	when no_data_found then
+		dbms_output.put_line(nombre_prueba || ':' || assert_equals(true, salida_esperada));
+		commit work;
+	when others then
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+		rollback;
+	end;
+end;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+create or replace package pruebas_lineas_cc
+is
+	procedure inicializar;
+	procedure insertar(nombre_prueba varchar2,w_cantidad number, w_id_compra number, w_id_comestible number,salida_esperada boolean);
+	procedure actualizar(nombre_prueba varchar2,w_cantidad number, w_id_compra number, w_id_comestible number,salida_esperada boolean);
+	procedure eliminar(nombre_prueba varchar2, w_id_compra number, w_id_comestible number, salida_esperada boolean);
+
+end;
+
+create or replace package body pruebas_lineas_cc
+is
+--inicializacion
+	procedure inicializar as
+	begin
+		delete from lineas_compras_comestibles;
+		commit;
+	end;
+
+
+--inserccion
+	procedure insertar(nombre_prueba varchar2,w_cantidad number, w_id_compra number, w_id_comestible number,salida_esperada boolean) as
+		contador integer;
+		salida boolean := false;
+		old_cantidad comestibles.cantidad%TYPE;
+		new_cantidad comestibles.cantidad%TYPE;
+	begin
+
+	  	select cantidad into old_cantidad from comestibles where id_comestible=w_id_comestible and id_compra=w_id_compra;
+		select count(*) into contador from compras where id_compra=w_id_compra;
+		if contador=0 then
+			insert into compras values(w_id_compra, current_date, '11111111A');
+		end if;
+		select cantidad into new_cantidad from comestible where id_comestible=w_id_comestible and id_compra=w_id_compra;
+		insert into lineas_compras_comestibles values(w_cantidad, w_id_comestible, w_id_compra);
+	
+		select count(*) into contador from lineas_compras_comestibles where id_comestible=w_id_comestible and id_compra=w_id_compra;
+
+		if contador=1 and new_cantidad=old_cantidad - w_cantidad then
+			salida := true;
+		end if;
+
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+
+--actualizacion
+	procedure actualizar(nombre_prueba varchar2,w_cantidad number, w_id_compra number, w_id_comestible number,salida_esperada boolean)  as
+		contador integer;
+		salida boolean := false;
+		old_cantidad_comestible comestibles.cantidad%TYPE;
+		new_cantidad_comestible comestibles.cantidad%TYPE;
+		old_cantidad lineas_compras_comestibles.cantidad%TYPE;	
+	begin
+
+		select cantidad into old_cantidad from lineas_compras_comestibles where id_comestible=w_id_comestible and id_compra=w_id_compra;
+		select cantidad into old_cantidad_comestible from comestibles where id_comestible=w_id_comestible;
+		update lineas_compras_comestibles set cantidad=w_cantidad where id_comestible=w_id_comestible and id_compra=w_id_compra;
+
+		select count(*) into contador from lineas_compras_comestibles where id_comestible=w_id_comestible and id_compra=w_id_compra;
+		select cantidad into new_cantidad_comestible from comestibles where id_comestible=w_id_comestible;
+
+		if contador=1 then
+			salida := true;
+		end if;
+		if w_cantidad!=old_cantidad and new_cantidad_comestible!=old_cantidad_comestible-w_cantidad+old_cantidad then
+			salida := false;
+		end if;
+
+
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(salida, salida_esperada));
+			commit work;
+		exception
+		when others then
+			dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+			rollback;
+	end;
+
+--eliminar
+	procedure eliminar(nombre_prueba varchar2, w_id_compra number, w_id_comestible number, salida_esperada boolean) as 
+	e_id_lineas_cc lineas_compras_comestibles.id_comestible%TYPE;
+		old_cantidad_comestible comestibles.cantidad%TYPE;
+		new_cantidad_comestible comestibles.cantidad%TYPE;
+		old_cantidad lineas_compras_comestibles.cantidad%TYPE;	
+		w_id_comestible comestibles.id_comestible%TYPE;	
+
+	begin
+
+		select id_comestible into w_id_com from lineas_compras_comestibles where id_comestible=w_id_comestible and id_compra=w_id_compra;
+		select cantidad into old_cantidad from lineas_compras_comestibles where id_comestible=w_id_comestible and id_compra=w_id_compra;
+		select cantidad into old_cantidad_comestible from comestibles where id_comestible=w_id_comestible;
+
+   		delete from lineas_compras_articulos where id_compra=w_id_compra;
+		select cantidad into new_cantidad_comestible from comestibles where id_comestible=w_id_comestible;
+		select id_comestibles into e_id_lineas_cc from lineas_compras_comestibles where id_compra=w_id_compra;
+
+
+
+
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));	
+		commit work;
+	exception
+	when no_data_found then
+		dbms_output.put_line(nombre_prueba || ':' || assert_equals(true, salida_esperada));
+		commit work;
+	when others then
+		dbms_output.put_line(nombre_prueba  || ':' || assert_equals(false, salida_esperada));
+		rollback;
+	end;
+end;

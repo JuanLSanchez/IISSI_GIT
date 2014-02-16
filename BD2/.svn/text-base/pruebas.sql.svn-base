@@ -1,0 +1,20 @@
+--pruebas
+declare 
+begin
+	pruebas_lineas_devoluciones.inicializar;
+	pruebas_lineas_alquileres.inicializar;
+	pruebas_alquileres.inicializar;
+	pruebas_devoluciones.inicializar;
+	pruebas_reservas.inicializar;
+	pruebas_articulos.inicializar;
+	pruebas_socios.inicializar;
+	pruebas_socios.insertar('Prueba 1 - insertar socio', '12345678A', 'juan', '20-SEP-1980', current_date, 'calle', true);
+	pruebas_socios.insertar('Prueba 2 - insertar socio con dni duplicado', '12345678A', 'juan', '20-SEP-1980', current_date, 'calle',  false);
+	pruebas_socios.actualizar('Prueba 3 - modificar socio', '12345678A', 'Juan','20-SEP-1980', current_date, 'calle' , true);
+	pruebas_socios.actualizar('Prueba 4 - modificar socio y poner dni erroneo', '12345668A', 'Juan','20-SEP-1980', current_date, 'calle' , false);
+	pruebas_socios.eliminar('Prueba 5 - eliminar socio', '11111111A', true);
+	pruebas_socios.insertar('Prueba 6 - insertar socio', '11111111A', 'maria', '13-OCT-2000', current_date, 'calle', true);
+	pruebas_socios.insertar('Prueba 7 - insertar socio con dni incorrecto', ' 11111112A', 'jose', '13-OCT-2000', current_date, 'calle', false);
+	pruebas_
+end;
+/

@@ -1,0 +1,56 @@
+set serveroutput on;
+--pruebas
+declare 
+	articulo1 articulos.id_articulo%TYPE;
+	articulo2 articulos.id_articulo%TYPE;
+	articulo3 articulos.id_articulo%TYPE;
+	alquiler1 alquileres.id_alquiler%TYPE;
+	alquiler2 alquileres.id_alquiler%TYPE;
+	devolucion1 devoluciones.id_devolucion%TYPE;
+	devolucion2 devoluciones.id_devolucion%TYPE;
+begin
+	pruebas_lineas_devoluciones.inicializar;
+	pruebas_lineas_alquileres.inicializar;
+	pruebas_alquileres.inicializar;
+	pruebas_devoluciones.inicializar;
+	pruebas_reservas.inicializar;
+	pruebas_articulos.inicializar;
+	pruebas_socios.inicializar;
+	pruebas_socios.insertar('Prueba 1 - insertar socio', '12345678A', 'juan', '20-SEP-1980', current_date, 'calle', true);
+	pruebas_socios.insertar('Prueba 2 - insertar socio con dni duplicado', '12345678A', 'juan', '20-SEP-1980', current_date, 'calle',  false);
+	pruebas_socios.actualizar('Prueba 3 - modificar socio', '12345678A', 'Juan','20-SEP-1980', current_date, 'calle' , true);
+	pruebas_socios.actualizar('Prueba 4 - modificar socio y poner dni erroneo', '12345668A', 'Juan','20-SEP-1980', current_date, 'calle' , false);
+	pruebas_socios.eliminar('Prueba 5 - eliminar socio', '11111111A', true);
+	pruebas_socios.insertar('Prueba 6 - insertar socio', '11111111A', 'maria', '13-OCT-2000', current_date, 'calle', true);
+	pruebas_socios.insertar('Prueba 7 - insertar socio con dni incorrecto', ' 11111112A', 'jose', '13-OCT-2000', current_date, 'calle', false);
+	pruebas_articulos.insertar('Prueba 8 - insertar articulo de alquiler', id_articulo.nextval, '2 Guns' , 16, 4, 25, 0, true);
+	articulo1 := id_articulo.currval;
+	pruebas_articulos.insertar('Prueba 9 - insertar articulo de compra', id_articulo.nextval, '2 Guns' , 16, 2, 25, 1, true);
+	articulo2 := id_articulo.currval;
+	pruebas_articulos.insertar('Prueba 10 - insertar articulo sin nombre', id_articulo.nextval, null, 16, 2, 25, 1, false);
+	pruebas_articulos.insertar('Prueba 11 - insertar articulo', id_articulo.nextval, 'Avatar', 7, 8, 25, 0, true);
+	articulo3 := id_articulo.currval;
+	pruebas_articulos.actualizar('Prueba 12 - modificar articulo', articulo1, '2 Guns' , 16, 6, 25, 0, true);
+	pruebas_alquileres.insertar('Prueba 13 - insertar alquiler', id_alquiler.nextval, current_date, 2, '12345678A', true);
+	alquiler1 := id_alquiler.currval;
+	pruebas_alquileres.insertar('Prueba 14 - insertar alquiler sin tiempo', id_alquiler.nextval, current_date, null, '11111111A', false);
+	pruebas_alquileres.insertar('Prueba 15 - insertar alquiler otro socio', id_alquiler.nextval, current_date, 2, '11111111A', true);
+	alquiler2 := id_alquiler.currval;
+	pruebas_lineas_alquileres.insertar('Prueba 16 - insertar linea alquiler', id_la.nextval, 4, alquiler1, articulo1, true);
+	pruebas_lineas_alquileres.insertar('Prueba 17 - intentar alquilar mas de 10 articulos', id_la.nextval, 7, alquiler1, articulo3, false);
+	pruebas_lineas_alquileres.insertar('Prueba 18 - intentar alquilar pelicula para edad mayor', id_la.nextval, 1, alquiler2, articulo1, false);
+	pruebas_lineas_alquileres.insertar('Prueba 19 - intentar alquilar mas peliculas de las disponibles', id_la.nextval, 9, alquiler2, articulo3, false);
+	pruebas_lineas_alquileres.insertar('Prueba 20 - insertar alquiler', id_la.nextval, 7, alquiler2, articulo3, true);
+	pruebas_devoluciones.insertar('Prueba 21 - insertar devolucion', id_devolucion.nextval, '12345678A', true);
+	devolucion1:=id_devolucion.currval;
+	pruebas_devoluciones.insertar('Prueba 22 - insertar devolucion', id_devolucion.nextval, '11111111A', true);
+	devolucion2:=id_devolucion.currval;
+	pruebas_lineas_devoluciones.insertar('Prueba 23 - devolver pelicula',id_ld.nextval, 2, 0, articulo1, devolucion1, true);
+	pruebas_lineas_devoluciones.insertar('Prueba 24 - devolver mas peliculas', id_ld.nextval, 3, 0, articulo1, devolucion1, false);
+	pruebas_lineas_devoluciones.insertar('Prueba 25 - devolver pelicula',id_ld.nextval, 1, 1, articulo1, devolucion1, true);
+	pruebas_lineas_devoluciones.insertar('Prueba 26 - devolver todas las peliculas',id_ld.nextval, 1, 0, articulo1, devolucion1, true);
+	pruebas_reservas.insertar('Prueba 27 - hacer reserva', articulo1, '12345678A', current_date, true);
+	pruebas_reservas.insertar('Prueba 28 - intentar hacer una reserva duplicada', articulo1, '12345678A', current_date, false);
+	pruebas_reservas.eliminar('Prueba 29 - eliminar reserva', articulo1, '12345678A', true);
+end;
+/

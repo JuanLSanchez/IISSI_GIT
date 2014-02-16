@@ -1,0 +1,133 @@
+body{
+	background: #999999;
+}
+
+#cabecera{
+	background: white;
+	border: 5px solid #fb5741;
+	padding: 20px;
+	
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	
+	-moz-box-shadow: #ab4a3d 5px 5px;
+	-webkit-box-shadow: #ab4a3d 5px 5px;
+	box-shadow: #ab4a3d 5px 5px;
+}
+
+
+#cabecera h1{
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+	color: #fb5741;
+	font-size: 75px;	
+}
+
+#cuerpo {
+	width: 960px;
+	margin: 15px auto;
+}
+
+#navegador{
+	background: #81bdeb;
+	padding: 0px;
+	margin: 0px;
+}
+
+#navegador ul{
+	margin: 0px;
+	padding: 0px;
+}
+
+#navegador li {
+	display: inline-block;
+	list-style: none;
+	padding: 10px;
+	margin: 0px;
+	font: bold 14px verdana, sans-serif;
+}
+
+#navegador li:hover{
+	background: #243542;
+	cursor: pointer;
+	color:white;
+}
+
+#seccion {
+	float: left;
+	width: 680px;
+	margin: 0px;
+	padding: 10px;
+	background: white;
+}
+
+#menu {
+	float: left;
+	width: 220px;
+	margin: 0px;
+	padding: 20px;
+	background: #81bdeb;
+}
+
+#menu ul{
+	margin: 0px;
+	padding: 0px;
+}
+#menu li{
+	display: block;
+	list-style: none;
+	padding: 5px;
+	margin: 0px;
+	font: bold 14px verdana, sans-serif;
+}
+#menu li:hover{
+	background: #243542;
+	cursor: pointer;
+	color:white;
+}
+
+
+#pie {
+	clear: both;
+	text-align: center;
+	padding: 20px;
+	border-top: 2px solid #999999;
+}
+
+/*Inicio Juanlu*/ 
+
+#seccion li{
+	display: inline-block;
+	list-style: none;
+	padding: 10px;
+	margin: 0px;
+}
+
+#seccion ul{
+	padding: 0px;
+	margin: 0px;
+}
+
+#seccion figcaption{
+	margin:0px;
+	padding: 0px;
+	width: 100px;
+	white-space: nowrap;
+	overflow: hidden; 
+	text-overflow: ellipsis;
+	text-align: center;	
+}
+
+#seccion h2{
+	clear: both;
+	text-align: center;
+	padding: 0px;
+	border-bottom: 2px solid #999999;
+}
+
+#seccion img {
+	height: 150px;
+	width: 110px;
+}

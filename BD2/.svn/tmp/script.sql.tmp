@@ -1,0 +1,906 @@
+
+--Creacion de tablas
+drop sequence id_alquiler;
+drop sequence id_articulo;
+drop sequence id_catalogo;
+drop sequence id_comestible;
+drop sequence id_compra;
+drop sequence id_devolucion;
+drop sequence id_la;
+drop sequence id_ld;
+drop sequence id_lvp;
+drop sequence id_oferta;
+drop sequence id_opinion;
+drop sequence id_pelicula;
+drop sequence id_proveedor;
+drop sequence id_puntuacion;
+drop sequence id_videojuego;
+drop sequence id_vp;
+drop sequence id_vsm;
+drop table relacion_catalogos_articulos;
+drop table reservas;
+drop table relacion_comestibles_lvp;
+drop table relacion_juegos_plataforma;
+drop table relacion_videojuegos_genero;
+drop table lineas_compras_comestibles;
+drop table comestibles;
+drop table lineas_compras_articulos;
+drop table compras;
+drop table amigos;
+drop table puntuaciones;
+drop table opiniones;
+drop table lineas_ventas_segunda_mano;
+drop table ventas_segunda_mano;
+drop table lineas_devoluciones;
+drop table devoluciones;
+drop table lineas_alquileres;
+drop table alquileres;
+drop table ofertas;
+drop table vistas;
+drop table pendientes;
+drop table favoritos;
+drop table articulos_comprados;
+drop table lineas_ventas_proveedores;
+drop table ventas_proveedores;
+drop table videojuegos;
+drop table plataformas;
+drop table generos_videojuegos;
+drop table relacion_peliculas_calidad;
+drop table relacion_peliculas_genero;
+drop table peliculas;
+drop table calidad_visual;
+drop table generos_peliculas;
+drop table articulos;
+drop table proveedores;
+drop table catalogos;
+drop table socios;
+
+create table socios(
+	dni varchar2(9),
+	nombre varchar2(50) not null,
+	nacido date not null,
+	registrado date not null,
+	direccion varchar2(50) not null,
+	email varchar2(50),
+	telefono number(9,0),
+	primary key(dni),
+	check ( regexp_like (dni, '^[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z]'))
+);
+
+create table catalogos(
+	id_catalogo number(20,0),
+	nombre varchar2(50) not null,
+	lanzamiento date,
+	primary key(id_catalogo)
+);
+
+create table proveedores(
+	id_proveedor number(20,0),
+	nombre varchar2(50) not null,
+	telefono number(9,0),
+	primary key(id_proveedor)
+);
+
+create table articulos(
+	id_articulo number(20,0),
+	nombre varchar2(50) not null,
+	edad_restrictiva number(2,0) not null,
+	imagen varchar2(50),
+	trailer varchar2(50),
+	sinopsis varchar2(1000),
+	cantidad number(2,0),
+	precio number(5,2) not null,
+	compra number(1,0) not null,
+	primary key(id_articulo),
+	check (compra=1 or compra=0),
+	check (cantidad>=0),
+	check (precio>0)
+);
+
+create table generos_peliculas(
+	genero varchar2(20),
+	primary key(genero)
+);
+
+create table calidad_visual(
+	calidad varchar2(20),
+	primary key(calidad)
+);
+
+create table peliculas(
+	id_pelicula number(20,0),
+	id_articulo number(20,0),
+	primary key(id_pelicula),
+	foreign key(id_articulo) references articulos(id_articulo)
+);
+
+create table relacion_peliculas_genero(
+	id_pelicula number(20,0),
+	genero varchar2(20),
+	primary key(id_pelicula, genero),
+	foreign key(id_pelicula) references peliculas(id_pelicula),
+	foreign key(genero) references generos_peliculas(genero)
+);
+
+create table relacion_peliculas_calidad(
+	id_pelicula number(20,0),
+	calidad varchar2(20),
+	primary key(id_pelicula, calidad),
+	foreign key(calidad) references calidad_visual(calidad),
+	foreign key(id_pelicula) references peliculas(id_pelicula)
+);
+
+create table generos_videojuegos(
+	genero varchar2(20),
+	primary key(genero)
+);
+
+create table plataformas(
+	plataforma varchar2(20),
+	primary key(plataforma)
+);
+
+create table videojuegos(
+	id_videojuego number(20,0),
+	id_articulo number(20,0),
+	primary key(id_videojuego),
+	foreign key(id_articulo) references articulos(id_articulo)
+);
+
+create table ventas_proveedores(
+	id_vp number(20,0),
+	fecha date,
+	id_proveedor number(20,0),
+	primary key(id_vp),
+	foreign key(id_proveedor) references proveedores(id_proveedor)
+);
+
+create table lineas_ventas_proveedores(
+	id_lvp number(20,0),
+	precio number(6,2),
+	cantidad number(3,0),
+	id_vp number(20,0),
+	primary key(id_lvp),
+	foreign key(id_vp) references ventas_proveedores(id_vp)
+);
+
+create table articulos_comprados(
+	id_lvp number(20,0),
+	id_articulo number(20,0),
+	primary key(id_lvp, id_articulo),
+	foreign key(id_lvp) references lineas_ventas_proveedores(id_lvp),
+	foreign key(id_articulo) references articulos(id_articulo)
+);
+
+create table favoritos(
+	dni varchar2(9),
+	id_articulo number(20,0),
+	primary key(dni, id_articulo),
+	foreign key(dni) references socios(dni),
+	foreign key(id_articulo) references articulos(id_articulo)
+);
+
+create table pendientes(
+	dni varchar2(9),
+	id_articulo number(20,0),
+	primary key(dni, id_articulo),
+	foreign key(dni) references socios(dni),
+	foreign key(id_articulo) references articulos(id_articulo)
+);
+
+create table vistas(
+	dni varchar2(9),
+	id_articulo number(20,0),
+	primary key(dni, id_articulo),
+	foreign key(dni) references socios(dni),
+	foreign key(id_articulo) references articulos(id_articulo)
+);
+
+create table ofertas(
+	id_oferta number(20,0),
+	texto varchar2(200),
+	fecha_inicio date,
+	fecha_fin date,
+	precio number(6,2),
+	primary key(id_oferta)
+);
+
+create table alquileres(
+	id_alquiler number(20,0),
+	fecha date not null,
+	tiempo number(3,0) not null,
+	dni varchar2(9),
+	primary key(id_alquiler),
+	foreign key(dni) references socios(dni)
+);
+
+create table lineas_alquileres(
+	id_la number(20,0),
+	cantidad number(3,0),
+	id_oferta number(20,0),
+	id_alquiler number(20,0),
+	id_articulo number(20,0),
+	primary key(id_la),
+	unique(id_alquiler, id_articulo),
+	foreign key(id_oferta) references ofertas(id_oferta),
+	foreign key(id_alquiler) references alquileres(id_alquiler),
+	foreign key(id_articulo) references articulos(id_articulo)
+);
+
+create table devoluciones(
+	id_devolucion number(20,0),
+	fecha date,
+	dni varchar2(9),
+	primary key(id_devolucion),
+	foreign key(dni) references socios(dni)
+);
+
+create table lineas_devoluciones(
+	id_ld number(20,0),
+	cantidad number(3,0),
+	defectuoso number(1,0),
+	id_articulo number(20,0),
+	id_devolucion number(20,0),
+	primary key(id_ld),
+	foreign key(id_articulo) references articulos(id_articulo),
+	foreign key(id_devolucion) references devoluciones(id_devolucion),
+	check (defectuoso=1 or defectuoso=0)
+);
+
+create table ventas_segunda_mano(
+	id_vsm number(20,0),
+	fecha date,
+	dni varchar2(9),
+	primary key(id_vsm),
+	foreign key(dni) references socios(dni)
+);
+
+create table lineas_ventas_segunda_mano(
+	id_vsm number(20,0),
+	id_articulo number(20,0),
+	precio number(5,2),
+	primary key(id_vsm, id_articulo),
+	foreign key(id_vsm) references ventas_segunda_mano(id_vsm),
+	foreign key(id_articulo) references articulos(id_articulo)
+);
+
+create table opiniones(
+	id_opinion number(20,0),
+	texto varchar2(1000),
+	fecha date,
+	id_articulo number(20,0),
+	dni varchar2(9),
+	primary key(id_opinion),
+	foreign key(id_articulo) references articulos(id_articulo),
+	foreign key(dni) references socios(dni)
+);
+
+create table puntuaciones(
+	id_puntuacion number(20,0),
+	estrellas number(1,0),
+	dni varchar2(9),
+	id_articulo number(20,0),
+	primary key(id_puntuacion),
+	check ( regexp_like (estrellas, '^[0-5]')),
+	foreign key(dni) references socios(dni),
+	foreign key(id_articulo) references articulos(id_articulo)
+);
+
+create table amigos(
+	amigo1 varchar2(9),
+	amigo2 varchar2(9),
+	primary key(amigo1, amigo2),
+	foreign key(amigo1) references socios(dni),
+	foreign key(amigo2) references socios(dni)
+);
+
+create table compras(
+	id_compra number(20,0),
+	fecha date,
+	dni varchar2(9),
+	primary key(id_compra),
+	foreign key(dni) references socios(dni)
+);
+
+create table lineas_compras_articulos(
+	id_articulo number(20,0),
+	id_compra number(20,0),
+	cantidad number(3,0),
+	primary key(id_articulo, id_compra),
+	foreign key(id_articulo) references articulos(id_articulo),
+	foreign key(id_compra) references compras(id_compra)
+);
+
+create table comestibles(
+	id_comestible number(20,0),
+	nombre varchar2(50),
+	cantidad number(4,0),
+	precio number(5,2),
+	primary key(id_comestible),
+	check (cantidad>=0),
+	check (precio>0)
+);
+
+create table lineas_compras_comestibles(
+	cantidad number(3,0),
+	id_comestible number(20,0),
+	id_compra number(20,0),
+	primary key(id_compra, id_comestible),
+	foreign key(id_comestible) references comestibles(id_comestible),
+	foreign key(id_compra) references compras(id_compra)
+);
+
+create table relacion_videojuegos_genero(
+	id_videojuego number(20,0),
+	genero varchar2(20),
+	primary key(id_videojuego, genero),
+	foreign key(genero) references generos_videojuegos(genero),
+	foreign key(id_videojuego) references videojuegos(id_videojuego)
+);
+
+create table relacion_juegos_plataforma(
+	plataforma varchar2(20),
+	id_videojuego number(20,0),
+	primary key(plataforma, id_videojuego),
+	foreign key(plataforma) references plataformas(plataforma),
+	foreign key(id_videojuego) references videojuegos(id_videojuego)
+);
+
+create table relacion_comestibles_lvp(
+	id_lvp number(20,0),
+	id_comestible number(20,0),
+	primary key(id_lvp, id_comestible),
+	foreign key(id_lvp) references lineas_ventas_proveedores(id_lvp),
+	foreign key(id_comestible) references comestibles(id_comestible)
+);
+
+create table reservas(
+	id_articulo number(20,0),
+	dni varchar2(9),
+	fecha date,
+	primary key(id_articulo, dni),
+	foreign key(id_articulo) references articulos(id_articulo),
+	foreign key(dni) references socios(dni)
+);
+
+create table relacion_catalogos_articulos(
+	id_articulo number(20,0),
+	id_catalogo number(20,0),
+	primary key(id_articulo, id_catalogo),
+	foreign key(id_articulo) references articulos(id_articulo),
+	foreign key(id_catalogo) references catalogos(id_catalogo)
+);
+--Inserts minimos
+--Generos peliculas
+insert into generos_peliculas values('accion');
+insert into generos_peliculas values('animacion');
+insert into generos_peliculas values('aventuras');
+insert into generos_peliculas values('belico');
+insert into generos_peliculas values('ciencia ficcion');
+insert into generos_peliculas values('cine negro');
+insert into generos_peliculas values('comedia');
+insert into generos_peliculas values('desconocido');
+insert into generos_peliculas values('documental');
+insert into generos_peliculas values('drama');
+insert into generos_peliculas values('fantastico');
+insert into generos_peliculas values('infantil');
+insert into generos_peliculas values('intriga');
+insert into generos_peliculas values('musical');
+insert into generos_peliculas values('romance');
+insert into generos_peliculas values('series de tv');
+insert into generos_peliculas values('terror');
+insert into generos_peliculas values('thriller');
+insert into generos_peliculas values('western');
+--Generos videojuegos
+insert into generos_videojuegos values('agilidad mental');
+insert into generos_videojuegos values('arcade');
+insert into generos_videojuegos values('aventuras');
+insert into generos_videojuegos values('carreras');
+insert into generos_videojuegos values('construccion');
+insert into generos_videojuegos values('deportes');
+insert into generos_videojuegos values('disparos');
+insert into generos_videojuegos values('educacion');
+insert into generos_videojuegos values('lucha');
+insert into generos_videojuegos values('musica');
+insert into generos_videojuegos values('primera persona');
+insert into generos_videojuegos values('rol');
+insert into generos_videojuegos values('sigilo');
+insert into generos_videojuegos values('simulacion');
+insert into generos_videojuegos values('tercera persona');
+--Plataformas
+insert into plataformas values('android');
+insert into plataformas values('pc');
+insert into plataformas values('playstation');
+insert into plataformas values('ps2');
+insert into plataformas values('ps3');
+insert into plataformas values('ps4');
+insert into plataformas values('xbox');
+insert into plataformas values('xbox 360');
+insert into plataformas values('xbox one');
+insert into plataformas values('wii u');
+insert into plataformas values('psv');
+insert into plataformas values('nintendo 3ds');
+insert into plataformas values('ios');
+insert into plataformas values('psp');
+insert into plataformas values('wii');
+insert into plataformas values('game boy');
+insert into plataformas values('gamecube');
+insert into plataformas values('nintendo ds');
+insert into plataformas values('dreamcast');
+insert into plataformas values('nintendo 64');
+--Calidad visual
+insert into calidad_visual values('CD');
+insert into calidad_visual values('DVD');
+insert into calidad_visual values('HD DVD');
+insert into calidad_visual values('Blu-ray');
+--Creacion de secuencias
+
+create sequence id_catalogo
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_proveedor
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_articulo
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_pelicula
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_videojuego
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_vp
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_lvp
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_oferta
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_alquiler
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_la
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_devolucion
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_ld
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_vsm
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_opinion
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_puntuacion
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_compra
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+create sequence id_comestible
+	minvalue 0
+	maxvalue 999999999999999999
+	increment by 1;
+
+
+--Funciones.
+--Funcion que recibe el id de un comestible y te devuelve la cantidad disponible
+create or replace function cantidad_comestible
+	(identificador comestibles.id_comestible%TYPE)
+	return number
+is
+	aux1 comestibles.cantidad%TYPE;
+begin
+	select cantidad into aux1 from comestibles where id_comestible=identificador;
+	return aux1;
+exception
+	when no_data_found then
+		raise_application_error
+		(-20600,
+		'No tenemos ese producto');
+end;
+/
+--Función que devuelve un 1 si el articulo es de compra
+create or replace function articulo_de_compra
+	(identificador articulos.id_articulo%TYPE)
+	return number
+is
+	aux1 articulos.compra%TYPE;
+begin
+	select compra into aux1 from articulos where id_articulo=identificador;
+	return aux1;
+exception
+	when no_data_found then
+		raise_application_error
+		(-20600,
+		'No disponemos de ese articulo');
+end;
+/
+--Funcion que te devuelve la cantidad de un articulo
+create or replace function cantidad_de_articulo
+	(identificador articulos.id_articulo%TYPE)
+	return number
+is
+	aux1 articulos.cantidad%TYPE;
+begin
+	select cantidad into aux1 from articulos where id_articulo = identificador;
+	return aux1;
+exception
+	when no_data_found then
+		raise_application_error
+		(-20600,
+		'No disponemos de ese articulo');
+end;
+/
+--Funcion que dice el numero de articulos que le queda por devolver a un socios
+create or replace function articulos_para_devolver
+	(socio socios.dni%TYPE)
+	return number
+is
+	res number(2);
+begin
+	select nvl(
+		(select nvl(sum(cantidad),0) from lineas_alquileres 
+			where id_alquiler in 
+				( select id_alquiler from alquileres where dni=socio) 
+			group by id_alquiler),
+	 0) into res from dual;
+	return res;
+end;
+/
+--Funciion que al pasarle el id_alquiler te dice la cantidad de articulos que se han alquilados
+create or replace function cantidad_articulos_alquilados
+	(identificador lineas_alquileres.id_alquiler%TYPE)
+	return number
+is
+	res number(2,0);
+begin
+	select sum(cantidad) into res from lineas_alquileres where id_alquiler = identificador;
+	return res;
+exception
+	when no_data_found then
+		res:=0;	
+end;
+/
+--Funcion que le das el id_articulo y te devuelve el nombre
+create or replace function id_articulo_a_nombre
+	(identificador articulos.id_articulo%TYPE)
+	return varchar2
+is
+	res articulos.nombre%TYPE;
+begin
+	select nombre into res from articulos where id_articulo = identificador;
+	return res;
+exception
+	when no_data_found then
+		raise_application_error
+		(-20600,
+		'No disponemos de ese articulo');
+end;
+/
+
+--Procedimientos
+-- Para que se pueda imprimir por pantalla: set serveroutput on
+--Este procedimiento elimina las reserva que se hiciero hace mas de dos horas. Tenemos que hacer que el sistema operativo lo ejecute cada cierto tiempo.
+create or replace procedure actualizar_reservas
+is
+begin
+	delete from reservas where fecha<sysdate-120/1440;
+end;
+/
+--Procedimiento que elimina las reservas de un socio.
+create or replace procedure quitar_reservas_socio
+	(socio socios.dni%TYPE)
+is
+begin
+	delete from reservas where dni=socio;
+end;
+/
+--Procedimiento que te muestra por pantalla el id_proveedor y el dinero que hemos invertido en el
+create or replace procedure mostrar_gastos_por_proveedor
+is
+	cursor c_datos is select id_proveedor as id, sum(precio*cantidad) as suma from ventas_proveedores v, lineas_ventas_proveedores l 
+		where v.id_vp=l.id_vp group by id_proveedor;
+begin
+	dbms_output.put_line('id_proveedor: '||chr(9)||'cantidad');
+	for v_datos in c_datos loop
+		dbms_output.put_line(v_datos.id||': '||chr(9)||chr(9)|| v_datos.suma);
+	end loop;
+end;
+/
+--Procedimiento al que le pasas un genero de peliculas y te imprime por pantalla el nombre de los articulos que pertenecen a ese genero
+create or replace procedure peliculas_por_genero
+	(gene generos_peliculas.genero%TYPE)
+is
+	cursor c_datos is 
+		select distinct id_articulo_a_nombre(id_articulo) as id from peliculas where 
+			id_pelicula in (select id_pelicula from relacion_peliculas_genero where genero=gene);
+begin
+	for v_datos in c_datos loop
+		dbms_output.put_line(v_datos.id);
+	end loop;	
+end;
+/
+--Procedimiento al que le pasas un genero de videojuego y te imprime por pantalla el nombre de los articulos que pertenecen a ese genero
+create or replace procedure videojuegos_por_genero
+	(gene generos_videojuegos.genero%TYPE)
+is
+	cursor c_datos is 
+		select distinct id_articulo_a_nombre(id_articulo) as id from videojuegos where 
+			id_videojuego in (select id_videojuego from relacion_videojuegos_genero where genero=gene);
+begin
+	for v_datos in c_datos loop
+		dbms_output.put_line(v_datos.id);
+	end loop;	
+end;
+/
+
+--Triggers
+--Evitar que se compren mas comestibles de los que disponemos y actualizar los comestibles tras una compra
+create or replace trigger lineas_compras_comestibles
+	before insert or update or delete on lineas_compras_comestibles for each row
+begin
+if inserting then
+	if :new.cantidad > cantidad_comestible(:new.id_comestible) then
+		raise_application_error (-20600,
+		'no se pueden comprar mas comestibles de los disponibles');
+	else
+		update comestibles set cantidad = cantidad-:new.cantidad where id_comestible=:new.id_comestible;
+	end if;
+elsif updating then
+	if :new.cantidad - :old.cantidad > cantidad_comestible(:new.id_comestible) then
+		raise_application_error (-20600,
+		'no se pueden comprar mas comestibles de los disponibles');
+	else
+		update comestibles set cantidad = cantidad-:new.cantidad + :old.cantidad where id_comestible=:new.id_comestible;
+	end if;	
+elsif deleting then
+	update comestibles set cantidad = cantidad+:old.cantidad where id_comestible=:old.id_comestible;
+end if;
+end;
+/
+--Evitar que se compren articulos de alquiler, evitar que se puedan comprar mas articulos de los disponibles y actualizar los articulos tras una compra
+create or replace trigger lineas_compras_articulos
+	before insert or update or delete on lineas_compras_articulos for each row
+begin
+if inserting then
+	if articulo_de_compra(:new.id_articulo) != 1 then
+		raise_application_error (-20600,
+		'no se pueden comprar articulos de alquiler');
+	end if;
+	if :new.cantidad > cantidad_de_articulo(:new.id_articulo) then
+		raise_application_error (-20600,
+		'no se pueden comprar mas articulos de los disponibles');
+	end if;
+	update articulos set cantidad = cantidad-:new.cantidad where id_articulo=:new.id_articulo;
+elsif updating then
+	if :old.id_articulo!=:new.id_articulo then
+		raise_application_error (-20600,
+		'No puedes cambiar el articulo');
+	end if;
+	if :new.cantidad-:old.cantidad > cantidad_de_articulo(:new.id_articulo) then
+		raise_application_error (-20600,
+		'no se pueden comprar mas articulos de los disponibles');
+	end if;
+	update articulos set cantidad = cantidad-:new.cantidad+:old.cantidad where id_articulo=:new.id_articulo;
+elsif deleting then
+	update articulos set cantidad = cantidad+:old.cantidad where id_articulo=:old.id_articulo;
+end if;
+end;
+/
+--No permitir hacer un alquiler mientras no se devuelva los articulos pendientes, al realizar un alquiler, quita las reservas
+create or replace trigger alquileres
+	before insert on alquileres for each row
+begin
+	if  articulos_para_devolver(:new.dni)> 0 then
+		raise_application_error
+		(-20600,
+		'Tienes que devolver todos los articulos antes de poder hacer otro alquiler');
+	end if;
+	quitar_reservas_socio(:new.dni);
+end;
+/
+--Si se inserta lineas de alquiler: evita alquilar articulos de compras, evita que se alquilen mas articulos de los disponibles, evita que se alquilen mas de 10 articulos y si la linea es correcta descuenta a los articulos la cantidad correspondiente.
+--Si se eliminan linas de alquiler: se le suma la cantidad correspondiente a los articulos.
+--Si se modifican: evita que se modifiquen los id de los articulos y si la cantidad es diferente, se actualiza la cantidad del articulo
+create or replace trigger lineas_alquiler
+	before insert or delete or update on lineas_alquileres for each row
+declare
+	socio socios.dni%TYPE;
+	edad socios.nacido%TYPE;
+	restriccion articulos.edad_restrictiva%TYPE;
+begin
+	if inserting then
+		select dni into socio from alquileres where id_alquiler=:new.id_alquiler;
+		select nacido into edad from socios where dni=socio;
+		select edad_restrictiva into restriccion from articulos where id_articulo=:new.id_articulo;
+		if edad+365*restriccion > current_date then
+			raise_application_error
+			(-20600,
+			'no tienes edad suficiente para esta pelicula');	
+		end if;
+		if articulo_de_compra(:new.id_articulo) != 0 then
+			raise_application_error
+			(-20600,
+			'no se pueden alquilar un articulo de compra');	
+		end if;
+		if :new.cantidad > cantidad_de_articulo(:new.id_articulo) then
+			raise_application_error
+			(-20600,
+			'No tenemos tanta cantidad de ese articulo');	
+		end if;
+		if cantidad_articulos_alquilados(:new.id_alquiler)+:new.cantidad >10 then
+			raise_application_error
+			(-20600,
+			'No se pueden alquilar mas de 10 articulos');
+		end if;
+		update articulos set cantidad = cantidad-:new.cantidad where id_articulo=:new.id_articulo;
+	end if;
+	if deleting then
+		update articulos set cantidad = cantidad+:old.cantidad where id_articulo=:old.id_articulo;
+	end if;
+	if updating then
+		if :old.id_articulo!=:new.id_articulo then
+			raise_application_error
+			(-20600,
+			'No se puede modificar el articulo de una linea de alquiler');
+		end if;
+		if :new.cantidad-:old.cantidad > cantidad_de_articulo(:new.id_articulo) then
+			raise_application_error
+			(-20600,
+			'No tenemos tanta cantidad de ese articulo');	
+		end if;
+		if cantidad_articulos_alquilados(:new.id_alquiler)+:new.cantidad-:old.cantidad >10 then
+			raise_application_error
+			(-20600,
+			'No se pueden alquilar mas de 10 articulos');
+		end if;
+		if :old.cantidad!=:new.cantidad then
+			update articulos set cantidad = cantidad - :new.cantidad + :old.cantidad where id_articulo=:new.id_articulo;
+		end if;
+	end if;
+end;
+/
+--Elimina las lineas de alquileres correspondientes con las devoluciones, aumenta los articulos devueltos
+create or replace trigger lineas_devoluciones
+	before insert or update or delete on lineas_devoluciones for each row
+declare
+	aux1 lineas_alquileres.cantidad%TYPE;
+	aux2 lineas_alquileres.id_la%TYPE;
+begin
+if inserting then
+	select cantidad, id_la into aux1, aux2 from lineas_alquileres where
+			id_articulo = :new.id_articulo and
+			id_alquiler in
+					(select id_alquiler from alquileres where dni in
+					(select dni from devoluciones where id_devolucion=:new.id_devolucion));
+
+	if :new.cantidad = aux1 then
+		delete from lineas_alquileres where id_la=aux2;
+	elsif :new.cantidad < aux1 then
+		update lineas_alquileres set cantidad = cantidad - :new.cantidad where id_la=aux2;	
+	else
+		raise_application_error
+		(-20600,
+		'No se pueden devolver articulos que no has alquilado');
+	end if;
+	if :new.defectuoso = 1 then
+		update articulos set cantidad = cantidad - :new.cantidad where id_articulo=:new.id_articulo;
+	end if;
+elsif updating then
+	raise_application_error(-20600,
+		'No se puede modificar una linea de devolucion');
+elsif deleting then
+	raise_application_error(-20600,
+		'No se puede eliminar una linea de devolucion');
+end if;
+exception
+	when no_data_found then
+		raise_application_error
+		(-20600,
+		'No se pueden devolver articulos que no has alquilado');
+end;
+/
+--Actualiza los articulos tras comprar un articulo a un socio y nos evita comprar articulos por un precio mayor del de ventas.
+create or replace trigger ventas_segunda_mano
+	before insert on lineas_ventas_segunda_mano for each row
+declare
+	aux1 articulos.precio%TYPE;
+begin
+	select precio into aux1 from articulos where id_articulo = :new.id_articulo;
+	if :new.precio > aux1 + 5 then
+		raise_application_error
+		(-20600,
+		'Es demasiado caro para comprarlo');
+	end if;
+	update articulos set cantidad = cantidad + 1 where id_articulo = :new.id_articulo;
+exception
+	when no_data_found then
+		aux1:=0;
+end;
+/
+--Descontar articulos cuando son reservados, evitar reservas si tiene peliculas pendientes de devolución o si no esta disponible.
+create or replace trigger reservas
+	before insert or update or delete on reservas for each row
+begin
+	if inserting then
+		if articulos_para_devolver(:new.dni)>0 then
+			raise_application_error
+			(-20600,
+			'Para poder hacer una reserva debe devolver la peliculas alquiladas');
+		end if;
+		if cantidad_de_articulo(:new.id_articulo)<1 then
+			raise_application_error
+			(-20600,
+			'Actualmente no tenemos disponible ese articulo');
+		end if;
+		update articulos set cantidad = cantidad - 1 where id_articulo = :new.id_articulo;
+	elsif deleting then
+		update articulos set cantidad = cantidad + 1 where id_articulo = :old.id_articulo;
+	elsif updating then
+		if :old.id_articulo != :new.id_articulo then
+			update articulos set cantidad = cantidad - 1 where id_articulo = :new.id_articulo;
+			update articulos set cantidad = cantidad + 1 where id_articulo = :old.id_articulo;
+		end if;
+	end if;
+end;
+/
+--Cuando realizamos una compra a un proveedor de comestibles, actaliza los comestibles
+create or replace trigger actualizar_comestibles_lvp
+	before insert on relacion_comestibles_lvp for each row
+declare
+	aux1 lineas_ventas_proveedores.cantidad%TYPE;
+begin
+	select cantidad into aux1 from lineas_ventas_proveedores where id_lvp=:new.id_lvp;
+	update comestibles set cantidad = cantidad + aux1 where id_comestible = :new.id_comestible;
+end;
+/
+--Cuando realizamos una compra a un proveedor de articulos, actualiza los articulos
+create or replace trigger actualizar_articulos_lvp
+	before insert on articulos_comprados for each row
+declare
+	aux1 lineas_ventas_proveedores.cantidad%TYPE;
+begin
+	select cantidad into aux1 from lineas_ventas_proveedores where id_lvp=:new.id_lvp;
+	update articulos set cantidad = cantidad + aux1 where id_articulo = :new.id_articulo;
+end;
+/
+
