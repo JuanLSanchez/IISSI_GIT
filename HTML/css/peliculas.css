@@ -145,3 +145,6 @@ img{
 	text-align:center;
 	width: 90px;
 }
+#paginacion li{
+	display: inline-block;
+}
