@@ -23,32 +23,53 @@
 			</ul>
 		</nav>
 		<section id="seccion">
-			<article id="iz">
-				<img class="bl" src="img_peliculas/2G.jpg" />
-				<input class="bl" type="button" value="Reservar" />
-				<span class="bl" >Puntuacion: 3.4</span>
-				<div class="menu-bar">
+				<article id="buscador">
+						<input type="search" name="buscador"/>
+						<input type="submit" value="buscar" />
+						<br />
+						<span>Desde: </span>
+						<input type="number"  name="inicio_ano" />
+						<span>Hasta: </span>
+						<input type="number" name="fin_ano" />
+						<br />
+						<span>Genero 1: </span>
+						<input type="text" name="genero1" />
+						<span>Genero 2: </span>
+						<input type="text" name="genero2" />
+						<p id="separador"> </p>				
+				</article>
+				<article id="ordenar">
+					<p class="espacio"> </p>
+					<span class="nombre">Nombre</span>
+					<span class="ano">Año</span>
+					<span class="punt">Puntuacion</span>
+					<span class="num">Alquileres</span>
+				</article>
+				<article id="resultado">
 					<ul>
 						<li>
-							<input class="menu-nav" type="button" value="Pendiente" />
-							<ul>
-								<li><input type="button" value="Pendiente" /></li>
-								<li><input type="button" value="Vista" /></li>
-								<li><input type="button" value="Favorita" /></li>
-							</ul>
+							<img src="img_peliculas/ESDL3.jpg" />
+							<span class="nombre">El señor de los anillos, El retorno del rey</span>
+							<span class="ano">2003</span>
+							<span class="punt">3.2</span>
+							<span class="num">230</span>
+						</li>
+						<li>
+							<img src="img_peliculas/mc.jpg" />
+							<span class="nombre">Mentiroso compulsivo</span>
+							<span class="ano">1997</span>
+							<span class="punt">3.1</span>
+							<span class="num">593</span>	
+						</li>
+						<li>
+							<img src="img_peliculas/avatar.jpg" />
+							<span class="nombre">Avatar</span>
+							<span class="ano">2009</span>
+							<span class="punt">3.5</span>
+							<span class="num">158</span>
 						</li>
 					</ul>
-				</div>
-			</article>
-			<article id="de">
-				<h3>2 Guns</h3>
-				<div id="sinopsis">
-					<span>Un agente de la DEA (Denzel Washington) y un oficial de la Marina (Mark Wahlberg) se infiltran en redes mafiosas sin conocer uno la identidad del otro. Comedia de acción del islandés Baltasar Kormákur basada en cómics de Steven Grant.</span>
-				</div>
-				<div id="genero"><span>Genero: Acción, Aventuras, Policiaca</span></div>
-				<input type="text" name="comentario" id="comentario" placeholder="Comente algo...">
-				<input type="button" value="Comentar" id="boton"/>
-			</article>
+				</article>
 		</section>
 		<aside id="menu">
 			<ul>

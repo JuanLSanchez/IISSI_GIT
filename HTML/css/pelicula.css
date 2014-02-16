@@ -97,51 +97,80 @@ body{
 }
 
 /*Inicio Juanlu*/ 
-img{
-	height: 150px;
-	width: 110px;
+ul{
+	margin:0px;
+	padding: 0px;
+}
+#iz{
 	float:left;
 }
-#resultado span{
-	margin-left:10px;
-	float: left;
+#seccion img {
+	width: 200px;
 }
-#ordenar span{
-	margin-left:10px;
-	float: left;
+.bl{
+	display:block;
 }
-#separador{
-	border-bottom: solid #000000 1px;
+.menu-bar ul{
+	display:block;
+	margin: 0px;
+	padding:0px;
 }
-
-#resultado li{
-	padding-top:10px;
-	clear: left;
+.menu-bar ul ul {
+  display: none;
+}
+.menu-bar li{
 	list-style: none;
 }
-#resultado ul{
-	margin: 0px;
-	padding: 0px;
-	clear:left;
+.menu-bar li:hover > ul {
+  display: block;
 }
-.espacio{
-	float:left;
-	margin:0px;
-	padding:0.5px;
-	width: 110px;
+.desplegable{
+	height: 140px;
 }
-.nombre{
-	width: 285px;
+.estado{
+	width: 80px;
 }
-.ano{
-	text-align:center;
-	width: 45px;
+
+#de span{
+	font: bold 14px Verdana, sans-serif;
 }
-.punt{
-	text-align:center;
-	width: 95px;
+h3{
+	text-align: center;
 }
-.num{
-	text-align:center;
-	width: 90px;
+#sinopsis{
+	width:450px;
+	margin-left: 220px;
+}
+
+#genero{
+	width:450px;
+	margin-top: 20px;
+	margin-left: 220px;
+}
+
+#comente{
+	margin-left:20px;
+	margin-top:20px;
+}
+
+#boton{
+	margin-left: 20px;
+}
+#comentarios{
+	clear: both;
+}
+#comentarios ul{
+	list-style: none;
+}
+.fila1{
+	background: #FB5741;
+}
+.fila2{
+	background: #81BDEB;
+}
+.fecha{
+	float:right;
+}
+#comentarios table{
+	margin-top: 10px;
 }
