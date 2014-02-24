@@ -97,41 +97,13 @@ body{
 }
 
 /*Inicio Juanlu*/ 
-
-#seccion li{
-	display: inline-block;
-	list-style: none;
-	padding: 10px;
-	margin: 0px;
-}
-
-#seccion ul{
-	padding: 0px;
-	margin: 0px;
-}
-
-#seccion figcaption{
+ul{
 	margin:0px;
 	padding: 0px;
-	width: 100px;
-	white-space: nowrap;
-	overflow: hidden; 
-	text-overflow: ellipsis;
-	text-align: center;	
 }
-
-#seccion h2{
-	clear: both;
-	text-align: center;
-	padding: 0px;
-	border-bottom: 2px solid #999999;
-}
-
 #seccion img {
-	height: 150px;
-	width: 110px;
+	width: 200px;
 }
-#seccion a{
-	text-decoration:none; 
-	color: black;
+li{
+	list-style-type: none;
 }

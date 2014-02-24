@@ -130,7 +130,9 @@ ul{
 .estado{
 	width: 80px;
 }
-
+#boton{
+	float: right;
+}
 #de span{
 	font: bold 14px Verdana, sans-serif;
 }

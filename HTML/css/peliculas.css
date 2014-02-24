@@ -131,11 +131,11 @@ img{
 	width: 110px;
 }
 .nombre{
-	width: 285px;
+	width: 270px;
 }
 .ano{
 	text-align:center;
-	width: 45px;
+	width: 70px;
 }
 .punt{
 	text-align:center;
@@ -147,4 +147,8 @@ img{
 }
 #paginacion li{
 	display: inline-block;
+}
+a{
+	text-decoration:none; 
+	color: black;
 }
