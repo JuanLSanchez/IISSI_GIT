@@ -113,8 +113,7 @@ create table peliculas(
 	edad_restrictiva number(2,0) not null,
 	imagen varchar2(50),
 	trailer varchar2(50),
-	sinopsis varchar2(2000),
-	alquiler number(2,0),
+	sinopsis varchar2(3500),
 	year date,
 	primary key(id_pelicula),
 	unique(nombre)
@@ -126,8 +125,7 @@ create table juegos(
 	edad_restrictiva number(2,0) not null,
 	imagen varchar2(50),
 	trailer varchar2(50),
-	sinopsis varchar2(2000),
-	alquiler number(2,0),
+	sinopsis varchar2(3500),
 	year date,
 	primary key(id_juego),
 	unique(nombre)
@@ -156,6 +154,7 @@ create table relacion_peliculas_calidad(
 	calidad varchar2(20),
 	precio number(5,2),
 	cantidad number(2),
+	alquiler number(2,0),
 	check (precio>0),
 	primary key(id_pelicula, calidad),
 	foreign key(calidad) references calidad_visual(calidad),
@@ -185,6 +184,7 @@ create table relacion_juegos_plataforma(
 	plataforma varchar2(20),
 	precio number(5,2),
 	cantidad number(2),
+	alquiler number(2,0),
 	check (precio>0),
 	primary key(plataforma, id_juego),
 	foreign key(plataforma) references plataformas(plataforma),
@@ -206,7 +206,9 @@ create table lineas_juegos_proveedores(
 	id_vp number(20,0),
 	precio number(6,2),
 	cantidad number(3,0),
+	plataforma varchar2(20),
 	primary key(id_ljp),
+	foreign key(plataforma) references plataformas(plataforma),
 	foreign key(id_vp) references ventas_proveedores(id_vp),
 	foreign key(id_juego) references juegos(id_juego)
 );
@@ -217,7 +219,9 @@ create table lineas_peliculas_proveedores(
 	id_vp number(20,0),
 	precio number(6,2),
 	cantidad number(3,0),
+	calidad varchar2(20),
 	primary key(id_lpp),
+	foreign key(calidad) references calidad_visual(calidad),
 	foreign key(id_vp) references ventas_proveedores(id_vp),
 	foreign key(id_pelicula) references peliculas(id_pelicula)
 );
@@ -306,8 +310,10 @@ create table lineas_alquileres_juegos(
 	id_oferta number(20,0) not null,
 	id_alquiler number(20,0),
 	id_juego number(20,0),
+	plataforma varchar2(20),
 	primary key(id_laj),
-	unique(id_alquiler, id_juego),
+	unique(id_alquiler, id_juego, plataforma),
+	foreign key(plataforma) references plataformas(plataforma),
 	foreign key(id_oferta) references ofertas(id_oferta),
 	foreign key(id_alquiler) references alquileres(id_alquiler),
 	foreign key(id_juego) references juegos(id_juego)
@@ -319,8 +325,10 @@ create table lineas_alquileres_peliculas(
 	id_oferta number(20,0) not null,
 	id_alquiler number(20,0),
 	id_pelicula number(20,0),
+	calidad varchar2(20),
 	primary key(id_lap),
-	unique(id_alquiler, id_pelicula),
+	unique(id_alquiler, id_pelicula, calidad),
+	foreign key(calidad) references calidad_visual(calidad),
 	foreign key(id_oferta) references ofertas(id_oferta),
 	foreign key(id_alquiler) references alquileres(id_alquiler),
 	foreign key(id_pelicula) references peliculas(id_pelicula)
@@ -341,7 +349,9 @@ create table lineas_devoluciones_juegos(
 	defectuoso number(1,0),
 	id_juego number(20,0),
 	id_devolucion number(20,0),
+	plataforma varchar2(20),
 	primary key(id_ldj),
+	foreign key(plataforma) references plataformas(plataforma),
 	foreign key(id_juego) references juegos(id_juego),
 	foreign key(id_devolucion) references devoluciones(id_devolucion),
 	check (defectuoso=1 or defectuoso=0)
@@ -353,7 +363,9 @@ create table lineas_devoluciones_peliculas(
 	defectuoso number(1,0),
 	id_pelicula number(20,0),
 	id_devolucion number(20,0),
+	calidad varchar2(20),
 	primary key(id_ldp),
+	foreign key(calidad) references calidad_visual(calidad),
 	foreign key(id_pelicula) references peliculas(id_pelicula),
 	foreign key(id_devolucion) references devoluciones(id_devolucion),
 	check (defectuoso=1 or defectuoso=0)
@@ -483,8 +495,10 @@ create table lineas_compras_comestibles(
 create table reservas_juegos(
 	id_juego number(20,0),
 	dni varchar2(9),
+	plataforma varchar2(20),
 	fecha date,
-	primary key(id_juego, dni),
+	primary key(id_juego, dni, plataforma),
+	foreign key(plataforma) references plataformas(plataforma),
 	foreign key(id_juego) references juegos(id_juego),
 	foreign key(dni) references socios(dni)
 );
@@ -492,8 +506,10 @@ create table reservas_juegos(
 create table reservas_peliculas(
 	id_pelicula number(20,0),
 	dni varchar2(9),
+	calidad varchar2(20),
 	fecha date,
-	primary key(id_pelicula, dni),
+	primary key(id_pelicula, dni, calidad),
+	foreign key(calidad) references calidad_visual(calidad),
 	foreign key(id_pelicula) references peliculas(id_pelicula),
 	foreign key(dni) references socios(dni)
 );
@@ -520,7 +536,7 @@ insert into generos_peliculas values('accion');
 insert into generos_peliculas values('animacion');
 insert into generos_peliculas values('aventuras');
 insert into generos_peliculas values('belico');
-insert into generos_peliculas values('ciencia ficcion');
+insert into generos_peliculas values('ciencia_ficcion');
 insert into generos_peliculas values('cine negro');
 insert into generos_peliculas values('comedia');
 insert into generos_peliculas values('desconocido');
@@ -531,12 +547,12 @@ insert into generos_peliculas values('infantil');
 insert into generos_peliculas values('intriga');
 insert into generos_peliculas values('musical');
 insert into generos_peliculas values('romance');
-insert into generos_peliculas values('series de tv');
+insert into generos_peliculas values('series_de_tv');
 insert into generos_peliculas values('terror');
 insert into generos_peliculas values('thriller');
 insert into generos_peliculas values('western');
 --Generos juegos
-insert into generos_juegos values('agilidad mental');
+insert into generos_juegos values('agilidad_mental');
 insert into generos_juegos values('arcade');
 insert into generos_juegos values('aventuras');
 insert into generos_juegos values('carreras');
@@ -546,11 +562,11 @@ insert into generos_juegos values('disparos');
 insert into generos_juegos values('educacion');
 insert into generos_juegos values('lucha');
 insert into generos_juegos values('musica');
-insert into generos_juegos values('primera persona');
+insert into generos_juegos values('primera_persona');
 insert into generos_juegos values('rol');
 insert into generos_juegos values('sigilo');
 insert into generos_juegos values('simulacion');
-insert into generos_juegos values('tercera persona');
+insert into generos_juegos values('tercera_persona');
 --Plataformas
 insert into plataformas values('android');
 insert into plataformas values('pc');
@@ -559,23 +575,23 @@ insert into plataformas values('ps2');
 insert into plataformas values('ps3');
 insert into plataformas values('ps4');
 insert into plataformas values('xbox');
-insert into plataformas values('xbox 360');
-insert into plataformas values('xbox one');
-insert into plataformas values('wii u');
+insert into plataformas values('xbox-360');
+insert into plataformas values('xbox-one');
+insert into plataformas values('wii-u');
 insert into plataformas values('psv');
-insert into plataformas values('nintendo 3ds');
+insert into plataformas values('nintendo-3ds');
 insert into plataformas values('ios');
 insert into plataformas values('psp');
 insert into plataformas values('wii');
 insert into plataformas values('game boy');
 insert into plataformas values('gamecube');
-insert into plataformas values('nintendo ds');
+insert into plataformas values('nintendo-ds');
 insert into plataformas values('dreamcast');
-insert into plataformas values('nintendo 64');
+insert into plataformas values('nintendo-64');
 --Calidad visual
 insert into calidad_visual values('CD');
 insert into calidad_visual values('DVD');
-insert into calidad_visual values('HD DVD');
+insert into calidad_visual values('HD-DVD');
 insert into calidad_visual values('Blu-ray');
 --Creacion de secuencias
 create sequence id_alquiler
@@ -697,12 +713,12 @@ end;
 /
 --Funcion que te devuelve la cantidad de alquiler disponibles de un juego
 create or replace function cantidad_alquiler_juego
-	(identificador juegos.id_juego%TYPE)
+	(identificador juegos.id_juego%TYPE, pla plataformas.plataforma%TYPE)
 	return number
 is
-	aux1 juegos.alquiler%TYPE;
+	aux1 relacion_juegos_plataforma.alquiler%TYPE;
 begin
-	select alquiler into aux1 from juegos where id_juego = identificador;
+	select alquiler into aux1 from relacion_juegos_plataforma where id_juego = identificador and plataforma = pla;
 	return aux1;
 exception
 	when no_data_found then
@@ -731,12 +747,12 @@ end;
 
 --Funcion que te devuelve la cantidad de alquiler disponible de una pelicula
 create or replace function cantidad_alquiler_pelicula
-	(identificador peliculas.id_pelicula%TYPE)
+	(identificador peliculas.id_pelicula%TYPE, cal calidad_visual.calidad%TYPE)
 	return number
 is
-	aux1 peliculas.alquiler%TYPE;
+	aux1 relacion_peliculas_calidad.alquiler%TYPE;
 begin
-	select alquiler into aux1 from peliculas where id_pelicula = identificador;
+	select alquiler into aux1 from relacion_peliculas_calidad where id_pelicula = identificador and calidad=cal;
 	return aux1;
 exception
 	when no_data_found then
@@ -1019,7 +1035,7 @@ begin
 			(-20600,
 			'no tienes edad suficiente para este articulo');	
 		end if;
-		if :new.cantidad > cantidad_alquiler_juego(:new.id_juego) then
+		if :new.cantidad > cantidad_alquiler_juego(:new.id_juego, :new.plataforma) then
 			raise_application_error
 			(-20600,
 			'No tenemos tanta cantidad de ese articulo');	
@@ -1029,10 +1045,10 @@ begin
 			(-20600,
 			'No se pueden alquilar mas de 10 articulos');
 		end if;
-		update juegos set alquiler = alquiler-:new.cantidad where id_juego=:new.id_juego;
+		update relacion_juegos_plataforma set alquiler = alquiler-:new.cantidad where id_juego=:new.id_juego and plataforma=:new.plataforma;
 	end if;
 	if deleting then
-		update juegos set alquiler = alquiler+:old.cantidad where id_juego=:old.id_juego;
+		update relacion_juegos_plataforma set alquiler = alquiler+:old.cantidad where id_juego=:old.id_juego and plataforma=:new.plataforma;
 	end if;
 	if updating then
 		select dni into socio from alquileres where id_alquiler=:old.id_alquiler;
@@ -1043,13 +1059,13 @@ begin
 			(-20600,
 			'No se puede modificar el articulo de una linea de alquiler');
 		end if;
-		if :new.cantidad-:old.cantidad > cantidad_alquiler_juego(:new.id_juego) then
+		if :new.cantidad-:old.cantidad > cantidad_alquiler_juego(:new.id_juego, :new.plataforma) then
 			raise_application_error
 			(-20600,
 			'No tenemos tanta cantidad de ese articulo');	
 		end if;
 		if :old.cantidad!=:new.cantidad then
-			update juegos set alquiler = alquiler - :new.cantidad + :old.cantidad where id_juego=:new.id_juego;
+			update relacion_juegos_plataforma set alquiler = alquiler - :new.cantidad + :old.cantidad where id_juego=:new.id_juego and plataforma=:new.plataforma;
 		end if;
 	end if;
 end;
@@ -1075,7 +1091,7 @@ begin
 			(-20600,
 			'no tienes edad suficiente para este articulo');	
 		end if;
-		if :new.cantidad > cantidad_alquiler_pelicula(:new.id_pelicula) then
+		if :new.cantidad > cantidad_alquiler_pelicula(:new.id_pelicula, :new.calidad) then
 			raise_application_error
 			(-20600,
 			'No tenemos tanta cantidad de ese articulo');	
@@ -1085,10 +1101,10 @@ begin
 			(-20600,
 			'No se pueden alquilar mas de 10 articulos');
 		end if;
-		update peliculas set alquiler = alquiler-:new.cantidad where id_pelicula=:new.id_pelicula;
+		update relacion_peliculas_calidad set alquiler = alquiler-:new.cantidad where id_pelicula=:new.id_pelicula and calidad=:new.calidad;
 	end if;
 	if deleting then
-		update peliculas set alquiler = alquiler+:old.cantidad where id_pelicula=:old.id_pelicula;
+		update relacion_peliculas_calidad set alquiler = alquiler+:old.cantidad where id_pelicula=:old.id_pelicula and calidad=:new.calidad;
 	end if;
 	if updating then
 		select dni into socio from alquileres where id_alquiler=:old.id_alquiler;
@@ -1099,13 +1115,13 @@ begin
 			(-20600,
 			'No se puede modificar el articulo de una linea de alquiler');
 		end if;
-		if :new.cantidad-:old.cantidad > cantidad_alquiler_pelicula(:new.id_pelicula) then
+		if :new.cantidad-:old.cantidad > cantidad_alquiler_pelicula(:new.id_pelicula, :new.calidad) then
 			raise_application_error
 			(-20600,
 			'No tenemos tanta cantidad de ese articulo');	
 		end if;
 		if :old.cantidad!=:new.cantidad then
-			update peliculas set alquiler = alquiler - :new.cantidad + :old.cantidad where id_pelicula=:new.id_pelicula;
+			update relacion_peliculas_calidad set alquiler = alquiler - :new.cantidad + :old.cantidad where id_pelicula=:new.id_pelicula and calidad=:new.calidad;
 		end if;
 	end if;
 end;
@@ -1121,7 +1137,7 @@ begin
 if inserting then
 	select cantidad, id_laj into aux1, aux2 from lineas_alquileres_juegos where
 		 id_alquiler=(select id_alquiler from devoluciones where id_devolucion=:new.id_devolucion) 
-		and id_juego=:new.id_juego;
+		and id_juego=:new.id_juego and plataforma=:new.plataforma;
 
 	if :new.cantidad = aux1 then
 		delete from lineas_alquileres_juegos where id_laj=aux2;
@@ -1133,7 +1149,7 @@ if inserting then
 		'No se pueden devolver articulos que no has alquilado');
 	end if;
 	if :new.defectuoso = 1 then
-		update juegos set alquiler = alquiler - :new.cantidad where id_juego=:new.id_juego;
+		update relacion_juegos_plataforma set alquiler = alquiler - :new.cantidad where id_juego=:new.id_juego and plataforma=:new.plataforma;
 	end if;
 elsif updating then
 	raise_application_error(-20600,
@@ -1157,7 +1173,7 @@ begin
 if inserting then
 	select cantidad, id_lap into aux1, aux2 from lineas_alquileres_peliculas where
 		 id_alquiler=(select id_alquiler from devoluciones where id_devolucion=:new.id_devolucion) 
-		and id_pelicula=:new.id_pelicula;
+		and id_pelicula=:new.id_pelicula and calidad=:new.calidad;
 
 	if :new.cantidad = aux1 then
 		delete from lineas_alquileres_peliculas where id_lap=aux2;
@@ -1169,7 +1185,7 @@ if inserting then
 		'No se pueden devolver articulos que no has alquilado');
 	end if;
 	if :new.defectuoso = 1 then
-		update peliculas set alquiler = alquiler - :new.cantidad where id_pelicula=:new.id_pelicula;
+		update relacion_peliculas_calidad set alquiler = alquiler - :new.cantidad where id_pelicula=:new.id_pelicula and calidad=:new.calidad;
 	end if;
 elsif updating then
 	raise_application_error(-20600,
@@ -1265,18 +1281,18 @@ begin
 			(-20600,
 			'Para poder hacer una reserva debe devolver la peliculas alquiladas');
 		end if;
-		if cantidad_alquiler_juego(:new.id_juego)<1 then
+		if cantidad_alquiler_juego(:new.id_juego, :new.plataforma)<1 then
 			raise_application_error
 			(-20600,
 			'Actualmente no tenemos disponible ese articulo');
 		end if;
-		update juegos set alquiler = alquiler - 1 where id_juego = :new.id_juego;
+		update relacion_juegos_plataforma set alquiler = alquiler - 1 where id_juego = :new.id_juego and plataforma=:new.plataforma;
 	elsif deleting then
-		update juegos set alquiler = alquiler + 1 where id_juego = :old.id_juego;
+		update relacion_juegos_plataforma set alquiler = alquiler + 1 where id_juego = :old.id_juego and plataforma=:new.plataforma;
 	elsif updating then
 		if :old.id_juego != :new.id_juego then
-			update juegos set alquiler = alquiler - 1 where id_juego = :new.id_juego;
-			update juegos set alquiler = alquiler + 1 where id_juego = :old.id_juego;
+			update relacion_juegos_plataforma set alquiler = alquiler - 1 where id_juego = :new.id_juego and plataforma=:new.plataforma;
+			update relacion_juegos_plataforma set alquiler = alquiler + 1 where id_juego = :old.id_juego and plataforma=:new.plataforma;
 		end if;
 	end if;
 end;
@@ -1292,18 +1308,18 @@ begin
 			(-20600,
 			'Para poder hacer una reserva debe devolver la peliculas alquiladas');
 		end if;
-		if cantidad_alquiler_pelicula(:new.id_pelicula)<1 then
+		if cantidad_alquiler_pelicula(:new.id_pelicula, :new.calidad)<1 then
 			raise_application_error
 			(-20600,
 			'Actualmente no tenemos disponible ese articulo');
 		end if;
-		update peliculas set alquiler = alquiler - 1 where id_pelicula = :new.id_pelicula;
+		update relacion_peliculas_calidad set alquiler = alquiler - 1 where id_pelicula = :new.id_pelicula and calidad=:new.calidad;
 	elsif deleting then
-		update peliculas set alquiler = alquiler + 1 where id_pelicula = :old.id_pelicula;
+		update relacion_peliculas_calidad set alquiler = alquiler + 1 where id_pelicula = :old.id_pelicula and calidad=:new.calidad;
 	elsif updating then
 		if :old.id_pelicula != :new.id_pelicula then
-			update peliculas set alquiler = alquiler - 1 where id_pelicula = :new.id_pelicula;
-			update peliculas set alquiler = alquiler + 1 where id_pelicula = :old.id_pelicula;
+			update relacion_peliculas_calidad set alquiler = alquiler - 1 where id_pelicula = :new.id_pelicula and calidad=:new.calidad;
+			update relacion_peliculas_calidad set alquiler = alquiler + 1 where id_pelicula = :old.id_pelicula and calidad=:new.calidad;
 		end if;
 	end if;
 end;
@@ -1321,7 +1337,7 @@ end;
 create or replace trigger actualizar_ljp
 	before insert on lineas_juegos_proveedores for each row
 begin
-	update juegos set alquiler = alquiler + :new.cantidad where id_juego = :new.id_juego;
+	update relacion_juegos_plataforma set alquiler = alquiler + :new.cantidad where id_juego = :new.id_juego and plataforma=:new.plataforma;
 end;
 /
 
@@ -1329,6 +1345,6 @@ end;
 create or replace trigger actualizar_lpp
 	before insert on lineas_peliculas_proveedores for each row
 begin
-	update peliculas set alquiler = alquiler + :new.cantidad where id_pelicula = :new.id_pelicula;
+	update relacion_peliculas_calidad set alquiler = alquiler + :new.cantidad where id_pelicula = :new.id_pelicula and calidad=:new.calidad;
 end;
 /

@@ -15,11 +15,11 @@
 		<div id="cuerpo">
 		<nav id="navegador">
 			<ul>
-				<li>Inicio</li>
-				<li>Peliculas</li>
-				<li>Juegos</li>
-				<li>Comestibles</li>
-				<li>Informacion</li>
+				<a href="index.php"><li>Inicio</li></a>
+				<a href="peliculas.php"><li>Peliculas</li></a>
+				<a href="juegos.php"><li>Juegos</li></a>
+				<a href="comestibles.php"><li>Comestibles</li></a>
+				<a href="informacion.html"><li>Informacion</li></a>
 			</ul>
 		</nav>
 		<section id="seccion">
@@ -97,13 +97,14 @@
 		</section>
 		<aside id="menu">
 			<ul>
-				<li>Alquileres</li>
-				<li>Devoluciones pendientes</li>
-				<li>Amigos</li>
-				<li>Pendientes</li>
-				<li>Favoritas</li>
-				<li>Mis puntuaciones</li>
-				<li>Mi perfil</li>
+				<a href="alquileres.php"><li>Alquileres</li></a>
+				<a href="devoluciones.php"><li>Devoluciones pendientes</li></a>
+				<a href="amigos.php"><li>Amigos</li></a>
+				<a href="pendientes.php"><li>Pendientes</li></a>
+				<a href="favoritas.php"><li>Favoritas</li></a>
+				<a href="vistas.php"><li>Vistas</li></a>
+				<a href="puntuaciones.php"><li>Mis puntuaciones</li></a>
+				<a href="perfil1.php"><li>Mi perfil</li></a>
 			</ul>
 		</aside>
 		<footer id="pie">

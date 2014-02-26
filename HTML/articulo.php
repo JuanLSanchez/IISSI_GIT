@@ -26,12 +26,14 @@
 			include "conexion.php";
 			$con = CrearConexionBD();
 			if(isset($_GET['id_pelicula'])){
-				$sql = "select * from peliculas where id_pelicula=".$_GET['id_pelicula'];
+				$articulo = "pelicula";
 			}else{
-				$sql = "select * from juegos where id_juego=".$_GET['id_juego'];	
+				$articulo = "juego";
 			}
-			
+			$id=$_GET['id_'.$articulo];
+			$sql = "select * from ".$articulo."s where id_".$articulo."=".$id;
 			$res = $con->query($sql);
+			//$genero = $con->query("select genero from relacion_".$articulo."s_genero where id_".$articulo."=".$id);
 			foreach ($res as $fila){
 				$nombre = $fila[1];
 				$edad = $fila[2];
@@ -67,7 +69,21 @@
 				<div id="sinopsis">
 					<span>'.$sinopsis.'</span>
 				</div>
-				<div id="genero"><span>Genero: Acción, Aventuras, Policiaca</span></div>
+				<div id="genero"><span>Genero: ';
+				$sql = "select genero from relacion_".$articulo."s_genero where id_".$articulo."=".$id;
+				$generos = $con->query($sql);
+				$bandera = 1==1;
+				foreach ($generos as $genero) {
+					if($bandera){
+						echo $genero[0];
+						$bandera = 1==2;
+					}else{
+						echo ", ".$genero[0];
+					}
+					
+				}
+
+				echo '.</span></div>
 				<textarea name="comentario" id="comente" cols="60" rows="6" placeholder="Comente algo..."/></textarea>
 				<input type="button" value="Comentar" id="boton"/>
 			</article>

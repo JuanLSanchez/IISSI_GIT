@@ -26,14 +26,16 @@
 			include "conexion.php";
 			$con = CrearConexionBD();
 			if(isset($_GET['id_pelicula'])){
-				$sql = "select id_pelicula, nombre, edad_restrictiva, imagen, trailer, sinopsis, alquiler, to_char(year, 'DD/MM/yyyy') 
-					from peliculas where id_pelicula=".$_GET['id_pelicula'];
-				$get = '?id_pelicula=';
+				$articulo="pelicula";
+				
 			}else{
-				$sql = "select id_juego, nombre, edad_restrictiva, imagen, trailer, sinopsis, alquiler, to_char(year, 'DD/MM/yyyy') 
-					from juegos where id_juego=".$_GET['id_juego'];
-				$get = '?id_juego=';
+				$articulo = "juego";	
 			}
+			$sql = "select id_".$articulo.", nombre, edad_restrictiva, imagen, trailer, sinopsis, alquiler, to_char(year, 'DD/MM/yyyy') 
+					from ".$articulo."s where id_".$articulo."=".$_GET['id_'.$articulo];
+			$get = '?id_'.$articulo.'=';
+			$sql2 = "select genero from generos_".$articulo."s";
+
 			$res = $con->query($sql);
 			foreach ($res as $fila){
 				$id = $fila[0];
@@ -61,17 +63,17 @@
 				<li><input type="number" name="year" value="'.$year.'"/></li>
 				<li><span>Edad restrictiva: </span></li>
 				<li><input type="number" name="edad" value="'.$edad.'"/></li>
+				<li><span>Nombre: </span></li>
+				<li><input type="text" name="nombre" value="'.$nombre.'"></li>
+				<li><span>Sinopsis: </span></li>
+				<li><textarea id="sinopsis" name="sinopsis" cols="70" rows="15">'.$sinopsis.'</textarea></li>
+				<li><span>Generos:</span></li><li>';
+				foreach ($con->query($sql2) as $fila) {
+					echo '<div class="generos" ><span>'.$fila[0].'</span><input type="checkbox" value='.$fila[0].'/></div>';
+				}
+				echo '</li><li><span>Trailer(URL): </span><input type="text" name="trailer" value="'.$trailer.'"/></li>
+				<li><input type="SUBMIT" value="Modificar articulo"/></li>
 				</ul>
-			</article>
-			<article id="de">
-				<span>Nombre: </span>
-				<input type="text" name="nombre" value="'.$nombre.'">
-				<div id="sinopsis">
-				<textarea id="sinopsis" name="sinopsis" cols="70" rows="15">'.$sinopsis.'</textarea>
-				</div>
-				<div id="genero"><span>Genero: Acción, Aventuras, Policiaca</span></div>
-				<span>Trailer(URL): </span><input type="text" name="trailer" value="'.$trailer.'"/>
-				<input type="SUBMIT" value="Modificar articulo"/>
 			</article>
 			</form>';
 		}else{

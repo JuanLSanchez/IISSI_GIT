@@ -1,6 +1,9 @@
 body{
 	background: #999999;
 }
+a{
+	text-decoration: none;
+}
 
 #cabecera{
 	background: white;
@@ -42,6 +45,7 @@ body{
 }
 
 #navegador li {
+	color:black;
 	display: inline-block;
 	list-style: none;
 	padding: 10px;
@@ -76,6 +80,7 @@ body{
 	padding: 0px;
 }
 #menu li{
+	color:black;
 	display: block;
 	list-style: none;
 	padding: 5px;

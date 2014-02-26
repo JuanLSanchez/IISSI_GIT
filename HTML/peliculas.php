@@ -26,44 +26,52 @@
 				<article id="buscador">
 					<form method="GET" action="peliculas.php" enctype="application/x-www-form-urlencoded">
 						<?php
+						include "conexion.php";
+						$con = CrearConexionBD();
+						$sql = "select genero from generos_peliculas";
+						$busqueda = "";
+						$inicio_year = "";
+						$fin_year = "";
+						$genero = "Ninguno";
 						if(isset($_GET['busqueda'])){
-							$inicio_year="";
-							$fin_year="";
+							$busqueda = $_GET['busqueda'];
+							$genero = $_GET['genero'];
 							if($_GET['inicio_year']!=1){
 								$inicio_year=$_GET['inicio_year'];
 							}
 							if($_GET['fin_year']!=9000){
 								$fin_year=$_GET['fin_year'];
 							}
-							echo '
-							<input type="search" name="busqueda" value="'.$_GET['busqueda'].'"/>
-							<input type="submit" value="Buscar" />
-							<br />
-							<span>Desde: </span>
-							<input type="number"  name="inicio_year" value="'.$inicio_year.'"/>
-							<span>Hasta: </span>
-							<input type="number" name="fin_year" value="'.$fin_year.'"/>
-							<br />
-							<span>Genero 1: </span>
-							<input type="text" name="genero1" value="'.$_GET['genero1'].'"/>
-							<span>Genero 2: </span>
-							<input type="text" name="genero2" value="'.$_GET['genero2'].'"/>
-							<p id="separador"> </p>	';
-						}else{
-							echo '<input type="search" name="busqueda"/>
-							<input type="submit" value="Buscar" />
-							<br />
-							<span>Desde: </span>
-							<input type="number"  name="inicio_year" />
-							<span>Hasta: </span>
-							<input type="number" name="fin_year" />
-							<br />
-							<span>Genero 1: </span>
-							<input type="text" name="genero1" />
-							<span>Genero 2: </span>
-							<input type="text" name="genero2" />
-							<p id="separador"> </p>	';
 						}
+						echo '
+						<div class="search">
+							<input type="search" name="busqueda" value="'.$busqueda.'"/>
+							<input type="submit" value="Buscar" />
+						</div>
+						<span>Desde: </span>
+						<input type="text"  size="4" name="inicio_year" value="'.$inicio_year.'"/>
+						<span>Hasta: </span>
+						<input type="text" size="4" name="fin_year" value="'.$fin_year.'"/>
+						<span>Genero: </span>
+						<select name="genero" value="Otro">';
+						if($genero == "Ninguno"){
+							echo '<option selected>Ninguno</option>';
+						}else{
+							echo '<option>Ninguno</option>';	
+						}
+						foreach ($con->query($sql) as $fila) {
+							if($genero == $fila[0]){
+								echo '<option selected>'.$fila[0].'</option>';
+							}else{
+								echo '<option>'.$fila[0].'</option>';	
+							}							
+						}
+
+						echo '</select>';
+						// <input type="text" name="genero" value="'.$_GET['genero'].'"/>
+						// <p id="separador"> </p>	';
+						
+						CerrarConexionBD($con);
 						?>
 					</form>
 				</article>
@@ -78,12 +86,11 @@
 					<ul>
 						<?php
 							if(isset($_GET['busqueda'])){
-								include "conexion.php";
+								//Iniciacion de variables
 								$con = CrearConexionBD();
 								$cad = urldecode($_GET['busqueda']);
-
 								$orden = "nombre";
-								$pelisPorPaginas = "4";
+								$pelisPorPaginas = "10";
 								if(isset($_GET['pagina'])){
 									$pagina = $_GET["pagina"];	
 								}else{
@@ -99,12 +106,15 @@
 								}else{
 									$fin_year = 9000;
 								}
-								$genero1 = $_GET['genero1'];
-								$genero2 = $_GET['genero2'];
-								
+								$genero = $_GET['genero'];
+															
 								$pagina_inicio = ($pagina-1)*$pelisPorPaginas;
 								$pagina_fin = $pagina*$pelisPorPaginas;
-								$sql = "select id_pelicula, imagen, nombre, year from peliculas where upper(nombre) like upper('%".$cad."%') and year>=to_date('".$inicio_year."', 'yyyy') and year<=to_date('".($fin_year+1)."', 'yyyy') order by ".$orden;
+								$sql = "select id_pelicula, imagen, nombre, year from peliculas where 
+											upper(nombre) like upper('%".$cad."%') and 
+											year>=to_date('".$inicio_year."', 'yyyy') and 
+											year<=to_date('".($fin_year+1)."', 'yyyy') 
+											order by ".$orden;
 								$cont = 0;
 								foreach ( $con->query($sql) as $fila) {
 									if($cont>=$pagina_inicio&&$cont<$pagina_fin){
@@ -118,6 +128,7 @@
 									}
 									$cont++;
 								}
+								/*Paginacion*/
 								$sql = "select count(*) from peliculas where upper(nombre) like upper('%".$cad."%') and year>=to_date('".$inicio_year."', 'yyyy') and year<=to_date('".($fin_year+1)."', 'yyyy')";
 								foreach ($con->query($sql) as $fila) {
 									$cont = $fila['0']/$pelisPorPaginas;
@@ -125,20 +136,18 @@
 								echo '</ul>
 									<ul id="paginacion">';
 								if($pagina>1){
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero1='.$genero1.'&genero2='.$genero2.'&pagina=1"><<</a></li>
-										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero1='.$genero1.'&genero2='.$genero2.'&pagina='.($pagina-1).'"><</a></li>';
+									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina=1"><<</a></li>
+										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina-1).'"><</a></li>';
 								}
 								$i = 0;
-								//$cont = $cont/$pagina;
-								//echo $cont;	
 								while ($cont>=$i) {
 									$i=$i+1;
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero1='.$genero1.'&genero2='.$genero2.'&pagina='.$i.'">'.$i.'</a></li>';
+									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.$i.'">'.$i.'</a></li>';
 										
 								}
 								if($pagina<$cont){
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero1='.$genero1.'&genero2='.$genero2.'&pagina='.($pagina+1).'">></a></li>
-										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero1='.$genero1.'&genero2='.$genero2.'&pagina='.ceil($cont).'">>></a></li>';
+									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina+1).'">></a></li>
+										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.ceil($cont).'">>></a></li>';
 								}
 								CerrarConexionBD($con);
 							}
