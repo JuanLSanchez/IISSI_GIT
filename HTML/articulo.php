@@ -5,7 +5,8 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="stylesheet" href="css/pelicula.css">
+	<link rel="stylesheet" href="css/general.css">
+	<link rel="stylesheet" href="css/articulo.css">
 </head>
 <body>
 		<header id="cabecera">
@@ -13,13 +14,10 @@
 		</header>
 		<div id="cuerpo">
 		<nav id="navegador">
-			<ul>
-				<li>Inicio</li>
-				<li>Peliculas</li>
-				<li>Juegos</li>
-				<li>Comestibles</li>
-				<li>Informacion</li>
-			</ul>
+			<?php
+				include "menus.php";
+				Navegador();
+			?>
 		</nav>
 		<section id="seccion">
 			<?php
@@ -40,30 +38,37 @@
 				$imagen = $fila[3];
 				$trailer = $fila[4];
 				$sinopsis = $fila[5];
-				$alquiler = $fila[6];
-				$year = $fila[7];
+				$year = $fila[6];
 				$puntuacion = "3.4";
 				$estado = "Pendiente";
 				$reserva = "Reservar";
 			}
 			if(isset($nombre)){
+			if(isset($_SESSION['dni'])){
+				if($_SESSION['dni']=="00000000A"){
+					echo '<div id="administrador">
+					<article>
+						<form METHOD="POST" ACTION="mod.php?id_'.$articulo.'='.$id.'">
+						<input type="submit" value="Modificar" id="boton"/>
+						</form>
+					</article>
+					</div>';
+				}
+			}
 			echo '<article id="iz">
 				<img class="bl" src="'.$imagen.'" />
-				<input class="bl" type="button" value="'.$reserva.'" />
-				<span class="bl" >Puntuacion: '.$puntuacion.'</span>
-				<div class="menu-bar">
-					<ul class="desplegable">
-						<li>
-							<input class="menu-nav" type="button" value="'.$estado.'"  class="estado"/>
-							<ul>
-								<li><input type="button" value="Pendiente" class="estado"/></li>
-								<li><input type="button" value="Vista"  class="estado"/></li>
-								<li><input type="button" value="Favorita"  class="estado"/></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</article>
+				<span class="bl" >Puntuacion: '.$puntuacion.'</span>';
+			if(isset($_SESSION['dni'])){
+				echo '<input class="bl" type="button" value="'.$reserva.'" />
+				<select name="estado">
+					<option selected>Ninguno</option>
+					<option>Favorito</option>
+					<option>Pendiente</option>
+					<option>Vista</option>
+				</select>';
+			}
+				
+			echo '</article>
 			<article id="de">
 				<h3>'.$nombre.'</h3>
 				<div id="sinopsis">
@@ -82,30 +87,35 @@
 					}
 					
 				}
-
 				echo '.</span></div>
-				<textarea name="comentario" id="comente" cols="60" rows="6" placeholder="Comente algo..."/></textarea>
-				<input type="button" value="Comentar" id="boton"/>
-			</article>
-			<article id="comentarios">
-				<ul>
-					<li>
-						<h3>Comentarios</h3>
-					</li>
-					<li>
-						<table>
-							<tr class="fila1"><td><spam class="autor">Autor: Juan Luis</spam> <spam class="fecha"> Fecha: 22/3/2012</spam></td></tr>
-							<tr class="fila2"><td>Esto es el comentario de una pelicula me tengo que enrrollar para ver si puedo ocupar mas de una linea, la pelicula es 2 Guns, a mi me gusto no se a ustedes asi que le dare buena puntuación</td></tr>
-						</table>
-					</li>
-					<li>
-						<table>
-							<tr class="fila1"><td><spam class="autor">Autor: Juan Luis</spam> <spam class="fecha"> Fecha: 22/3/2012</spam></td></tr>
-							<tr class="fila2"><td>Esto es el comentario de una pelicula me tengo que enrrollar para ver si puedo ocupar mas de una linea, la pelicula es 2 Guns, a mi me gusto no se a ustedes asi que le dare buena puntuación</td></tr>
-						</table>
-					</li>
-				</ul>
-			</article>';
+				</article>';
+				if(isset($_SESSION['dni'])){
+					echo '
+				<article id="comentarios">
+
+					<ul>
+						<li>
+							<textarea name="comentario" id="comente" cols="60" rows="6" placeholder="Comente algo..."/></textarea>
+							<input type="button" value="Comentar" id="boton"/>
+						</li>
+						<li>
+							<h3>Comentarios</h3>
+						</li>
+						<li>
+							<table>
+								<tr class="fila1"><td><spam class="autor">Autor: Juan Luis</spam> <spam class="fecha"> Fecha: 22/3/2012</spam></td></tr>
+								<tr class="fila2"><td>Esto es el comentario de una pelicula me tengo que enrrollar para ver si puedo ocupar mas de una linea, la pelicula es 2 Guns, a mi me gusto no se a ustedes asi que le dare buena puntuación</td></tr>
+							</table>
+						</li>
+						<li>
+							<table>
+								<tr class="fila1"><td><spam class="autor">Autor: Juan Luis</spam> <spam class="fecha"> Fecha: 22/3/2012</spam></td></tr>
+								<tr class="fila2"><td>Esto es el comentario de una pelicula me tengo que enrrollar para ver si puedo ocupar mas de una linea, la pelicula es 2 Guns, a mi me gusto no se a ustedes asi que le dare buena puntuación</td></tr>
+							</table>
+						</li>
+					</ul>
+				</article>';
+				}
 		}else{
 			echo "<p>No existe esa pelicula</p>";
 		}
@@ -113,15 +123,7 @@
 			?>
 		</section>
 		<aside id="menu">
-			<ul>
-				<li>Alquileres</li>
-				<li>Devoluciones pendientes</li>
-				<li>Amigos</li>
-				<li>Pendientes</li>
-				<li>Favoritas</li>
-				<li>Mis puntuaciones</li>
-				<li>Mi perfil</li>
-			</ul>
+			<?php Menu(); ?>
 		</aside>
 		<footer id="pie">
 			Derechos Reservados &copy; 2013-2014
@@ -129,4 +131,3 @@
 	</div>
 </body>
 </html>
-

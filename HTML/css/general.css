@@ -1,6 +1,18 @@
 body{
 	background: #999999;
 }
+a{
+	text-decoration: none;
+}
+.incorrecto p{
+	background: #eb9881;
+	text-align: center;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding-bottom:15px;
+	padding-top: 15px;
+}
 
 #cabecera{
 	background: white;
@@ -42,6 +54,7 @@ body{
 }
 
 #navegador li {
+	color:black;
 	display: inline-block;
 	list-style: none;
 	padding: 10px;
@@ -76,6 +89,7 @@ body{
 	padding: 0px;
 }
 #menu li{
+	color:black;
 	display: block;
 	list-style: none;
 	padding: 5px;
@@ -87,18 +101,27 @@ body{
 	cursor: pointer;
 	color:white;
 }
-
-
+#menu h4{
+	margin: 0px;
+}
+.boton{
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	border:0px;
+	margin-bottom: 20px;
+	background: -moz-linear-gradient(
+		top,
+		#e5ecfd 0%,
+		#355fcb);
+	background: -webkit-gradient(
+		linear, left top, left bottom,
+		from(#e5ecfd),
+		to(#355fcb));
+}
 #pie {
 	clear: both;
 	text-align: center;
 	padding: 20px;
 	border-top: 2px solid #999999;
 }
-
-/*Inicio Juanlu*/ 
-article li{
-	list-style-type: none;
-	display: block;
-}
-

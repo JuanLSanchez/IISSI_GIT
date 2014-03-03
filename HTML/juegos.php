@@ -22,11 +22,11 @@
 		</nav>
 		<section id="seccion">
 				<article id="buscador">
-					<form method="GET" action="peliculas.php" enctype="application/x-www-form-urlencoded">
+					<form method="GET" action="juegos.php" enctype="application/x-www-form-urlencoded">
 						<?php
 						include "conexion.php";
 						$con = CrearConexionBD();
-						$sql = "select genero from generos_peliculas";
+						$sql = "select genero from generos_juegos";
 						$busqueda = "";
 						$inicio_year = "";
 						$fin_year = "";
@@ -51,7 +51,7 @@
 						<span>Hasta: </span>
 						<input type="text" size="4" name="fin_year" value="'.$fin_year.'"/>
 						<span>Genero: </span>
-						<select name="genero" value="Otro">';
+						<select name="genero">';
 						if($genero == "Ninguno"){
 							echo '<option selected>Ninguno</option>';
 						}else{
@@ -67,7 +67,7 @@
 
 						echo '</select>';
 						// <input type="text" name="genero" value="'.$_GET['genero'].'"/>
-						echo '<p id="separador"> </p>	';
+						// <p id="separador"> </p>	';
 						
 						CerrarConexionBD($con);
 						?>
@@ -109,7 +109,7 @@
 															
 								$pagina_inicio = ($pagina-1)*$pelisPorPaginas;
 								$pagina_fin = $pagina*$pelisPorPaginas;
-								$sql = "select id_pelicula, imagen, nombre, year from peliculas where 
+								$sql = "select id_juego, imagen, nombre, year from juegos where 
 											upper(nombre) like upper('%".$cad."%') and 
 											year>=to_date('".$inicio_year."', 'yyyy') and 
 											year<=to_date('".($fin_year+1)."', 'yyyy') 
@@ -129,25 +129,25 @@
 								}								
 								echo '</table>';
 								/*Paginacion*/
-								$sql = "select count(*) from peliculas where upper(nombre) like upper('%".$cad."%') and year>=to_date('".$inicio_year."', 'yyyy') and year<=to_date('".($fin_year+1)."', 'yyyy')";
+								$sql = "select count(*) from juegos where upper(nombre) like upper('%".$cad."%') and year>=to_date('".$inicio_year."', 'yyyy') and year<=to_date('".($fin_year+1)."', 'yyyy')";
 								foreach ($con->query($sql) as $fila) {
 									$cont = $fila['0']/$pelisPorPaginas;
 								}
 								echo '</ul>
 									<ul id="paginacion">';
 								if($pagina>1){
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina=1"><<</a></li>
-										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina-1).'"><</a></li>';
+									echo '<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina=1"><<</a></li>
+										<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina-1).'"><</a></li>';
 								}
 								$i = 0;
 								while ($cont>=$i) {
 									$i=$i+1;
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.$i.'">'.$i.'</a></li>';
+									echo '<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.$i.'">'.$i.'</a></li>';
 										
 								}
 								if($pagina<$cont){
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina+1).'">></a></li>
-										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.ceil($cont).'">>></a></li>';
+									echo '<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina+1).'">></a></li>
+										<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.ceil($cont).'">>></a></li>';
 								}
 								CerrarConexionBD($con);
 							}else{
@@ -155,7 +155,8 @@
 							}
 							
 						?>
-			</article>
+					</ul>
+				</article>
 		</section>
 		<aside id="menu">
 			<?php Menu(); ?>

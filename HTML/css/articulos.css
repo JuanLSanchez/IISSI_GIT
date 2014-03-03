@@ -1,0 +1,36 @@
+img{
+	height: 150px;
+	width: 110px;
+	float:left;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+#separador{
+	border-bottom: solid #000000 1px;
+}
+.imagen{
+	width: 110px;
+}
+.nombre{
+	width: 270px;
+}
+.ano{
+	text-align:center;
+	width: 70px;
+}
+.punt{
+	text-align:center;
+	width: 95px;
+}
+.num{
+	text-align:center;
+	width: 90px;
+}
+#paginacion li{
+	display: inline-block;
+}
+a{
+	text-decoration:none; 
+	color: black;
+}

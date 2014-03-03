@@ -5,22 +5,19 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
+	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/principal.css">
 </head>
 <body>
-	
 		<header id="cabecera">
 			<h1>Videoclub ORI</h1>
 		</header>
 		<div id="cuerpo">
 		<nav id="navegador">
-			<ul>
-				<a href="index.php"><li>Inicio</li></a>
-				<a href="peliculas.php"><li>Peliculas</li></a>
-				<a href="juegos.php"><li>Juegos</li></a>
-				<a href="comestibles.php"><li>Comestibles</li></a>
-				<a href="informacion.html"><li>Informacion</li></a>
-			</ul>
+			<?php
+				include "menus.php";
+				Navegador();
+			?>
 		</nav>
 		<section id="seccion">
 			<div id="inicio">
@@ -37,8 +34,12 @@
 									<ul>';
 						foreach ($con->query($sql) as $fila){
 							echo '<li>
+							<a href="articulo.php?id_pelicula='.$fila[2].'">
+							<figure>
 							<img src='.$fila[1].' />
-							<figcaption ><a href="articulo.php?id_pelicula='.$fila[2].'">'.$fila[0].'</a></figcaption>
+							<figcaption >'.$fila[0].'</figcaption>
+							</figure>
+							</a>
 							</li>';
 							if($contador == 4){
 								break;
@@ -54,8 +55,12 @@
 						$contador = 0;
 						foreach ($con->query($sql) as $fila){
 							echo '<li>
+							<a href="articulo.php?id_juego='.$fila[2].'">
+							<figure>
 							<img src='.$fila[1].' />
-							<figcaption ><a href="articulo.php?id_juego='.$fila[2].'">'.$fila[0].'</a></figcaption>
+							<figcaption >'.$fila[0].'</figcaption>
+							<figure>
+							</a>
 							</li>';
 							if($contador == 4){
 								break;
@@ -96,16 +101,27 @@
 		</section>
 		</section>
 		<aside id="menu">
-			<ul>
-				<a href="alquileres.php"><li>Alquileres</li></a>
-				<a href="devoluciones.php"><li>Devoluciones pendientes</li></a>
-				<a href="amigos.php"><li>Amigos</li></a>
-				<a href="pendientes.php"><li>Pendientes</li></a>
-				<a href="favoritas.php"><li>Favoritas</li></a>
-				<a href="vistas.php"><li>Vistas</li></a>
-				<a href="puntuaciones.php"><li>Mis puntuaciones</li></a>
-				<a href="perfil1.php"><li>Mi perfil</li></a>
-			</ul>
+			<?php
+			if(isset($_POST['dni'])){
+				$con = CrearConexionBD();
+				$dni = $_POST['dni'];
+				$key = $_POST['key'];
+				$sql = "select dni, nombre from socios where 
+						dni='$dni' and key='$key'";
+				$query = $con->query($sql);
+				if($res = $query->fetch()){
+					$_SESSION['dni'] = $res['0'];
+					$_SESSION['nombre'] = $res['1'];
+				}else{
+					echo '<div class="incorrecto"><p>Contraseña o usuario incorrectos</p></div>';
+				}
+			}
+			if(isset($_GET['logout'])){
+				$_SESSION = array();
+				session_destroy();
+			}
+			Menu();
+			?>
 		</aside>
 		<footer id="pie">
 			Derechos Reservados &copy; 2013-2014
