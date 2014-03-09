@@ -59,7 +59,7 @@
 							<figure>
 							<img src='.$fila[1].' />
 							<figcaption >'.$fila[0].'</figcaption>
-							<figure>
+							</figure>
 							</a>
 							</li>';
 							if($contador == 4){
@@ -87,18 +87,50 @@
 				<article>
 					<h2> Películas mas Valoradas</h2>
 					<ul>
-
-
+						<?php
+							$con = CrearConexionBD();
+							$sql = "select id_pelicula, imagen, nombre, 
+									id_pelicula_a_puntuacion(id_pelicula) puntuacion
+									from peliculas
+									where rownum<=5
+									order by puntuacion desc";
+							foreach ($con->query($sql) as $fila) {
+							 	echo '<li>
+							<a href="articulo.php?id_pelicula='.$fila[0].'">
+							<figure>
+							<img src='.$fila[1].' />
+							<figcaption >'.$fila[2].'</figcaption>
+							</figure>
+							</a>
+							</li>';
+						}
+						?>
 					</ul>
 				</article>
 				<article>
 					<h2>Juegos mas Valorados</h2>
 					<ul>
-
+						<?php
+							$con = CrearConexionBD();
+							$sql = "select id_juego, imagen, nombre, 
+									id_juego_a_puntuacion(id_juego) puntuacion
+									from juegos
+									where rownum<=5
+									order by puntuacion desc";
+							foreach ($con->query($sql) as $fila) {
+							 	echo '<li>
+							<a href="articulo.php?id_juego='.$fila[0].'">
+							<figure>
+							<img src='.$fila[1].' />
+							<figcaption >'.$fila[2].'</figcaption>
+							</figure>
+							</a>
+							</li>';
+						}
+						?>
 					</ul>
 				</article>
 			</div>
-		</section>
 		</section>
 		<aside id="menu">
 			<?php

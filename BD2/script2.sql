@@ -112,7 +112,7 @@ create table peliculas(
 	nombre varchar2(50) not null,
 	edad_restrictiva number(2,0) not null,
 	imagen varchar2(50),
-	trailer varchar2(50),
+	trailer varchar2(150),
 	sinopsis varchar2(3500),
 	year date,
 	primary key(id_pelicula),
@@ -124,7 +124,7 @@ create table juegos(
 	nombre varchar2(50) not null,
 	edad_restrictiva number(2,0) not null,
 	imagen varchar2(50),
-	trailer varchar2(50),
+	trailer varchar2(150),
 	sinopsis varchar2(3500),
 	year date,
 	primary key(id_juego),
@@ -145,8 +145,8 @@ create table relacion_peliculas_genero(
 	id_pelicula number(20,0),
 	genero varchar2(20),	
 	primary key(id_pelicula, genero),
-	foreign key(id_pelicula) references peliculas(id_pelicula),
-	foreign key(genero) references generos_peliculas(genero)
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade,
+	foreign key(genero) references generos_peliculas(genero) on delete cascade
 );
 
 create table relacion_peliculas_calidad(
@@ -157,8 +157,8 @@ create table relacion_peliculas_calidad(
 	alquiler number(2,0),
 	check (precio>0),
 	primary key(id_pelicula, calidad),
-	foreign key(calidad) references calidad_visual(calidad),
-	foreign key(id_pelicula) references peliculas(id_pelicula)
+	foreign key(calidad) references calidad_visual(calidad) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade
 );
 
 create table generos_juegos(
@@ -175,8 +175,8 @@ create table relacion_juegos_genero(
 	id_juego number(20,0),
 	genero varchar2(20),
 	primary key(id_juego, genero),
-	foreign key(genero) references generos_juegos(genero),
-	foreign key(id_juego) references juegos(id_juego)
+	foreign key(genero) references generos_juegos(genero) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade
 );
 
 create table relacion_juegos_plataforma(
@@ -187,8 +187,8 @@ create table relacion_juegos_plataforma(
 	alquiler number(2,0),
 	check (precio>0),
 	primary key(plataforma, id_juego),
-	foreign key(plataforma) references plataformas(plataforma),
-	foreign key(id_juego) references juegos(id_juego)
+	foreign key(plataforma) references plataformas(plataforma) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade
 );
 
 create table ventas_proveedores(
@@ -196,7 +196,7 @@ create table ventas_proveedores(
 	fecha date,
 	id_proveedor number(20,0),
 	primary key(id_vp),
-	foreign key(id_proveedor) references proveedores(id_proveedor)
+	foreign key(id_proveedor) references proveedores(id_proveedor) on delete cascade
 );
 
 
@@ -208,9 +208,9 @@ create table lineas_juegos_proveedores(
 	cantidad number(3,0),
 	plataforma varchar2(20),
 	primary key(id_ljp),
-	foreign key(plataforma) references plataformas(plataforma),
-	foreign key(id_vp) references ventas_proveedores(id_vp),
-	foreign key(id_juego) references juegos(id_juego)
+	foreign key(plataforma) references plataformas(plataforma) on delete cascade,
+	foreign key(id_vp) references ventas_proveedores(id_vp) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade
 );
 
 create table lineas_peliculas_proveedores(
@@ -221,9 +221,9 @@ create table lineas_peliculas_proveedores(
 	cantidad number(3,0),
 	calidad varchar2(20),
 	primary key(id_lpp),
-	foreign key(calidad) references calidad_visual(calidad),
-	foreign key(id_vp) references ventas_proveedores(id_vp),
-	foreign key(id_pelicula) references peliculas(id_pelicula)
+	foreign key(calidad) references calidad_visual(calidad) on delete cascade,
+	foreign key(id_vp) references ventas_proveedores(id_vp) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade
 );
 
 
@@ -234,56 +234,56 @@ create table lineas_comestibles_proveedores(
 	precio number(6,2),
 	cantidad number(3,0),
 	primary key(id_lcp),
-	foreign key(id_vp) references ventas_proveedores(id_vp),
-	foreign key(id_comestible) references comestibles(id_comestible)
+	foreign key(id_vp) references ventas_proveedores(id_vp) on delete cascade,
+	foreign key(id_comestible) references comestibles(id_comestible) on delete cascade
 );
 
 create table peliculas_favoritos(
 	dni varchar2(9),
 	id_pelicula number(20,0),
 	primary key(dni, id_pelicula),
-	foreign key(dni) references socios(dni),
-	foreign key(id_pelicula) references peliculas(id_pelicula)
+	foreign key(dni) references socios(dni) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade
 );
 
 create table juegos_favoritos(
 	dni varchar2(9),
 	id_juego number(20,0),
 	primary key(dni, id_juego),
-	foreign key(dni) references socios(dni),
-	foreign key(id_juego) references juegos(id_juego)
+	foreign key(dni) references socios(dni) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade
 );
 
 create table peliculas_pendientes(
 	dni varchar2(9),
 	id_pelicula number(20,0),
 	primary key(dni, id_pelicula),
-	foreign key(dni) references socios(dni),
-	foreign key(id_pelicula) references peliculas(id_pelicula)
+	foreign key(dni) references socios(dni) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade
 );
 
 create table juegos_pendientes(
 	dni varchar2(9),
 	id_juego number(20,0),
 	primary key(dni, id_juego),
-	foreign key(dni) references socios(dni),
-	foreign key(id_juego) references juegos(id_juego)
+	foreign key(dni) references socios(dni) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade
 );
 
 create table peliculas_vistas(
 	dni varchar2(9),
 	id_pelicula number(20,0),
 	primary key(dni, id_pelicula),
-	foreign key(dni) references socios(dni),
-	foreign key(id_pelicula) references peliculas(id_pelicula)
+	foreign key(dni) references socios(dni) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade
 );
 
 create table juegos_vistos(
 	dni varchar2(9),
 	id_juego number(20,0),
 	primary key(dni, id_juego),
-	foreign key(dni) references socios(dni),
-	foreign key(id_juego) references juegos(id_juego)
+	foreign key(dni) references socios(dni) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade
 );
 
 create table ofertas(
@@ -301,7 +301,7 @@ create table alquileres(
 	tiempo number(3,0) not null,
 	dni varchar2(9),
 	primary key(id_alquiler),
-	foreign key(dni) references socios(dni)
+	foreign key(dni) references socios(dni) on delete cascade
 );
 
 create table lineas_alquileres_juegos(
@@ -313,10 +313,10 @@ create table lineas_alquileres_juegos(
 	plataforma varchar2(20),
 	primary key(id_laj),
 	unique(id_alquiler, id_juego, plataforma),
-	foreign key(plataforma) references plataformas(plataforma),
-	foreign key(id_oferta) references ofertas(id_oferta),
-	foreign key(id_alquiler) references alquileres(id_alquiler),
-	foreign key(id_juego) references juegos(id_juego)
+	foreign key(plataforma) references plataformas(plataforma) on delete cascade,
+	foreign key(id_oferta) references ofertas(id_oferta) on delete cascade,
+	foreign key(id_alquiler) references alquileres(id_alquiler) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade
 );
 
 create table lineas_alquileres_peliculas(
@@ -328,10 +328,10 @@ create table lineas_alquileres_peliculas(
 	calidad varchar2(20),
 	primary key(id_lap),
 	unique(id_alquiler, id_pelicula, calidad),
-	foreign key(calidad) references calidad_visual(calidad),
-	foreign key(id_oferta) references ofertas(id_oferta),
-	foreign key(id_alquiler) references alquileres(id_alquiler),
-	foreign key(id_pelicula) references peliculas(id_pelicula)
+	foreign key(calidad) references calidad_visual(calidad) on delete cascade,
+	foreign key(id_oferta) references ofertas(id_oferta) on delete cascade,
+	foreign key(id_alquiler) references alquileres(id_alquiler) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade
 );
 
 create table devoluciones(
@@ -340,7 +340,7 @@ create table devoluciones(
 	fecha date,
 	dni varchar2(9),
 	primary key(id_devolucion),
-	foreign key(dni) references socios(dni)
+	foreign key(dni) references socios(dni) on delete cascade
 );
 
 create table lineas_devoluciones_juegos(
@@ -351,8 +351,8 @@ create table lineas_devoluciones_juegos(
 	id_devolucion number(20,0),
 	plataforma varchar2(20),
 	primary key(id_ldj),
-	foreign key(plataforma) references plataformas(plataforma),
-	foreign key(id_juego) references juegos(id_juego),
+	foreign key(plataforma) references plataformas(plataforma) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade,
 	foreign key(id_devolucion) references devoluciones(id_devolucion),
 	check (defectuoso=1 or defectuoso=0)
 );
@@ -365,9 +365,9 @@ create table lineas_devoluciones_peliculas(
 	id_devolucion number(20,0),
 	calidad varchar2(20),
 	primary key(id_ldp),
-	foreign key(calidad) references calidad_visual(calidad),
-	foreign key(id_pelicula) references peliculas(id_pelicula),
-	foreign key(id_devolucion) references devoluciones(id_devolucion),
+	foreign key(calidad) references calidad_visual(calidad) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade,
+	foreign key(id_devolucion) references devoluciones(id_devolucion) on delete cascade,
 	check (defectuoso=1 or defectuoso=0)
 );
 
@@ -376,7 +376,7 @@ create table ventas_segunda_mano(
 	fecha date,
 	dni varchar2(9),
 	primary key(id_vsm),
-	foreign key(dni) references socios(dni)
+	foreign key(dni) references socios(dni) on delete cascade
 );
 
 create table lvsmj(
@@ -386,9 +386,9 @@ create table lvsmj(
 	precio number(5,2),
 	cantidad number(2),
 	primary key(id_vsm, id_juego, plataforma),
-	foreign key(id_vsm) references ventas_segunda_mano(id_vsm),
-	foreign key(id_juego) references juegos(id_juego),
-	foreign key(plataforma) references plataformas(plataforma)
+	foreign key(id_vsm) references ventas_segunda_mano(id_vsm) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade,
+	foreign key(plataforma) references plataformas(plataforma) on delete cascade
 );
 
 create table lvsmp(
@@ -398,9 +398,9 @@ create table lvsmp(
 	precio number(5,2),
 	cantidad number(2),
 	primary key(id_vsm, id_pelicula, calidad),
-	foreign key(id_vsm) references ventas_segunda_mano(id_vsm),
-	foreign key(id_pelicula) references peliculas(id_pelicula),
-	foreign key(calidad) references calidad_visual(calidad)
+	foreign key(id_vsm) references ventas_segunda_mano(id_vsm) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade,
+	foreign key(calidad) references calidad_visual(calidad) on delete cascade
 );
 
 create table opiniones_juegos(
@@ -410,8 +410,8 @@ create table opiniones_juegos(
 	id_juego number(20,0),
 	dni varchar2(9),
 	primary key(id_opinion_juego),
-	foreign key(id_juego) references juegos(id_juego),
-	foreign key(dni) references socios(dni)
+	foreign key(id_juego) references juegos(id_juego) on delete cascade,
+	foreign key(dni) references socios(dni) on delete cascade
 );
 
 create table opiniones_peliculas(
@@ -421,8 +421,8 @@ create table opiniones_peliculas(
 	id_pelicula number(20,0),
 	dni varchar2(9),
 	primary key(id_opinion_pelicula),
-	foreign key(id_pelicula) references peliculas(id_pelicula),
-	foreign key(dni) references socios(dni)
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade,
+	foreign key(dni) references socios(dni) on delete cascade
 );
 
 create table puntuaciones_juegos(
@@ -431,8 +431,8 @@ create table puntuaciones_juegos(
 	estrellas number(1,0),
 	primary key(dni, id_juego),
 	check ( regexp_like (estrellas, '^[0-5]')),
-	foreign key(dni) references socios(dni),
-	foreign key(id_juego) references juegos(id_juego)
+	foreign key(dni) references socios(dni) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade
 );
 
 create table puntuaciones_peliculas(
@@ -441,16 +441,16 @@ create table puntuaciones_peliculas(
 	estrellas number(1,0),
 	primary key(dni, id_pelicula),
 	check ( regexp_like (estrellas, '^[0-5]')),
-	foreign key(dni) references socios(dni),
-	foreign key(id_pelicula) references peliculas(id_pelicula)
+	foreign key(dni) references socios(dni) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade
 );
 
 create table amigos(
 	amigo1 varchar2(9),
 	amigo2 varchar2(9),
 	primary key(amigo1, amigo2),
-	foreign key(amigo1) references socios(dni),
-	foreign key(amigo2) references socios(dni)
+	foreign key(amigo1) references socios(dni) on delete cascade,
+	foreign key(amigo2) references socios(dni) on delete cascade
 );
 
 create table compras(
@@ -458,7 +458,7 @@ create table compras(
 	fecha date,
 	dni varchar2(9),
 	primary key(id_compra),
-	foreign key(dni) references socios(dni)
+	foreign key(dni) references socios(dni) on delete cascade
 );
 
 create table lineas_compras_juegos(
@@ -467,9 +467,9 @@ create table lineas_compras_juegos(
 	cantidad number(3,0),
 	plataforma varchar2(20),
 	primary key(id_juego, id_compra, plataforma),
-	foreign key(id_juego) references juegos(id_juego),
-	foreign key(plataforma) references plataformas(plataforma),
-	foreign key(id_compra) references compras(id_compra)
+	foreign key(id_juego) references juegos(id_juego) on delete cascade,
+	foreign key(plataforma) references plataformas(plataforma) on delete cascade,
+	foreign key(id_compra) references compras(id_compra) on delete cascade
 );
 
 create table lineas_compras_peliculas(
@@ -478,9 +478,9 @@ create table lineas_compras_peliculas(
 	cantidad number(3,0),
 	calidad varchar2(20),
 	primary key(id_pelicula, id_compra, calidad),
-	foreign key(calidad) references calidad_visual(calidad),
-	foreign key(id_pelicula) references peliculas(id_pelicula),
-	foreign key(id_compra) references compras(id_compra)
+	foreign key(calidad) references calidad_visual(calidad) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade,
+	foreign key(id_compra) references compras(id_compra) on delete cascade
 );
 
 create table lineas_compras_comestibles(
@@ -488,8 +488,8 @@ create table lineas_compras_comestibles(
 	id_comestible number(20,0),
 	id_compra number(20,0),
 	primary key(id_compra, id_comestible),
-	foreign key(id_comestible) references comestibles(id_comestible),
-	foreign key(id_compra) references compras(id_compra)
+	foreign key(id_comestible) references comestibles(id_comestible) on delete cascade,
+	foreign key(id_compra) references compras(id_compra) on delete cascade
 );
 
 create table reservas_juegos(
@@ -498,9 +498,9 @@ create table reservas_juegos(
 	plataforma varchar2(20),
 	fecha date,
 	primary key(id_juego, dni, plataforma),
-	foreign key(plataforma) references plataformas(plataforma),
-	foreign key(id_juego) references juegos(id_juego),
-	foreign key(dni) references socios(dni)
+	foreign key(plataforma) references plataformas(plataforma) on delete cascade,
+	foreign key(id_juego) references juegos(id_juego) on delete cascade,
+	foreign key(dni) references socios(dni) on delete cascade
 );
 
 create table reservas_peliculas(
@@ -509,25 +509,25 @@ create table reservas_peliculas(
 	calidad varchar2(20),
 	fecha date,
 	primary key(id_pelicula, dni, calidad),
-	foreign key(calidad) references calidad_visual(calidad),
-	foreign key(id_pelicula) references peliculas(id_pelicula),
-	foreign key(dni) references socios(dni)
+	foreign key(calidad) references calidad_visual(calidad) on delete cascade,
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade,
+	foreign key(dni) references socios(dni) on delete cascade
 );
 
 create table relacion_catalogos_peliculas(
 	id_pelicula number(20,0),
 	id_catalogo number(20,0),
 	primary key(id_pelicula, id_catalogo),
-	foreign key(id_pelicula) references peliculas(id_pelicula),
-	foreign key(id_catalogo) references catalogos(id_catalogo)
+	foreign key(id_pelicula) references peliculas(id_pelicula) on delete cascade,
+	foreign key(id_catalogo) references catalogos(id_catalogo) on delete cascade
 );
 
 create table relacion_catalogos_juegos(
 	id_juego number(20,0),
 	id_catalogo number(20,0),
 	primary key(id_juego, id_catalogo),
-	foreign key(id_juego) references juegos(id_juego),
-	foreign key(id_catalogo) references catalogos(id_catalogo)
+	foreign key(id_juego) references juegos(id_juego) on delete cascade,
+	foreign key(id_catalogo) references catalogos(id_catalogo) on delete cascade
 );
 
 --Inserts minimos
@@ -695,6 +695,22 @@ create sequence id_vsm
 	increment by 1;
 
 --Funciones.
+--Funcion que te da el nombre de un dni
+create or replace function dni_a_nombre
+	(identificador socios.dni%TYPE)
+	return varchar2
+is
+	res socios.nombre%TYPE;
+begin
+	select nombre into res from socios where dni = identificador;
+	return res;
+exception
+	when no_data_found then
+		raise_application_error
+		(-20600,
+		'No esta registrado');
+end;
+/
 --Funcion que recibe el id de un comestible y te devuelve la cantidad disponible
 create or replace function cantidad_comestible
 	(identificador comestibles.id_comestible%TYPE)
@@ -851,6 +867,31 @@ exception
 		'No disponemos de ese articulo');
 end;
 /
+--Funcion que le das el id_pelicula y te devuelve la puntuacion media
+create or replace function id_pelicula_a_puntuacion
+	(identificador peliculas.id_pelicula%TYPE)
+	return varchar2
+is
+	res varchar2(4);
+begin
+  select nvl(to_char(avg(estrellas)),'-') into res from puntuaciones_peliculas 
+    where id_pelicula = identificador;
+  return res;
+end;
+/
+--Funcion que le das el id_juego y te devuelve la puntuacion media
+create or replace function id_juego_a_puntuacion
+	(identificador juegos.id_juego%TYPE)
+	return varchar2
+is
+	res varchar2(4);
+begin
+  select nvl(to_char(avg(estrellas)),'-') into res from puntuaciones_juegos 
+    where id_juego = identificador;
+  return res;
+end;
+/
+
 
 --Procedimientos
 -- Para que se pueda imprimir por pantalla: set serveroutput on
@@ -1288,7 +1329,7 @@ begin
 		end if;
 		update relacion_juegos_plataforma set alquiler = alquiler - 1 where id_juego = :new.id_juego and plataforma=:new.plataforma;
 	elsif deleting then
-		update relacion_juegos_plataforma set alquiler = alquiler + 1 where id_juego = :old.id_juego and plataforma=:new.plataforma;
+		update relacion_juegos_plataforma set alquiler = alquiler + 1 where id_juego = :old.id_juego and plataforma=:old.plataforma;
 	elsif updating then
 		if :old.id_juego != :new.id_juego then
 			update relacion_juegos_plataforma set alquiler = alquiler - 1 where id_juego = :new.id_juego and plataforma=:new.plataforma;
@@ -1315,7 +1356,7 @@ begin
 		end if;
 		update relacion_peliculas_calidad set alquiler = alquiler - 1 where id_pelicula = :new.id_pelicula and calidad=:new.calidad;
 	elsif deleting then
-		update relacion_peliculas_calidad set alquiler = alquiler + 1 where id_pelicula = :old.id_pelicula and calidad=:new.calidad;
+		update relacion_peliculas_calidad set alquiler = alquiler + 1 where id_pelicula = :old.id_pelicula and calidad=:old.calidad;
 	elsif updating then
 		if :old.id_pelicula != :new.id_pelicula then
 			update relacion_peliculas_calidad set alquiler = alquiler - 1 where id_pelicula = :new.id_pelicula and calidad=:new.calidad;

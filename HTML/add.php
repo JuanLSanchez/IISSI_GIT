@@ -17,6 +17,7 @@
 		<nav id="navegador">
 			<?php
 				include "menus.php";
+				include "conexion.php";
 				Navegador();
 			?>
 		</nav>
@@ -25,7 +26,7 @@
 
 				<?php //Añadir articulo
 				if(isset($_POST['nombre'])&&$_SESSION['dni'] == '00000000A'){
-					include "conexion.php";
+					
 					$con = CrearConexionBD();
 					//Inicializacion de las variables
 					$articulo = $_GET['articulo'];
@@ -82,9 +83,9 @@
 						if($_FILES['imagen']['error']==0){
 							copy($_FILES['imagen']['tmp_name'],$imagen);	
 						}						
-						echo "<span>El articulo, </span>".$salida."<span> se ha añadido correctamente</span>";						
+						echo '<div class="correcto"><p>El articulo, '.$salida.' se ha añadido correctamente</p></div>';						
 					}else{
-						echo "<p>El articulo no se ha añadido</p>";
+						echo '<div class="incorrecto"><p>El articulo no se ha añadido</p></div>';
 					}
 					CerrarConexionBD($con);
 				}
@@ -111,7 +112,6 @@
 					<li><span>Sinopsis: </span><textarea id="sinopsis" name="sinopsis" cols="70" rows="15"></textarea></li>
 					<li><span>Generos a los que pertenece: </span></li>
 					<?php
-						include "conexion.php";
 						$con = CrearConexionBD();
 						$cont = 0;
 						$nombre = "genero";

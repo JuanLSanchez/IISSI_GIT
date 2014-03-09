@@ -4,6 +4,7 @@ ul{
 }
 #iz{
 	float:left;
+	padding:20px;
 }
 #seccion img {
 	width: 200px;
@@ -14,24 +15,20 @@ ul{
 .estado{
 	width: 80px;
 }
-#boton{
-	float: right;
-}
 #de span{
 	font: bold 14px Verdana, sans-serif;
 }
-h3{
-	text-align: center;
+#administracion li{
+	display: inline-block;
 }
-#sinopsis{
-	width:450px;
-	margin-left: 220px;
+h3{
+	clear:right;
+	text-align: center;
 }
 
 #genero{
-	width:450px;
 	margin-top: 20px;
-	margin-left: 220px;
+    text-align: center;
 }
 
 #comente{
@@ -39,9 +36,6 @@ h3{
 	margin-top:20px;
 }
 
-#boton{
-	margin-left: 20px;
-}
 #comentarios{
 	clear: both;
 }
@@ -59,4 +53,9 @@ h3{
 }
 #comentarios table{
 	margin-top: 10px;
+}
+.trailer{
+	clear:both;
+	margin:20px;
+	margin-left: 60px;
 }

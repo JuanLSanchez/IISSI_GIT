@@ -49,9 +49,9 @@
 						}
 						$res = $con->exec("insert into comestibles values('$id', '$nombre', '$cantidad', '$precio')");
 						if($res==1){
-							echo "<p>El articulo se ha añadido correctamente</p>";
+							echo '<div class="correcto"><p>El articulo se ha añadido correctamente</p></div>';
 						}else{
-							echo "<p>El articulo no se ha añadido</p>";
+							echo '<div class="incorrecto"><p>El articulo no se ha añadido</p></div>';
 						}
 						CerrarConexionBD($con);
 					}					

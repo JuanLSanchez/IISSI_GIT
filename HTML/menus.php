@@ -11,41 +11,43 @@ function Menu(){
 			<input type="submit" value="Logout" class="boton"/>
 		</form>
 		<ul>				
-			<a href="alquileres.php"><li>Alquileres</li></a>
-			<a href="devoluciones.php"><li>Devoluciones pendientes</li></a>
-			<a href="amigos.php"><li>Amigos</li></a>
-			<a href="pendientes.php"><li>Pendientes</li></a>
-			<a href="favoritas.php"><li>Favoritas</li></a>
-			<a href="vistas.php"><li>Vistas</li></a>
-			<a href="puntuaciones.php"><li>Mis puntuaciones</li></a>
-			<a href="perfil1.php"><li>Mi perfil</li></a>				
+			<li><a href="alquileres.php">Alquileres</a></li>
+			<li><a href="devoluciones.php">Devoluciones pendientes</a></li>
+			<li><a href="amigos.php">Amigos</a></li>
+			<li><a href="pendientes.php">Pendientes</a></li>
+			<li><a href="favoritas.php">Favoritas</a></li>
+			<li><a href="vistas.php">Vistas</a></li>
+			<li><a href="puntuaciones.php">Mis puntuaciones</a></li>
+			<li><a href="perfil1.php">Mi perfil</a></li>
 		</ul>';	
 	}else{				
 		echo '<form method="POST" action="index.php" enctype="application/x-www-form-urlencoded">
-				<span>DNI: </span><input type="text" name="dni"/>
-				<span>Contraseña: </span><input type="password" name="key"/>
-				<input type="submit" value="Logear" class="boton"/>
+				<div id="login">
+					<span>DNI: </span><input type="text" name="dni"/>
+					<span>Contraseña: </span><input type="password" name="key"/>
+					<input type="submit" value="Logear" class="boton"/>
+				</div>
 			</form>';
 	}
 	if($dni=='00000000A'){
 		echo'<p> </p>
 			<ul>
-				<a href="add.php?articulo=pelicula"><li>Añadir pelicula</li></a>
-				<a href="add.php?articulo=juego"><li>Añadir juego</li></a>
-				<a href="add_usuario.php"><li>Añadir usuario</li></a>
-				<a href="add_comestible.php"><li>Añadir comestble</li></a>
-				<a href=""><li>Alquiler</li></a>
-				<a href=""><li>Devolucion</li></a>
+				<li><a href="add.php?articulo=pelicula">Añadir pelicula</a></li>
+				<li><a href="add.php?articulo=juego">Añadir juego</a></li>
+				<li><a href="add_usuario.php">Añadir usuario</a></li>
+				<li><a href="add_comestible.php">Añadir comestble</a></li>
+				<li><a href="">Alquiler</a></li>
+				<li><a href="">Devolucion</a></li>
 			</ul>';
 	}
 }
 function Navegador(){
 	echo '<ul>
-		<a href="index.php"><li>Inicio</li></a>
-		<a href="peliculas.php"><li>Peliculas</li></a>
-		<a href="juegos.php"><li>Juegos</li></a>
-		<a href="comestibles.php"><li>Comestibles</li></a>
-		<a href="informacion.html"><li>Informacion</li></a>
+		<li><a href="index.php">Inicio</a></li>
+		<li><a href="peliculas.php">Peliculas</a></li>
+		<li><a href="juegos.php">Juegos</a></li>
+		<li><a href="comestibles.php">Comestibles</a></li>
+		<li><a href="informacion.html">Informacion</a></li>
 	</ul>';
 }	
 ?>

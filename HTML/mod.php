@@ -39,7 +39,9 @@
 					$edad = $_POST["edad"];
 					$trailer = $_POST["trailer"];
 					$sinopsis = $_POST["sinopsis"];
-					$year = $_POST["year"];//Definir el insert
+					$year = $_POST["year"];
+					$imagen = "img_".$articulo."s/".$id;
+					//Definir el insert
 					// $sql = "insert into ".$articulo."s values
 					// 		('$id', '$nombre', '$edad', '$imagen', 
 					// 		'$trailer', '$sinopsis', to_date('$year', 'DD/MM/yyyy'))";
@@ -93,9 +95,9 @@
 						if($_FILES['imagen']['error']==0){
 							copy($_FILES['imagen']['tmp_name'],$imagen);	
 						}						
-						echo "<span>El articulo, </span>".$salida."<span> se ha modificado correctamente</span>";						
+						echo '<div class="correcto"><p>El articulo, '.$salida.' se ha modificado correctamente</p></div>';						
 					}else{
-						echo "<p>El articulo no se ha modificado</p>";
+						echo '<div class="incorrecto"><p>El articulo no se ha modificado</p></div>';
 					}
 					CerrarConexionBD($con);
 				}
@@ -138,7 +140,7 @@
 					<li><span>Nombre: </span><input type="text" name="nombre" value="'.$nombre.'"/></li>
 					<li><span>Año de lanzamiento(ej: 05/03/1999): </span><input type="text" name="year" value="'.$year.'"/></li>
 					<li><span>Edad restrictiva: </span><input type="text" name="edad" value="'.$edad.'"/></li>
-					<li><span>Trailer(URL): </span><input type="text" name="trailer" value="'.$trailer.'"/></li>
+					<li><span>Trailer(URL): </span><input type="text" name="trailer" value="'.'"/></li>
 					<li><span>Sinopsis: </span><textarea id="sinopsis" name="sinopsis" cols="70" rows="15">'.$sinopsis.'</textarea></li>
 					<li><span>Generos a los que pertenece: </span></li>';
 						//Genero

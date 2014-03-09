@@ -42,9 +42,9 @@
 						if($_FILES['imagen']['error']==0){
 							copy($_FILES['imagen']['tmp_name'],$imagen);	
 						}	
-						echo '<p> El usuario se ha insertado correctamente </p>';
+						echo '<div class="correcto"><p> El usuario se ha insertado correctamente </p></div>';
 					}else{
-						echo '<p> El usuario no se ha insertado correctamente </p>';
+						echo '<div class="incorrecto"><p> El usuario no se ha insertado correctamente </p></div>';
 					}
 					CerrarConexionBD($con);
 				}
