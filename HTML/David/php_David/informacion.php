@@ -15,13 +15,10 @@
 		</header>
 		<div id="cuerpo">
 		<nav id="navegador">
-			<ul>
-				<li>Inicio</li>
-				<li>Peliculas</li>
-				<li>Juegos</li>
-				<li>Comestibles</li>
-				<li>Informacion</li>
-			</ul>
+			<?php
+				include "menus.php";
+				Navegador();
+			?>
 		</nav>
 		<section id="seccion">
 			<h2>Información</h2>
@@ -50,15 +47,7 @@
 			
 		</section>
 		<aside id="menu">
-			<ul>
-				<li>Alquileres</li>
-				<li>Devoluciones pendientes</li>
-				<li>Amigos</li>
-				<li>Pendientes</li>
-				<li>Favoritas</li>
-				<li>Mis puntuaciones</li>
-				<li>Mi perfil</li>
-			</ul>
+			<?php Menu(); ?>
 		</aside>
 		<footer id="pie">
 			Derechos Reservados &copy; 2013-2014
