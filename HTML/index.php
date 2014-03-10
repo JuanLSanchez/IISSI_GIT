@@ -27,9 +27,9 @@
 						include "conexion.php";
 						$con = CrearConexionBD();
 						// $res = $con->query("select nombre, imagen from peliculas order by year");
-						 $sql = 'select nombre, imagen, id_pelicula from peliculas order by year desc';
-						 $contador = 0;
-						 echo '<article >
+						$sql = 'select nombre, imagen, id_pelicula from peliculas order by year desc';
+						$contador = 0;
+						echo '<article >
 									<h2>Novedades Peliculas</h2>
 									<ul>';
 						foreach ($con->query($sql) as $fila){
@@ -73,6 +73,23 @@
 								<h2> Películas mas Populares</h2>
 								<ul>';
 
+						$con = CrearConexionBD();
+							$sql = "select id_pelicula, imagen, nombre, 
+							id_pelicula_a_alquileres(id_pelicula) alquileres
+							from peliculas
+							where rownum<=5
+							order by alquileres desc";
+							foreach ($con->query($sql) as $fila) {
+							 	echo '<li>
+										<a href="articulo.php?id_pelicula='.$fila[0].'">
+										<figure>
+										<img src='.$fila[1].' />
+										<figcaption >'.$fila[2].'</figcaption>
+										</figure>
+										</a>
+									</li>';
+							}
+
 							CerrarConexionBD($con);
 					?>
 					
@@ -81,6 +98,26 @@
 				<article>
 					<h2>Juegos mas Populares</h2>
 					<ul>
+						<?php
+							$con = CrearConexionBD();
+							$sql = "select id_juego, imagen, nombre, 
+							id_juego_a_alquileres(id_juego) alquileres
+							from juegos
+							where rownum<=5
+							order by alquileres desc";
+							foreach ($con->query($sql) as $fila) {
+							 	echo '<li>
+										<a href="articulo.php?id_juego='.$fila[0].'">
+										<figure>
+										<img src='.$fila[1].' />
+										<figcaption >'.$fila[2].'</figcaption>
+										</figure>
+										</a>
+									</li>';
+							}
+
+							CerrarConexionBD($con);
+						?>
 
 					</ul>
 				</article>

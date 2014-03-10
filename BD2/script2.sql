@@ -891,7 +891,32 @@ begin
   return res;
 end;
 /
-
+--Funcion que le das el id_juego y te devuelve cuantas veces se ha alquilado
+create or replace function id_juego_a_alquileres
+	(identificador juegos.id_juego%TYPE)
+	return varchar2
+is
+	res1 number(7);
+	res2 number(7);
+begin
+	select nvl(count(cantidad),0) into res1 from lineas_alquileres_juegos where id_juego = identificador;
+	select nvl(count(cantidad),0) into res2 from lineas_devoluciones_juegos where id_juego = identificador;
+	return res1+res2;
+end;
+/
+--Funcion que le das el id_pelicula y te devuelve cuantas veces se ha alquilado
+create or replace function id_pelicula_a_alquileres
+	(identificador peliculas.id_pelicula%TYPE)
+	return varchar2
+is
+	res1 number(7);
+	res2 number(7);
+begin
+	select nvl(count(cantidad),0) into res1 from lineas_alquileres_peliculas where id_pelicula = identificador;
+	select nvl(count(cantidad),0) into res2 from lineas_devoluciones_peliculas where id_pelicula = identificador;
+	return res1+res2;
+end;
+/
 
 --Procedimientos
 -- Para que se pueda imprimir por pantalla: set serveroutput on

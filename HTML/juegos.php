@@ -155,13 +155,19 @@
 											year>=to_date('".$inicio_year."', 'yyyy') and 
 											year<=to_date('".($fin_year+1)."', 'yyyy')";
 									*/
-									 $sql = "select id_juego, imagen, nombre, year, id_juego_a_puntuacion(id_juego) puntuacion from juegos where 
+									 $sql = "select id_juego, imagen, nombre, year, 
+									 		id_juego_a_puntuacion(id_juego) puntuacion, 
+									 		id_juego_a_alquileres(id_juego) alquileres
+									 		from juegos where 
 									 		upper(nombre) like upper('%".$cad."%') and 
 									 		year>=to_date('".$inicio_year."', 'yyyy') and 
 									 		year<=to_date('".($fin_year+1)."', 'yyyy')";
 									
 								}else{
-									$sql = "select id_juego, imagen, nombre, year, id_juego_a_puntuacion(id_juego) puntuacion  from juegos where 
+									$sql = "select id_juego, imagen, nombre, year, 
+											id_juego_a_puntuacion(id_juego) puntuacion, 
+									 		id_juego_a_alquileres(id_juego) alquileres 
+									 		from juegos where 
 											upper(nombre) like upper('%".$cad."%') and 
 											year>=to_date('".$inicio_year."', 'yyyy') and 
 											year<=to_date('".($fin_year+1)."', 'yyyy') and
@@ -174,12 +180,14 @@
 									$sql=$sql."order by year";
 								}elseif($orden=="Puntuacion"){
 									$sql=$sql."order by puntuacion";
+								}elseif($orden=="Alquileres"){
+									$sql=$sql."order by alquileres";
 								}
 								if($_GET["torden"]=="desc"){
 									$sql=$sql." desc";
 								}
-								$sql2="select id_juego, imagen, nombre, year, puntuacion from
-											(select id_juego, imagen, nombre, year, puntuacion, rownum rn from
+								$sql2="select id_juego, imagen, nombre, year, puntuacion, alquileres from
+											(select id_juego, imagen, nombre, year, puntuacion, alquileres, rownum rn from
 											(".$sql.") 
 											where rownum<".$pagina_fin.")
 											where rn>".$pagina_inicio;
@@ -191,7 +199,7 @@
 												<td class="nombre"><a href="articulo.php?id_juego='.$fila[0].'">'.$fila[2].'</a></td>
 												<td class="ano">'.$fila[3].'</td>
 												<td class="punt">'.$fila[4].'</td>
-												<td class="num">230</td>
+												<td class="num">'.$fila[5].'</td>
 											</tr>';
 									//}
 									//$cont++;

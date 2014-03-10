@@ -65,6 +65,7 @@
 							if($bandera){
 								echo '<td>
 										<input type="button" value="Eliminar" onClick=" window.location.href='."'comestibles.php?eliminar=".$fila[0]."'".'">
+										<input type="button" value="Modificar" onClick=" window.location.href='."'mod_comestible.php?id_comestible=".$fila[0]."'".'">
 										</td>';
 										$cont++;
 							}

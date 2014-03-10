@@ -5,7 +5,8 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="stylesheet" href="css/add_pelicula.css">
+	<link rel="stylesheet" href="css/general.css">
+	<link rel="stylesheet" href="css/add.css">
 </head>
 <body>
 	
@@ -15,6 +16,7 @@
 		<div id="cuerpo">
 		<nav id="navegador">
 			<?php
+				include "conexion.php";
 				include "menus.php";
 				Navegador();
 			?>
@@ -22,25 +24,28 @@
 		<section id="seccion">
 			<article>
 				<?php
-					include "conexion.php";
-					if(isset($_POST['nombre'])){
-						
+					if(isset($_POST['nombre'])&&$_SESSION['dni'] == '00000000A'){
 						$con = CrearConexionBD();
+
 						$id=$_GET['id_comestible'];
 						$nombre=$_POST['nombre'];
 						$cantidad=$_POST['cantidad'];
 						$precio=$_POST['precio'];
+						
 						$imagen="img_comestibles/".$id;
-						$res = $con->exec("update comestibles set 
-							nombre='$nombre', cantidad='$cantidad', precio='$precio' 
-							where id_comestible='$id'");
-						if($_FILES['imagen']['error']==0 && $res==1){
+						if($_FILES['imagen']['error']==0){
 							copy($_FILES['imagen']['tmp_name'],$imagen);
 						}
+						$sql = "update comestibles set nombre='$nombre', 
+											cantidad='$cantidad',
+											precio = '$precio' 
+											where id_comestible='$id'";
+						
+						$res = $con->exec($sql);
 						if($res==1){
-							echo "<p>El articulo se ha modificado correctamente</p>";
+							echo '<div class="correcto"><p>El articulo se ha modificado correctamente</p></div>';
 						}else{
-							echo "<p>El articulo no se ha modificado</p>";
+							echo '<div class="incorrecto"><p>El articulo no se ha modificado</p></div>';
 						}
 						CerrarConexionBD($con);
 					}					
@@ -48,33 +53,40 @@
 			</article>
 			<article>
 				<?php
-					$id = $_GET['id_comestible'];
-					echo '<form METHOD="POST" ACTION="mod_comestible.php?id_comestible='.$id.'" enctype="multipart/form-data">';
-					$con = CrearConexionBD();
-					$res = $con->query("select * from comestibles where id_comestible='$id'");
-					foreach ($res as $fila) {
-						$nombre=$fila[1];
-						$cantidad=$fila[2];
-						$precio=$fila[3];
-					}
-					if(isset($nombre)){
-						echo '<ul>
-								<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-								<li><span>Nombre: </span><input type="text" name="nombre" value="'.$nombre.'"/></li>
-								<li><span>Cantidad: </span><input type="text" name="cantidad" value="'.$cantidad.'"/></li>
-								<li><span>Precio: </span><input type="text" name="precio" value="'.$precio.'"/></li>
-								<li><input type="SUBMIT" value="Añadir"/></li>
-							</ul>';	
+				if (isset($_SESSION['dni'])) {
+						if(!($_SESSION['dni'] == '00000000A')){
+							echo '<div class="incorrecto"><p>No eres el administrador, no se guardaran los cambios</p></div>';
+						}else{
+							$con = CrearConexionBD();
+							$id = $_GET['id_comestible'];
+							$sql = "select * from comestibles where id_comestible='$id'";
+							
+							$res = $con->query($sql);
+							foreach ($res as $fila) {
+								$nombre = $fila[1];
+								$cantidad = $fila[2];
+								$precio = $fila[3];
+							}
+							echo '<form METHOD="POST" ACTION="mod_comestible.php?id_comestible='.$id.'" enctype="multipart/form-data">
+									<ul>
+										<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
+										<li><span>Nombre: </span><input type="text" name="nombre" value="'.$nombre.'"/></li>
+										<li><span>Cantidad: </span><input type="text" name="cantidad" value="'.$cantidad.'"/></li>
+										<li><span>Precio: </span><input type="text" name="precio" value="'.$precio.'"/></li>
+										<li><input type="SUBMIT" value="Añadir"/></li>
+									</ul>
+								</form>';
+							CerrarConexionBD($con);
+						}
 					}else{
-						echo "<p>No existe dicho comestible</p>";
+						echo '<div class="incorrecto"><p>Tienes que loguearte para que se guardaran los cambios</p></div>';
 					}
-					CerrarConexionBD($con);					
 				?>
-				</form>
+				
 			</article>
 		</section>
 		<aside id="menu">
-			<?php Menu(); ?>
+			<?php Menu();	?>
 		</aside>
 		<footer id="pie">
 			Derechos Reservados &copy; 2013-2014

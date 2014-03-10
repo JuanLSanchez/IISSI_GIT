@@ -18,7 +18,7 @@ function Menu(){
 			<li><a href="favoritas.php">Favoritas</a></li>
 			<li><a href="vistas.php">Vistas</a></li>
 			<li><a href="puntuaciones.php">Mis puntuaciones</a></li>
-			<li><a href="perfil1.php">Mi perfil</a></li>
+			<li><a href="perfil.php'.$_SESSION['dni'].'">Mi perfil</a></li>
 		</ul>';	
 	}else{				
 		echo '<form method="POST" action="index.php" enctype="application/x-www-form-urlencoded">
@@ -36,8 +36,14 @@ function Menu(){
 				<li><a href="add.php?articulo=juego">Añadir juego</a></li>
 				<li><a href="add_usuario.php">Añadir usuario</a></li>
 				<li><a href="add_comestible.php">Añadir comestble</a></li>
-				<li><a href="">Alquiler</a></li>
+				<li><a href="add_alquiler.php">Alquiler</a></li>
 				<li><a href="">Devolucion</a></li>
+				<li><a href="">Compras</a></li>
+				<li><a href="">Ofertas</a></li>
+				<li><a href="">Generos</a></li>
+				<li><a href="">Plataformas</a></li>
+				<li><a href="">Calidades</a></li>
+
 			</ul>';
 	}
 }

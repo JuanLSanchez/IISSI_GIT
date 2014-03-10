@@ -152,7 +152,7 @@
 					$sql="select calidad from relacion_peliculas_calidad where id_pelicula='$id' and alquiler>0";
 					$sql2="select dni from peliculas_vistas where id_pelicula='$id' and dni='$dni'";
 				}else{
-					$sql="select plataforma from relacion_juegos_plataforma where id_pelicula='$id' and alquiler>0"	;
+					$sql="select plataforma from relacion_juegos_plataforma where id_juego='$id' and alquiler>0"	;
 					$sql2="select dni from juegos_vistos where id_juego='$id' and dni='$dni'";
 				}
 				$calidad=$con->query($sql);
@@ -176,8 +176,19 @@
 				}
 
 				echo '<span>Mi puntuacion:</span>
-				<form METHOD="POST" ACTION="articulo.php?id_'.$articulo.'='.$id.'" enctype="multipart/form-data">
-					<input class="bl" type="text" size="2" value="'.$mipuntuacion.'" name="mipuntuacion"/>
+				<form METHOD="POST" ACTION="articulo.php?id_'.$articulo.'='.$id.'" enctype="multipart/form-data">';
+				echo '<select class="bl" name="mipuntuacion">';
+				foreach (array('','0','1','2','3','4','5') as $i) {
+					if($i==$mipuntuacion){
+						echo "<option selected>".$i."</option>";
+					}else{
+						echo "<option>".$i."</option>";
+					}
+				}
+				//<input class="bl" type="text" size="2" value="'.$mipuntuacion.'" name="mipuntuacion"/>';
+
+				echo '
+					</select>
 					<select class="bl" name="estado">
 						<option selected>'.$estado.'</option>
 						<option>Favorito</option>
