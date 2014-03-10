@@ -220,12 +220,19 @@ body{
 }
 #amigos li{
 	display:inline-block;
+	margin-right:40px;
 	
 }
 #amigos img{
 	float:left;
+	:center;
 }
-#amigos span{
-	margin-top: 28px;
-	float:left;
+#amigos figcaption{
+	margin-top: 36px;
+	text-align:center;
+	
+}
+#seccion a{
+	text-decoration:none; 
+	color: black;
 }
