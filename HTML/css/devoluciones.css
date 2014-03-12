@@ -231,10 +231,12 @@ body{
 	text-align:center;
 }
 .fechaini{
-	width: 80px;
+	width: 115px;
+	text-align:center;
 }
 .fechafinal{
-	width: 80px;
+	width: 60px;
+	text-align:center;
 }
 .espacio{
 	float:left;
@@ -256,12 +258,16 @@ img{
 }
 .nombre{
 	margin-top:20px;
-	margin-left:70px;
-	width: 280px;	
+	margin-left:62px;
+	width: 326px;	
 	text-align:center;
 }
 span{
 	padding-top:20px;
 	float:left;
 	margin: 20px;
+}
+#seccion a{
+	text-decoration:none; 
+	color: black;
 }

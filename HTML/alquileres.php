@@ -36,9 +36,11 @@
 		<section id="seccion">
 			
 		<?php
+		if(isset($_SESSION['dni'])){
 			include "conexion.php";
 			$con = CrearConexionBD();	
-			$sql = 'select id_alquiler, fecha from alquileres order by fecha desc';
+			$dni = $_SESSION['dni'];
+			$sql = "select id_devolucion,fecha from devoluciones where dni='$dni' order by fecha desc";
 			echo'
 		<div id="alquileres">
 				
@@ -47,7 +49,6 @@
 			</article>
 			';
 			foreach ($con->query($sql) as $fila){
-			$alquiler = $fila[0];
 			echo'
 			<article>
 
@@ -59,44 +60,56 @@
 						<span>Cantidad</span>
 					</li>
 					';
-					$pelis = 'select id_pelicula, cantidad from lineas_alquileres_peliculas where id_alquiler='.$alquiler;
+					$pelis = 'select id_pelicula, cantidad from lineas_devoluciones_peliculas where id_devolucion='.$fila[0];
 					foreach ($con->query($pelis) as $fila2){
-					$peli = 'select id_pelicula, nombre, imagen from peliculas where id_pelicula='.$fila2[0];
+					$peli = 'select nombre, imagen from peliculas where id_pelicula='.$fila2[0];
+					foreach ($con->query($peli) as $fila3){
 					echo'
 					<li>
-						<img src="img_peliculas/'.$peli[2].'" />
-						<span class="nombre"><a href="articulo.php?id_pelicula='.$peli[0].'">'.$peli[1].'</a></span>
+						<a href="articulo.php?id_pelicula='.$fila2[0].'"><img src="'.$fila3[1].'" /></a>
+						<a href="articulo.php?id_pelicula='.$fila2[0].'"><span class="nombre">'.$fila3[0].'</span></a>
 						<span>'.$fila2[1].'</span>
 					</li>
 					';
 					}
-					$juegos = 'select id_juego, cantidad from lineas_alquileres_juegos where id_alquiler='.$alquiler;
-					foreach ($con->query($pelis) as $fila3){
-					$juego = 'select id_juego, nombre, imagen from juegoss where id_pelicula='.$fila3[0];
+					}
+					
+
+					$juegos = 'select id_juego,cantidad from lineas_devoluciones_juegos where id_devolucion='.$fila[0];
+					foreach ($con->query($juegos) as $fila4){
+					$juego = 'select nombre, imagen from juegos where id_juego='.$fila4[0];
+					foreach ($con->query($juego) as $fila5){
 					echo'
 					<li>
-						<img src="img_peliculas/'.$juego[2].'" />
-						<span class="nombre"><a href="articulo.php?id_juego='.$juego[0].'">'.$juego[1].'</a></span>
-						<span>'.$fila3[1].'</span>
+						<a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" /></a>
+						<a href="articulo.php?id_juego='.$fila4[0].'"><span class="nombre">'.$fila5[0].'</span></a>
+						<span>'.$fila4[1].'</span>
 					</li>
 					';
 					}
+					}
+					
+
 			echo'
 				</ul>
 			</article>
 			';
+
 			}
 			echo'				
 		</div>
 		';
 				CerrarConexionBD($con);
+				}
 			?>
 		</section>
 
 		
 	<aside id="menu">
 			
-			<?php Menu(); ?>
+			<?php 
+			
+			Menu(); ?>
 		
 	</aside>
 		

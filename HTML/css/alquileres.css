@@ -260,3 +260,7 @@ span{
 	float:left;
 	margin: 20px;
 }
+#seccion a{
+	text-decoration:none; 
+	color: black;
+}
