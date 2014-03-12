@@ -19,6 +19,7 @@ function Menu(){
 			<li><a href="vistas.php">Vistas</a></li>
 			<li><a href="puntuaciones.php">Mis puntuaciones</a></li>
 			<li><a href="perfil.php'.$_SESSION['dni'].'">Mi perfil</a></li>
+			<li><a href="buscasocio.php">Buscar Socio<a></li>
 		</ul>';	
 	}else{				
 		echo '<form method="POST" action="index.php" enctype="application/x-www-form-urlencoded">

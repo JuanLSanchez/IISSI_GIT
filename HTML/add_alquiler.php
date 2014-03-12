@@ -129,6 +129,37 @@
 						</form>';
 
 					}elseif (isset($_POST['socio'])) {//Completar el alquiler
+						echo '<script>
+								var cont=0;
+								var padre="articulos";
+								function addArtculo(){
+									var div=document.createElement("div");
+									btn.id="div"+cont;
+									var pelicula=document.createTextNode("Pelicula "+cont);
+									btn.appendChild(pelicula);
+									var id=document.createElement("input");
+									id.name="pelicula"+cont;
+									id.type="text";
+									btn.appendChild(id);
+									var cantidad=document.createElement("input");
+									id.name="cantidadpelicula"+cont;
+									id.type="number";
+									btn.appendChild(cantidad);
+									var select=document.createElement("select");
+									select.name="select"+cont;
+									var option=document.createElement("option");
+									option.appendChild(document.createTextNode("Opcion"));
+									select.appendChild(option);
+									btn.appendChild(select);
+									document.getElementById("inputs").appendChild(btn);
+									cont++;
+								};
+								function del(){
+									cont--;
+									element = document.getElementById("div"+cont);
+									element.parentNode.removeChild(element);
+								};
+								</script>';
 						echo '<form METHOD="POST" ACTION="add_alquiler.php">
 								<input type="hidden" value="'.$_POST['socio'].'" name="dni"/>';
 						$sql="select calidad from calidad_visual";
