@@ -17,8 +17,8 @@ function Menu(){
 			<li><a href="pendientes.php">Pendientes</a></li>
 			<li><a href="favoritas.php">Favoritas</a></li>
 			<li><a href="vistas.php">Vistas</a></li>
-			<li><a href="puntuaciones.php">Mis puntuaciones</a></li>
-			<li><a href="perfil.php'.$_SESSION['dni'].'">Mi perfil</a></li>
+			<li><a href="puntuaciones.php?dni='.$_SESSION['dni'].'"">Mis puntuaciones</a></li>
+			<li><a href="perfil.php?dni='.$_SESSION['dni'].'">Mi perfil</a></li>
 			<li><a href="buscasocio.php">Buscar Socio<a></li>
 		</ul>';	
 	}else{				

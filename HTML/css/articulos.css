@@ -21,11 +21,16 @@ img{
 }
 .punt{
 	text-align:center;
-	width: 95px;
+	width: 79px;
+}
+.punt img{
+	text-align:center;
+	width: 79px;
+	height: 16px;	
 }
 .num{
 	text-align:center;
-	width: 90px;
+	width: 95px;
 }
 #paginacion li{
 	display: inline-block;

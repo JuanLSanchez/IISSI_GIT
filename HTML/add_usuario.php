@@ -64,13 +64,13 @@
 				
 				<ul>
 					<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-					<li><span>Dni: </span><input type="text" name="dni"/></li>
-					<li><span>Nombre: </span><input type="text" name="nombre"/></li>
-					<li><span>Año de nacimiento(ej: 05/03/1999): </span><input type="text" name="nacido"/></li>
-					<li><span>Direccion: </span><input type="text" name="direccion"/></li>
-					<li><span>Email: </span><input type="text" name="email"/></li>
-					<li><span>Telefono: </span><input type="text" name="telefono"/></li>
-					<li><span>Contraseña: </span><input type="password" name="key"/></li>
+					<li><span>Dni: </span><input type="text" name="dni" required/></li>
+					<li><span>Nombre: </span><input type="text" name="nombre" required/></li>
+					<li><span>Año de nacimiento(ej: 05/03/1999): </span><input type="text" name="nacido" required/></li>
+					<li><span>Direccion: </span><input type="text" name="direccion" required/></li>
+					<li><span>Email: </span><input type="email" name="email"/></li>
+					<li><span>Telefono: </span><input type="text" name="telefono" required/></li>
+					<li><span>Contraseña: </span><input type="password" name="key" required/></li>
 					<li><input type="SUBMIT" value="Añadir"/></li>
 				</ul>
 			</form>

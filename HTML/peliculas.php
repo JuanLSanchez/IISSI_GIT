@@ -161,7 +161,7 @@
 									 		from peliculas where 
 									 		upper(nombre) like upper('%".$cad."%') and 
 									 		year>=to_date('".$inicio_year."', 'yyyy') and 
-									 		year<=to_date('".($fin_year+1)."', 'yyyy')";
+									 		year<=to_date('".($fin_year)."', 'yyyy')";
 									
 								}else{
 									$sql = "select id_pelicula, imagen, nombre, year, 
@@ -169,8 +169,8 @@
 											id_pelicula_a_alquileres(id_pelicula) alquileres  
 											from peliculas where 
 											upper(nombre) like upper('%".$cad."%') and 
-											year>=to_date('".$inicio_year."', 'yyyy') and 
-											year<=to_date('".($fin_year+1)."', 'yyyy') and
+											year>to_date('".$inicio_year."', 'yyyy') and 
+											year<to_date('".($fin_year)."', 'yyyy') and
 											id_pelicula in (select id_pelicula from relacion_peliculas_genero 
 															where genero='$genero') ";	
 								}
@@ -197,8 +197,13 @@
 										echo '<tr>
 												<td class="imagen"><img src="'.$fila[1].'" /></td>
 												<td class="nombre"><a href="articulo.php?id_pelicula='.$fila[0].'">'.$fila[2].'</a></td>
-												<td class="ano">'.$fila[3].'</td>
-												<td class="punt">'.$fila[4].'</td>
+												<td class="ano">'.$fila[3].'</td>';
+												if($fila[4]=="-"){
+													$puntuacion="<span>-</span>";
+												}else{
+													$puntuacion='<img src="img_ori/'.$fila[4].'_estrellas.png"/>';
+												}
+										echo '<td class="punt">'.$puntuacion.'</td>
 												<td class="num">'.$fila[5].'</td>
 											</tr>';
 									//}

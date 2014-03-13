@@ -131,43 +131,55 @@
 					}elseif (isset($_POST['socio'])) {//Completar el alquiler
 						echo '<script>
 								var cont=0;
-								var padre="articulos";
-								function addArtculo(){
-									var div=document.createElement("div");
-									btn.id="div"+cont;
-									var pelicula=document.createTextNode("Pelicula "+cont);
-									btn.appendChild(pelicula);
-									var id=document.createElement("input");
-									id.name="pelicula"+cont;
-									id.type="text";
-									btn.appendChild(id);
-									var cantidad=document.createElement("input");
-									id.name="cantidadpelicula"+cont;
-									id.type="number";
-									btn.appendChild(cantidad);
-									var select=document.createElement("select");
-									select.name="select"+cont;
-									var option=document.createElement("option");
-									option.appendChild(document.createTextNode("Opcion"));
-									select.appendChild(option);
-									btn.appendChild(select);
-									document.getElementById("inputs").appendChild(btn);
-									cont++;
+								var pelicula=0;
+								var juego=0;
+								function add(clonado, lugar){
+									if(pelicula+juego<9){
+									if(clonado==".pelicula"){
+										cont=pelicula;
+									}else{
+										cont=juego;
+									}
+									var itm=document.querySelector(clonado);
+									var cln=itm.cloneNode(true);
+									cln.querySelector(".pelicula").setAttribute("name",cln.querySelector(".pelicula").getAttribute("name")+cont);
+									cln.querySelector(".cantidad").setAttribute("name",cln.querySelector(".cantidad").getAttribute("name")+cont);
+									cln.querySelector(".calidad").setAttribute("name",cln.querySelector(".calidad").getAttribute("name")+cont);
+									document.getElementById(lugar).appendChild(cln);
+									if(clonado==".pelicula"){
+										pelicula++;
+									}else{
+										juego++;
+									}
+									}
 								};
-								function del(){
-									cont--;
-									element = document.getElementById("div"+cont);
-									element.parentNode.removeChild(element);
-								};
+
+								function del(clonado, lugar){
+									var puntero=document.getElementById(lugar);
+									if(clonado==".pelicula" && pelicula>0){
+										puntero.removeChild(puntero.childNodes[puntero.childNodes.length-1]);
+										pelicula--;
+									}else if(clonado==".juego" && juego>0){
+										puntero.removeChild(puntero.childNodes[puntero.childNodes.length-1]);
+										juego--;
+									} 
+								}
+
 								</script>';
-						echo '<form METHOD="POST" ACTION="add_alquiler.php">
+						echo '<span>Peliculas: </span>
+						<button onclick="add(\'.pelicula\', \'lineasPeliculas\')">+</button>
+						<button onclick="del(\'.pelicula\', \'lineasPeliculas\')">-</button>
+						<span>Juegos: </span>
+						<button onclick="add(\'.juego\', \'lineasJuegos\')">+</button>
+						<button onclick="del(\'.juego\', \'lineasJuegos\')">-</button>
+						<form METHOD="POST" ACTION="add_alquiler.php">
 								<input type="hidden" value="'.$_POST['socio'].'" name="dni"/>';
 						$sql="select calidad from calidad_visual";
 						$res = $con->query($sql);
 						$calidad="";
 						foreach ($res as $fila) {
 							$calidad= $calidad.'
-									<option>'.$fila[0].'</otpion>';
+									<option>'.$fila[0].'</option>';
 						}
 						$sql="select plataforma from plataformas";
 						$res = $con->query($sql);
@@ -176,28 +188,33 @@
 							$plataforma= $plataforma.'
 									<option>'.$fila[0].'</otpion>';
 						}
-						foreach (array(1,2,3,4,5,6,7,8,9,10) as $i) {
-							echo '<div class="pelicula">
+						
+							echo '
+							<div id="lineasPeliculas">
+								<div class="pelicula">
 									<span>id_pelicula</span>
-									<input type="text" name="pelicula'.$i.'"/>
+									<input type="text" name="pelicula" class="pelicula"/>
 									<span>Cantidad</span>
-									<input type="text" size="5" name="pelicula_cantidad'.$i.'"/>
-									<select name="calidad'.$i.'">
+									<input type="text" size="5" name="pelicula_cantidad" class="cantidad"/>
+									<select name="calidad" class="calidad">
 									'.$calidad.'
 									</select>
+								</div>
 								</div>';
-						}
-						foreach (array(1,2,3,4,5,6,7,8,9,10) as $i) {
-							echo '<div class="juego">
+						
+						
+							echo '<div id="lineasJuegos">
+							<div class="juego">
 									<span>id_juego</span>
-									<input type="text" name="juego'.$i.'"/>
+									<input type="text" name="juego" class="pelicula"/>
 									<span>Cantidad</span>
-									<input type="text" size="5" name="juego_cantidad'.$i.'"/>
-									<select name="plataforma'.$i.'">
+									<input type="text" size="5" name="juego_cantidad" class="cantidad"/>
+									<select name="plataforma" class="calidad">
 									'.$plataforma.'
 									</select>
+								</div>
 								</div>';
-						}
+						
 						$sql="select * from ofertas";
 						foreach ($con->query($sql) as $fila) {
 							echo '<div class="oferta">
