@@ -60,7 +60,7 @@
 							<span class="fechaini">Fecha del Alquiler '.$fila[1].'</span>
 							<span class="fechafinal">Duración: '.$duracion.' Horas</span>
 							<span class="nombre2">Nombre</span>
-							<span>Cantidad</span>
+							<span class="cantidad">Cantidad</span>
 					</li>
 			';
 			$pelis = 'select id_pelicula, cantidad from lineas_alquileres_peliculas where id_alquiler='.$fila[0];

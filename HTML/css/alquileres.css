@@ -227,9 +227,14 @@ body{
 .nombre2{
 	margin-left:20px;
 	width: 290px;
+	font-size:10pt;
 }
 .fecha{
 	width: 190px;
+	font-size:10pt;
+}
+.cantidad{
+	font-size:10pt;
 }
 .espacio{
 	float:left;

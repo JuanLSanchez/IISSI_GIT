@@ -229,14 +229,20 @@ body{
 	margin-left:40px;
 	width: 320px;
 	text-align:center;
+	font-size:10pt;
 }
 .fechaini{
 	width: 115px;
 	text-align:center;
+	font-size:10pt;
 }
 .fechafinal{
 	width: 60px;
 	text-align:center;
+	font-size:10pt;
+}
+.cantidad{
+	font-size:10pt;
 }
 .espacio{
 	float:left;

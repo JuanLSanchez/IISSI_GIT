@@ -57,7 +57,7 @@
 						<p class="espacio"></p>
 						<span class="fecha">Fecha: '.$fila[1].'</span>
 						<span class="nombre2">Nombre</span>
-						<span>Cantidad</span>
+						<span class="cantidad">Cantidad</span>
 					</li>
 					';
 					$pelis = 'select id_pelicula, cantidad from lineas_devoluciones_peliculas where id_devolucion='.$fila[0];
