@@ -74,7 +74,8 @@
 						$horas=6*$_POST['tiempo'];
 						$sql = "insert into alquileres values($id_alquiler, sysdate, '$horas', '".$_POST['dni']."')";
 						echo '<input type="hidden" name="sql'.$cont.'" value="'.$sql.'"/>';
-						foreach (array(1,2,3,4,5,6,7,8,9,10) as $i) {
+						foreach (array("",0,1,2,3,4,5,6,7,8) as $i) {
+							if(isset($_POST['pelicula'.$i])){
 							if($_POST['pelicula'.$i]!=""){
 								$sql = "select id_pelicula, nombre from peliculas where id_pelicula=".$_POST['pelicula'.$i];
 								$res = $con->query($sql);
@@ -94,9 +95,11 @@
 								'$id_alquiler', ".$res[0].", '".$_POST['calidad'.$i]."' )";
 								echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/>';
 							}
+							}
 							
 						}
-						foreach (array(1,2,3,4,5,6,7,8,9,10) as $i) {
+						foreach (array("",0,1,2,3,4,5,6,7,8) as $i) {
+							if(isset($_POST['juego'.$i])){
 							if($_POST['juego'.$i]!=""){
 								$sql = "select id_juego, nombre from juegos where id_juego=".$_POST['juego'.$i];
 								$res = $con->query($sql);
@@ -115,6 +118,7 @@
 								".$_POST['juego_cantidad'.$i].", ".$_POST['oferta'].", 
 								'$id_alquiler', ".$res[0].", '".$_POST['plataforma'.$i]."' )";
 								echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/>';
+							}
 							}
 							
 						}
@@ -166,13 +170,11 @@
 								}
 
 								</script>';
-						echo '<span>Peliculas: </span>
-						<button onclick="add(\'.pelicula\', \'lineasPeliculas\')">+</button>
-						<button onclick="del(\'.pelicula\', \'lineasPeliculas\')">-</button>
-						<span>Juegos: </span>
-						<button onclick="add(\'.juego\', \'lineasJuegos\')">+</button>
-						<button onclick="del(\'.juego\', \'lineasJuegos\')">-</button>
+						echo '
 						<form METHOD="POST" ACTION="add_alquiler.php">
+						<span>Peliculas: </span>
+						<input type="button" onclick="add(\'.pelicula\', \'lineasPeliculas\')" value="+">
+						<input type="button" onclick="del(\'.pelicula\', \'lineasPeliculas\')" value="-">
 								<input type="hidden" value="'.$_POST['socio'].'" name="dni"/>';
 						$sql="select calidad from calidad_visual";
 						$res = $con->query($sql);
@@ -186,7 +188,7 @@
 						$plataforma="";
 						foreach ($res as $fila) {
 							$plataforma= $plataforma.'
-									<option>'.$fila[0].'</otpion>';
+									<option>'.$fila[0].'</option>';
 						}
 						
 							echo '
@@ -204,6 +206,10 @@
 						
 						
 							echo '<div id="lineasJuegos">
+
+							<span>Juegos: </span>
+							<input type="button" onclick="add(\'.juego\', \'lineasJuegos\')" value="+"/>
+							<input type="button" onclick="del(\'.juego\', \'lineasJuegos\')" value="-"/>
 							<div class="juego">
 									<span>id_juego</span>
 									<input type="text" name="juego" class="pelicula"/>
@@ -226,7 +232,7 @@
 						foreach ($con->query($sql) as $fila) {
 							echo '<input type="hidden" name="id_alquiler" value="'.$fila[0].'"/>';
 						}
-						echo '<span>Tiempo en 6 horas: </p>
+						echo '<p>Tiempo en 6 horas: </p>
 						<input type="text" name="tiempo"/>
 						<input type="submit" value="Terminar alquiler"/>
 						</form>';

@@ -1114,7 +1114,7 @@ begin
 		update relacion_juegos_plataforma set alquiler = alquiler-:new.cantidad where id_juego=:new.id_juego and plataforma=:new.plataforma;
 	end if;
 	if deleting then
-		update relacion_juegos_plataforma set alquiler = alquiler+:old.cantidad where id_juego=:old.id_juego and plataforma=:new.plataforma;
+		update relacion_juegos_plataforma set alquiler = alquiler+:old.cantidad where id_juego=:old.id_juego and plataforma=:old.plataforma;
 	end if;
 	if updating then
 		select dni into socio from alquileres where id_alquiler=:old.id_alquiler;
@@ -1170,7 +1170,7 @@ begin
 		update relacion_peliculas_calidad set alquiler = alquiler-:new.cantidad where id_pelicula=:new.id_pelicula and calidad=:new.calidad;
 	end if;
 	if deleting then
-		update relacion_peliculas_calidad set alquiler = alquiler+:old.cantidad where id_pelicula=:old.id_pelicula and calidad=:new.calidad;
+		update relacion_peliculas_calidad set alquiler = alquiler+:old.cantidad where id_pelicula=:old.id_pelicula and calidad=:old.calidad;
 	end if;
 	if updating then
 		select dni into socio from alquileres where id_alquiler=:old.id_alquiler;

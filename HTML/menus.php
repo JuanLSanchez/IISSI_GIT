@@ -17,9 +17,9 @@ function Menu(){
 			<li><a href="pendientes.php">Pendientes</a></li>
 			<li><a href="favoritas.php">Favoritas</a></li>
 			<li><a href="vistas.php">Vistas</a></li>
-			<li><a href="puntuaciones.php?dni='.$_SESSION['dni'].'"">Mis puntuaciones</a></li>
+			<li><a href="puntuaciones.php?dni='.$_SESSION['dni'].'">Mis puntuaciones</a></li>
 			<li><a href="perfil.php?dni='.$_SESSION['dni'].'">Mi perfil</a></li>
-			<li><a href="buscasocio.php">Buscar Socio<a></li>
+			<li><a href="buscasocio.php">Buscar Socio</a></li>
 		</ul>';	
 	}else{				
 		echo '<form method="POST" action="index.php" enctype="application/x-www-form-urlencoded">
@@ -38,7 +38,7 @@ function Menu(){
 				<li><a href="add_usuario.php">Añadir usuario</a></li>
 				<li><a href="add_comestible.php">Añadir comestble</a></li>
 				<li><a href="add_alquiler.php">Alquiler</a></li>
-				<li><a href="">Devolucion</a></li>
+				<li><a href="add_devolucion.php?buscar=">Devolucion</a></li>
 				<li><a href="">Compras</a></li>
 				<li><a href="">Ofertas</a></li>
 				<li><a href="">Generos</a></li>

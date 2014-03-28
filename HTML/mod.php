@@ -31,7 +31,7 @@
 					if(isset($_GET['id_pelicula'])){
 						$id=$_GET['id_pelicula'];
 						$articulo="pelicula";
-					}elseif ($_GET['id_juego']) {
+					}elseif (isset($_GET['id_juego'])) {
 						$articulo="juego";
 						$id=$_GET['id_juego'];
 					}//Obtener un ID
@@ -115,7 +115,7 @@
 					if(isset($_GET['id_pelicula'])){
 						$articulo="pelicula";
 						$id=$_GET['id_pelicula'];
-					}elseif ($_GET['id_juego']) {
+					}elseif (isset($_GET['id_juego'])) {
 						$articulo="juego";
 						$id=$_GET['id_juego'];
 					}
