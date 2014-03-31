@@ -1,4 +1,4 @@
-img{
+#seccion img{
 	height: 150px;
 	width: 110px;
 	float:left;
@@ -6,36 +6,90 @@ img{
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
 }
-#separador{
-	border-bottom: solid #000000 1px;
+
+#seccion #buscador{
+    background-color: #eaf8fc;
+    background-image: linear-gradient(#fff, #d4e8ec);
+    -moz-border-radius: 35px;
+	-webkit-border-radius: 35px;
+	border-radius: 35px;
+    border-style: solid;
+    border-color: #c4d9df #a4c3ca #83afb7;            
+    width: 500px;
+    height: 100px;
+    padding: 15px;
+    margin: 0px auto 0px;
 }
-.imagen{
-	width: 110px;
+#seccion #buscador .search{
+	 margin:0 auto 4px auto; 
+	 width:300px;
 }
-.nombre{
+#seccion #buscador .search #busqueda{
+	height: 22px;
+	width:220px;
+}
+
+#seccion #buscador .search #buscar{       
+     background-color: #6cbb6b;
+    background-image: linear-gradient(#95d788, #6cbb6b);
+    border-radius: 3px 50px 50px 3px;    
+    border-width: 1px;
+    border-style: solid;
+    border-color: #7eba7c #578e57 #447d43;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    width: 60px;
+    cursor: pointer;
+    font: bold 14px Arial, Helvetica;
+    color: #23441e;    
+    text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+}
+
+#seccion #buscador .search #buscar:hover {       
+    background-color: #95d788;
+    background-image: linear-gradient(#6cbb6b, #95d788);
+}
+#seccion #buscador .search #buscar:active {       
+    background: #95d788;
+    outline: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;        
+}
+
+#seccion #buscador .search #buscar::-moz-focus-inner {
+       border: 0;  /* Quitar borde al pulsar */
+}
+
+#seccion #separador{
+	border: solid #000000 1px;
+}
+#seccion .imagen{
+	width: 120px;
+}
+#seccion .nombre{
 	width: 270px;
 }
-.ano{
+#seccion .ano{
 	text-align:center;
 	width: 70px;
 }
-.punt{
+#seccion .punt{
 	text-align:center;
 	width: 79px;
 }
-.punt img{
+#seccion .punt img{
 	text-align:center;
 	width: 79px;
 	height: 16px;	
 }
-.num{
+#seccion .num{
 	text-align:center;
 	width: 95px;
 }
-#paginacion li{
+#seccion #paginacion li{
 	display: inline-block;
 }
-a{
+#seccion a{
 	text-decoration:none; 
 	color: black;
 }

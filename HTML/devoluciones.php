@@ -40,7 +40,10 @@
 			include "conexion.php";
 			$con = CrearConexionBD();	
 			$dni = $_SESSION['dni'];
-			$sql = "select id_alquiler,fecha,tiempo from alquileres where dni='$dni' and rownum=1 order by fecha desc";
+			$sql = "select id_alquiler, fecha, tiempo from 
+					(select id_alquiler,fecha,tiempo from alquileres 
+						where dni='$dni' order by fecha desc) 
+					where rownum=1";
 			
 		echo'
 		<div id="devolucion">

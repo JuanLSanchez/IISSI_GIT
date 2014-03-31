@@ -54,7 +54,7 @@ function Navegador(){
 		<li><a href="peliculas.php">Peliculas</a></li>
 		<li><a href="juegos.php">Juegos</a></li>
 		<li><a href="comestibles.php">Comestibles</a></li>
-		<li><a href="informacion.html">Informacion</a></li>
+		<li><a href="informacion.php">Informacion</a></li>
 	</ul>';
 }	
 ?>

@@ -8,6 +8,29 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/add.css">
+
+	<script type="text/javascript">
+		function procesaFormulario(){
+			var nombre = document.getElementById("nombre").value;
+			var year = document.getElementById("year").value;
+			var patronYear = /^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/]\d{4}$/;
+			var edad = document.getElementById("edad").value;
+			var patronEdad = /^\d|1[0-8]$/;
+			var trailer = document.getElementById("trailer").value;
+			var sinopsis = document.getElementById("sinopsis").value;
+			if(nombre==""){
+				alert("Introduzca un nombre.");
+				return false;
+			}else if(patronYear.test(year)==false){
+				alert("La fecha no es correcta.");
+				return false;
+			}else if(patronEdad.test(edad)==false){
+				alert("La edad no es correcta.");
+				return false;
+			}
+			return true;
+		}
+	</script>
 </head>
 <body>
 		<header id="cabecera">
@@ -100,15 +123,15 @@
 					}else{
 						echo '<div class="incorrecto"><p>Tienes que loguearte para que se guardaran los cambios</p></div>';
 					}
-					echo '<form METHOD="POST" ACTION="add.php?articulo='.$_GET['articulo'].'" enctype="multipart/form-data">'
+					echo '<form METHOD="POST" onsubmit="return procesaFormulario()" ACTION="add.php?articulo='.$_GET['articulo'].'" enctype="multipart/form-data">'
 				?>
 				
 				<ul>
 					<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-					<li><span>Nombre: </span><input type="text" name="nombre"/></li>
-					<li><span>Año de lanzamiento(ej: 05/03/1999): </span><input type="text" name="year"/></li>
-					<li><span>Edad restrictiva: </span><input type="text" name="edad"/></li>
-					<li><span>Trailer(URL): </span><input type="text" name="trailer"/></li>
+					<li><span>Nombre: </span><input type="text" name="nombre" id="nombre" required/></li>
+					<li><span>Año de lanzamiento: </span><input placeholder="ej: 15/03/1999" type="date"  title="Siga el ejemplo de la fecha" pattern="^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/]\d{4}$" id="year" name="year"/></li>
+					<li><span>Edad restrictiva: </span><input type="number" title="La edad esta entre 0 y 18" pattern="^\d|1[0-8]$" name="edad" id="edad" required/></li>
+					<li><span>Trailer(URL): </span><input type="text" id="trailer" name="trailer"/></li>
 					<li><span>Sinopsis: </span><textarea id="sinopsis" name="sinopsis" cols="70" rows="15"></textarea></li>
 					<li><span>Generos a los que pertenece: </span></li>
 					<?php
@@ -141,9 +164,9 @@
 							echo '<div class="tipo">
 									<input type="checkbox" name="tipo'.$cont.'" value="'.$fila[0].'"/>
 									<span>'.$fila[0].'</span>
-									<input type="text" size=5 name="cantidadalquiler'.$cont.'"/>
-									<input type="text" size=5 name="cantidadventa'.$cont.'"/>
-									<input type="text" size=5 name="precioventa'.$cont.'"/>
+									<input type="number" size=5 name="cantidadalquiler'.$cont.'"/>
+									<input type="number" size=5 name="cantidadventa'.$cont.'"/>
+									<input type="number" size=5 name="precioventa'.$cont.'"/>
 									</div>';
 							$cont++;
 						}

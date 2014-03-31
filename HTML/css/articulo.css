@@ -1,3 +1,15 @@
+#seccion #estrellas img{
+	height: 16px;
+	width: 16px;
+}
+#seccion .estrellas{
+	margin:0px;
+	list-style: none;
+}
+#seccion .estrellas li{
+	margin:0px;
+	display: inline-block;
+}
 ul{
 	margin:0px;
 	padding: 0px;

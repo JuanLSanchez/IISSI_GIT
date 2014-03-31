@@ -7,6 +7,27 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/add.css">
+
+	<script type="text/javascript">
+		function procesaFormulario(){
+			var nombre = document.getElementById("nombre").value;
+			var cantidad = document.getElementById("cantidad").value;
+			var patronCantidad = /\d*/;
+			var precio = document.getElementById("precio").value;
+			var patronPrecio = /\d{1,5}[\,]\d{1,2}/;
+			if(nombre==""){
+				alert("Introduzca un nombre valido.");
+				return false;
+			}else if(patronCantidad.test(cantidad)==false){
+				alert("La cantidad tiene que ser mayor o igual a 0.");
+				return false;
+			}else if(patronPrecio.test(precio)==false){
+				alert("Precio incorrecto, siga el ejemplo.");
+				return false;
+			}
+			return true;			
+		}
+	</script>
 </head>
 <body>
 	
@@ -67,12 +88,12 @@
 						echo '<p>Tienes que loguearte para que se guardaran los cambios</p>';
 					}
 				?>
-				<form METHOD="POST" ACTION="add_comestible.php" enctype="multipart/form-data">
+				<form METHOD="POST" onsubmit="return procesaFormulario()" ACTION="add_comestible.php" enctype="multipart/form-data">
 					<ul>
 						<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-						<li><span>Nombre: </span><input type="text" name="nombre"/></li>
-						<li><span>Cantidad: </span><input type="text" name="cantidad"/></li>
-						<li><span>Precio: </span><input type="text" name="precio"/></li>
+						<li><span>Nombre: </span><input type="text" id="nombre" name="nombre" required/></li>
+						<li><span>Cantidad: </span><input type="number" id="cantidad" name="cantidad" pattern="\d*" required/></li>
+						<li><span>Precio: </span><input type="text" id="precio" name="precio" placeholder="Ej: 0,3" title="Siga el ejemplo." pattern="\d{1,5}[\,]\d{1,2}" required/></li>
 						<li><input type="SUBMIT" value="Añadir"/></li>
 					</ul>
 				</form>

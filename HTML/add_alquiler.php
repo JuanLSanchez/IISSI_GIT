@@ -7,6 +7,45 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/add_alquiler.css">
+
+	<script>
+		var cont=0;
+		var pelicula=0;
+		var juego=0;
+		function add(clonado, lugar){
+			if(pelicula+juego<9){
+			if(clonado==".pelicula"){
+				cont=pelicula;
+			}else{
+				cont=juego;
+			}
+			var itm=document.querySelector(clonado);
+			var cln=itm.cloneNode(true);
+			cln.querySelector(".pelicula").setAttribute("name",cln.querySelector(".pelicula").getAttribute("name")+cont);
+			cln.querySelector(".cantidad").setAttribute("name",cln.querySelector(".cantidad").getAttribute("name")+cont);
+			cln.querySelector(".calidad").setAttribute("name",cln.querySelector(".calidad").getAttribute("name")+cont);
+			document.getElementById(lugar).appendChild(cln);
+			if(clonado==".pelicula"){
+				pelicula++;
+			}else{
+				juego++;
+			}
+			}
+		};
+
+		function del(clonado, lugar){
+			var puntero=document.getElementById(lugar);
+			if(clonado==".pelicula" && pelicula>0){
+				puntero.removeChild(puntero.childNodes[puntero.childNodes.length-1]);
+				pelicula--;
+			}else if(clonado==".juego" && juego>0){
+				puntero.removeChild(puntero.childNodes[puntero.childNodes.length-1]);
+				juego--;
+			} 
+		}
+
+	</script>
+
 </head>
 <body>
 		<header id="cabecera">
@@ -133,43 +172,7 @@
 						</form>';
 
 					}elseif (isset($_POST['socio'])) {//Completar el alquiler
-						echo '<script>
-								var cont=0;
-								var pelicula=0;
-								var juego=0;
-								function add(clonado, lugar){
-									if(pelicula+juego<9){
-									if(clonado==".pelicula"){
-										cont=pelicula;
-									}else{
-										cont=juego;
-									}
-									var itm=document.querySelector(clonado);
-									var cln=itm.cloneNode(true);
-									cln.querySelector(".pelicula").setAttribute("name",cln.querySelector(".pelicula").getAttribute("name")+cont);
-									cln.querySelector(".cantidad").setAttribute("name",cln.querySelector(".cantidad").getAttribute("name")+cont);
-									cln.querySelector(".calidad").setAttribute("name",cln.querySelector(".calidad").getAttribute("name")+cont);
-									document.getElementById(lugar).appendChild(cln);
-									if(clonado==".pelicula"){
-										pelicula++;
-									}else{
-										juego++;
-									}
-									}
-								};
-
-								function del(clonado, lugar){
-									var puntero=document.getElementById(lugar);
-									if(clonado==".pelicula" && pelicula>0){
-										puntero.removeChild(puntero.childNodes[puntero.childNodes.length-1]);
-										pelicula--;
-									}else if(clonado==".juego" && juego>0){
-										puntero.removeChild(puntero.childNodes[puntero.childNodes.length-1]);
-										juego--;
-									} 
-								}
-
-								</script>';
+						echo '';
 						echo '
 						<form METHOD="POST" ACTION="add_alquiler.php">
 						<span>Peliculas: </span>

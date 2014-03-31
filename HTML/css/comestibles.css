@@ -3,41 +3,25 @@
 	padding: 0px;
 	border-bottom: 2px solid #999999;
 }
-#ordenar span{
-	float: left;
-	background: #81BDEB;
-	padding: 5px;
-	margin:0px;
-	margin-right:-1px;
-	border:solid #000000 1px;
-}
-#ordenar span:hover{
-	background: #81CEFB;
-	cursor: pointer;
-}
-#nombre{
-	margin-left:20px;
-	width: 320px;
-}
-#espacio{
-	float:left;
-	width: 176px;
-}
 #seccion img {
-	float:left;
 	width: 110px;
 }
-#seccion li{
-	clear:left;
-	list-style: none;
-	padding: 5px;
-}
-.nombre{
-	margin-left:20px;
+#seccion .nombre{
 	width: 300px;	
 }
-article span{
-	padding-top:20px;
-	float:left;
-	margin: 20px;
+#seccion .admin input{
+	display: block;
+}
+#seccion table{
+	border-collapse:collapse; 
+	border: none;
+	width:100%; 
+	
+}
+#seccion tr:first-of-type{
+	background: #81bdeb;
+}
+#seccion tr td {
+	text-align: center;
+	height:30px;
 }

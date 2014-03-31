@@ -28,9 +28,13 @@
 					<?php
 						if(isset($_GET['eliminar'])){
 							$con = CrearConexionBD();
-							$sql = "delete from comestibles where id_comestible=".$_GET['eliminar'];
+							$id = $_GET['eliminar'];
+							$sql = "delete from comestibles where id_comestible=".$id;
 							$res = $con->exec($sql);
 							if($res==1){
+								if(file_exists("img_comestibles/".$id)){
+									unlink("img_comestibles/".$id);
+								}
 								echo '<div class="correcto"><p>Se ha eliminado el articulo</p></div>';
 							}else{
 								echo '<div class="incorrecto"><p>No se ha eliminado el articulo</p></div>';
@@ -40,15 +44,13 @@
 
 					?>
 				</article>
-				<article id="ordenar">
-					<table><tr>
-						<td><p id="espacio"></p></td>
-						<td><span id="nombre">Nombre</span></td>
-						<td><span>Precio</span></td>
-					</tr></table>
-					
-				</article>
 				<article>
+					<table><tr>
+						<td class="admin"></td>
+						<td class="imagen"></td>
+						<td class="nombre">Nombre</td>
+						<td class="precio">Precio</td>
+					</tr>
 					<?php
 						$con = CrearConexionBD();
 						$res = $con->query("select id_comestible, nombre, to_char(precio, '990.99') from comestibles");
@@ -58,27 +60,25 @@
 								$bandera=1==1;
 							}
 						}
-						echo '<table>';
 						$cont = 0;
 						foreach ($res as $fila) {
 							echo '<tr>';
 							if($bandera){
-								echo '<td>
+								echo '<td class="admin">
 										<input type="button" value="Eliminar" onClick=" window.location.href='."'comestibles.php?eliminar=".$fila[0]."'".'">
 										<input type="button" value="Modificar" onClick=" window.location.href='."'mod_comestible.php?id_comestible=".$fila[0]."'".'">
 										</td>';
 										$cont++;
 							}
 							
-							echo '		<td><img src="img_comestibles/'.$fila[0].'" /></td>
-									<td><span class="nombre">'.$fila[1].'</span></td>
-									<td><span>'.$fila[2].'€</span></td></tr>';
+							echo '		<td class="imagen"><img src="img_comestibles/'.$fila[0].'" /></td>
+									<td class="nombre">'.$fila[1].'</td>
+									<td class="precio">'.$fila[2].'€</td></tr>';
 								
 						}
-						echo '</table>';
 						CerrarConexionBD($con);
 						?>
-					
+					</table>
 				</article>
 			</div>
 		</section>

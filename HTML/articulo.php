@@ -7,6 +7,38 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/articulo.css">
+	<script type="text/javascript">
+		var ul;
+		var b = true;
+		function estrellas(estrellas){
+			if(b){
+				ul = document.querySelector("#estrellas").innerHTML;
+				b=false;
+			}   
+			var cont=estrellas;
+			var id = "#estrella";
+			var i = 5;
+			while(i>cont){
+				var query = id.concat(i);
+				var li = document.querySelector(query);
+				li.src="img_ori/eg.png";
+				i--;
+			}
+			while(cont>0){
+				var query = id.concat(cont);
+				var li = document.querySelector(query);
+				li.src="img_ori/ed.png";
+				cont--;
+			}
+		};
+		function normal(){
+			document.querySelector("#estrellas").innerHTML=ul;
+		};
+		function guardar(e){
+			ul = document.querySelector("#estrellas").innerHTML;
+			document.querySelector("#mipuntuacion").value=e;
+		}
+	</script>
 </head>
 <body>
 		<header id="cabecera">
@@ -177,18 +209,20 @@
 
 				echo '<span>Mi puntuacion:</span>
 				<form METHOD="POST" ACTION="articulo.php?id_'.$articulo.'='.$id.'" enctype="multipart/form-data">';
-				echo '<select class="bl" name="mipuntuacion">';
-				foreach (array('','0','1','2','3','4','5') as $i) {
-					if($i==$mipuntuacion){
-						echo "<option selected>".$i."</option>";
+				echo '<input type="hidden" value="'.$mipuntuacion.'" name="mipuntuacion" id="mipuntuacion"/>
+				<div id="estrellas">
+						<img src="img_ori/b.png" id="estrella0" onmouseover="estrellas(0)" onmouseout="normal()" onclick="guardar(0)"/>
+						';
+				foreach (array('1','2','3','4','5') as $i) {
+					if($i<=$mipuntuacion){
+						echo '<img src="img_ori/ed.png" id="estrella'.$i.'" onmouseover="estrellas('.$i.')" onmouseout="normal()" onclick="guardar('.$i.')"/>';
 					}else{
-						echo "<option>".$i."</option>";
+						echo '<img src="img_ori/eg.png" id="estrella'.$i.'" onmouseover="estrellas('.$i.')" onmouseout="normal()" onclick="guardar('.$i.')"/>';
 					}
 				}
 				//<input class="bl" type="text" size="2" value="'.$mipuntuacion.'" name="mipuntuacion"/>';
 
 				echo '
-					</select>
 					<select class="bl" name="estado">
 						<option selected>'.$estado.'</option>
 						<option>Favorito</option>

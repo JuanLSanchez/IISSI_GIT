@@ -21,8 +21,8 @@
 			?>
 		</nav>
 		<section id="seccion">
-				<article id="buscador">
-					<form method="GET" action="peliculas.php" enctype="application/x-www-form-urlencoded">
+				<article >
+					<form method="GET" action="peliculas.php" enctype="application/x-www-form-urlencoded" id="buscador">
 						<?php
 						include "conexion.php";
 						$con = CrearConexionBD();
@@ -42,8 +42,8 @@
 						}
 						echo '
 						<div class="search">
-							<input type="search" name="busqueda" value="'.$busqueda.'"/>
-							<input type="submit" value="Buscar" />
+							<input type="search" id="busqueda" name="busqueda" value="'.$busqueda.'"/>
+							<input type="submit" id="buscar" value="Buscar" />
 						</div>
 						<div>
 							<span>Desde: </span>
@@ -112,7 +112,7 @@
 				<article >
 					<table>
 						<tr>
-							<td class="imagen"/>
+							<td class="imagen"></td>
 							<td class="nombre">Nombre</td>
 							<td class="ano">Año</td>
 							<td class="punt">Puntuacion</td>
@@ -201,7 +201,7 @@
 												if($fila[4]=="-"){
 													$puntuacion="<span>-</span>";
 												}else{
-													$puntuacion='<img src="img_ori/'.$fila[4].'_estrellas.png"/>';
+													$puntuacion='<img src="img_ori/'.round($fila[4]).'_estrellas.png"/>';
 												}
 										echo '<td class="punt">'.$puntuacion.'</td>
 												<td class="num">'.$fila[5].'</td>
@@ -215,8 +215,7 @@
 								foreach ($con->query($sql) as $fila) {
 									$cont = $fila['0']/$pelisPorPaginas;
 								}
-								echo '</ul>
-									<ul id="paginacion">';
+								echo '<ul id="paginacion">';
 								if($pagina>1){
 									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina=1&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'"><<</a></li>
 										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina-1).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'"><</a></li>';

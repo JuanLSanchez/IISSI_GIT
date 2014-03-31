@@ -8,6 +8,46 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/add.css">
+
+	<script type="text/javascript">
+		function procesaFormulario(){
+			var dni = document.getElementById("dni").value;
+			var patronDNI = /^\w\d{8}|^\d{8}\w/;
+			var nombre = document.getElementById("nombre").value;
+			var nacido = document.getElementById("nacido").value;
+			var patronNacido = /^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/]\d{4}$/;
+			var direccion = document.getElementById("direccion").value;
+			var email = document.getElementById("email").value;
+			var patronEmail=/^(.+)@(.+)$/;
+			var telefono = document.getElementById("telefono").value;
+			var patronTelefono = /^\d{9}/;
+			var key = document.getElementById("key").value;
+			var rkey = document.getElementById("rkey").value;
+			if(patronDNI.test(dni)==false){
+				alert("El DNI no es correcto.");
+				return false;
+			}else if(nombre==""){
+				alert("Introduzca un nombre.");
+				return false;
+			}else if(patronNacido.test(nacido)==false){
+				alert("La fecha de nacimiento no es correcto.");
+				return false;
+			}else if(direccion==""){
+				alert("Introduzca una direccion.");
+				return false;
+			}else if(patronEmail.test(email)==false&&!(email=="")){
+				alert("El email no es correcto.");
+				return false;
+			}else if(patronTelefono.test(telefono)==false){
+				alert("El telefono no es correcto.");
+				return false;
+			}else if(key!=rkey){
+				alert("Las contraseñas no coinciden.");
+				return false;
+			}
+
+		}
+	</script>
 </head>
 <body>
 		<header id="cabecera">
@@ -59,18 +99,19 @@
 					}else{
 						echo '<p>Tienes que loguearte para que se guardaran los cambios</p>';
 					}
-					echo '<form METHOD="POST" ACTION="add_usuario.php" enctype="multipart/form-data">';
 				?>
 				
+				<form METHOD="POST" onsubmit="return procesaFormulario()" ACTION="add_usuario.php" enctype="multipart/form-data">
 				<ul>
 					<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-					<li><span>Dni: </span><input type="text" name="dni" required/></li>
-					<li><span>Nombre: </span><input type="text" name="nombre" required/></li>
-					<li><span>Año de nacimiento(ej: 05/03/1999): </span><input type="text" name="nacido" required/></li>
-					<li><span>Direccion: </span><input type="text" name="direccion" required/></li>
-					<li><span>Email: </span><input type="email" name="email"/></li>
-					<li><span>Telefono: </span><input type="text" name="telefono" required/></li>
-					<li><span>Contraseña: </span><input type="password" name="key" required/></li>
+					<li><span>Dni: </span><input title="Introduce un DNI correcto" id="dni" pattern="^\w\d{8}|^\d{8}\w" type="text" name="dni" required/></li>
+					<li><span>Nombre: </span><input type="text" name="nombre" id="nombre" required/></li>
+					<li><span>Año de nacimiento: </span><input type="date" placeholder="ej: 15/03/1999" id="nacido" name="nacido" required/></li>
+					<li><span>Direccion: </span><input type="text" id="direccion" name="direccion" required/></li>
+					<li><span>Email: </span><input type="email" id="email" name="email"/></li>
+					<li><span>Telefono: </span><input type="tel" pattern="\d{9}" id="telefono" name="telefono" maxlength="9" required/></li>
+					<li><span>Contraseña: </span><input type="password" id="key" name="key" required/></li>
+					<li><span>Repita la contraseña: </span><input type="password" id="rkey" name="rkey" required/></li>
 					<li><input type="SUBMIT" value="Añadir"/></li>
 				</ul>
 			</form>
