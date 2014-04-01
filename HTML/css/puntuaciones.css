@@ -34,9 +34,12 @@ img {height: 150px}
 	text-align: center;
 }
 .punt{
-  
+  margin-top: 0px;
   text-align: center;
 }
 .iz{
 	float:left;
+}
+.estrellas{
+	height:20px;;
 }

@@ -27,7 +27,7 @@
 				
 						
 						<?php
-							
+								if(isset($_SESSION['dni'])){
 								include "conexion.php";
 								$con = CrearConexionBD();
 								
@@ -42,7 +42,8 @@
 												<li>
 													<img src="../img_peliculas/'.$fila[0].'" />
 													<figcaption class="nombre">'.$fila[1].'</figcaption>
-            										<p class = "punt">'.$fila[2].'</p>
+            										<img class="estrellas" src="../img_ori/'.$fila[2].'_estrellas.png"/>
+            										
 												</li>
 												
 												
@@ -53,7 +54,10 @@
 								
 								CerrarConexionBD($con);
 							
-							
+								}else{
+									
+									echo'<p class="incorrecto">No tiene permiso para ver las puntuaciones</p>';
+								}
 						?>
 			</article>	
 		</section>
