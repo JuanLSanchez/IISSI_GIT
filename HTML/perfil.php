@@ -5,8 +5,8 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="stylesheet" href="../css/general.css">
-	<link rel="stylesheet" href="../css/perfil1.css">
+	<link rel="stylesheet" href="css/general.css">
+	<link rel="stylesheet" href="css/perfil1.css">
 </head>
 <body>
 	
@@ -30,6 +30,12 @@
 					$amigo2=$_GET['dni'];
 					$sql="insert into amigos values('$amigo1','$amigo2')";
 					$res = $con->exec($sql);
+					if($res){
+						echo '<div class="correcto"><p>Se ha añadido correctamente.</p></div>';
+					}else{
+						echo '<div class="incorrecto"><p>No se ha añadido correctamente.</p></div>
+						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+					}
 					CerrarConexionBD($con);
 				}
 			?>
@@ -62,11 +68,9 @@
 						
 						</article>';
 						if(isset($_POST['foto'])){
-							echo "hola";
 							$imagen = "img_socioss/" . $dni;
 							
-						}	
-				}
+						}
 						
 					
 					echo'<article id="de">
@@ -103,7 +107,6 @@
 					echo "</article>";
 				}elseif($amigo){//Perfil de un amigo
 					
-					echo "Eres amigo";
 					foreach ($con->query($sql) as $fila) {
 						echo'<article id="iz">
 						<img src="../img_socios/'.$fila[0].'" />
@@ -144,7 +147,7 @@
 					
 					echo "</article>";
 					}else{//perfil de no amigo
-						echo "no eres amigo";
+						echo '<div class="incorrecto"><p>No eres amigo</p></div>';
 						foreach ($con->query($sql) as $fila) {
 						echo'<article id="iz">
 							<img class="bl" src="../img_socios/'.$dni.'" />
@@ -154,10 +157,7 @@
 							<h3>Perfil</h3>
 				
 							<ul>
-								<li>Nombre: '.$nombre.'</li></br>
-								<li>No eres amigo de '.$nombre.'</li></br>					
-								
-					
+								<li>Nombre: '.$nombre.'</li></br>					
 							</ul>';							
 												
 							echo'<form METHOD="get" ACTION = "perfil.php">
@@ -172,7 +172,7 @@
 						
 						
 				}
-				
+				}
 				CerrarConexionBD($con);
 				?>
 		</section>

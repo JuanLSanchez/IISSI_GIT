@@ -21,8 +21,8 @@
 			?>
 		</nav>
 		<section id="seccion">
-				<article id="buscador">
-					<form method="GET" action="juegos.php" enctype="application/x-www-form-urlencoded">
+				<article>
+					<form method="GET" action="juegos.php" enctype="application/x-www-form-urlencoded" id="buscador">
 						<?php
 						include "conexion.php";
 						$con = CrearConexionBD();
@@ -42,8 +42,8 @@
 						}
 						echo '
 						<div class="search">
-							<input type="search" name="busqueda" value="'.$busqueda.'"/>
-							<input type="submit" value="Buscar" />
+							<input type="search" id="busqueda" name="busqueda" value="'.$busqueda.'"/>
+							<input type="submit" id="buscar" value="Buscar" />
 						</div>
 						<div>
 							<span>Desde: </span>
