@@ -57,46 +57,49 @@
 			echo'
 			<article>
 
-				<ul>
-					<li class="ordenar">
-							<p class="espacio"></p>
-							<span class="fechaini">Fecha del Alquiler '.$fila[1].'</span>
-							<span class="fechafinal">Duración: '.$duracion.' Horas</span>
-							<span class="nombre2">Nombre</span>
-							<span class="cantidad">Cantidad</span>
-					</li>
+				<table>
+					<tr class="primera">
+							<td  class="fechaini">Fecha del Alquiler '.$fila[1].'</td>
+							<td  class="nombre2">Nombre</td>
+							<td  class="cantidad">Cantidad</td>
+					</tr>
+					<tr class="segunda">
+							<td class="fechafinal">Duración: '.$duracion.' Horas</td>
+							<td></td>
+							<td></td>
+					</tr>
 			';
 			$pelis = 'select id_pelicula, cantidad from lineas_alquileres_peliculas where id_alquiler='.$fila[0];
 			foreach($con->query($pelis) as $fila2){
 				$peli = 'select nombre, imagen from peliculas where id_pelicula='.$fila2[0];
 				foreach ($con->query($peli) as $fila3){
 					echo'
-					<li>
-						<a href="articulo.php?id_pelicula='.$fila2[0].'"><img src="'.$fila3[1].'" /></a>
-						<a href="articulo.php?id_pelicula='.$fila2[0].'"><span class="nombre">'.$fila3[0].'</span></a>
-						<span>'.$fila2[1].'</span>
-					</li>
+					<tr>
+						<td><a href="articulo.php?id_pelicula='.$fila2[0].'"><img src="'.$fila3[1].'" /></a></td>
+						<td><a href="articulo.php?id_pelicula='.$fila2[0].'"><span class="nombre">'.$fila3[0].'</span></a></td>
+						<td><span>'.$fila2[1].'</span></td>
+					</tr>
 					';
 				}
 			}
 			
 			$juegos = 'select id_juego, cantidad from lineas_alquileres_juegos where id_alquiler='.$fila[0];			
 			foreach($con->query($juegos) as $fila4){
-				$juego = 'select nombre, imagen from juegos where id_juego='.$fila2[0];
+				$juego = 'select nombre, imagen from juegos where id_juego='.$fila4[0];
 				foreach ($con->query($juego) as $fila5){
 					echo'
-					<li>
-						<a href="articulo.php?id_pelicula='.$fila4[0].'"><img src="'.$fila5[1].'" /></a>
-						<span class="nombre">'.$fila5[0].'</span>
-						<span>'.$fila4[1].'</span>
-					</li>
+					<tr>
+						<td><a href="articulo.php?id_pelicula='.$fila4[0].'"><img src="'.$fila5[1].'" /></a></td>
+						<td><span class="nombre">'.$fila5[0].'</span></td>
+						<td><span>'.$fila4[1].'</span></td>
+					</tr>
 					';
 				}
 			}
 			
 			
 				echo'	
-				</ul>
+				</table>
 			</article>
 			';
 		}			
