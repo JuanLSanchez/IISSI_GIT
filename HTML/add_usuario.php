@@ -23,27 +23,33 @@
 			var patronTelefono = /^\d{9}/;
 			var key = document.getElementById("key").value;
 			var rkey = document.getElementById("rkey").value;
+			var error = "";
 			if(patronDNI.test(dni)==false){
-				alert("El DNI no es correcto.");
+				error += '<div class="incorrecto"><p>El DNI no es correcto.</p></div>';
+			}
+			if(nombre==""){
+				error += '<div class="incorrecto"><p>Introduzca un nombre.</p></div>';
+			}
+			if(patronNacido.test(nacido)==false){
+				error += '<div class="incorrecto"><p>La fecha de nacimiento no es correcto.</p></div>';
+			}
+			if(direccion==""){
+				error += '<div class="incorrecto"><p>Introduzca una direccion.</p></div>';
+			}
+			if(patronEmail.test(email)==false&&!(email=="")){
+				error += '<div class="incorrecto"><p>El email no es correcto.</p></div>';
+			}
+			if(patronTelefono.test(telefono)==false){
+				error += '<div class="incorrecto"><p>El telefono no es correcto.</p></div>';
+			}
+			if(key!=rkey){
+				error += '<div class="incorrecto"><p>Las contraseñas no coinciden.</p></div>';
+			}
+			if(error!=""){
+				document.getElementById("error").innerHTML=error;
 				return false;
-			}else if(nombre==""){
-				alert("Introduzca un nombre.");
-				return false;
-			}else if(patronNacido.test(nacido)==false){
-				alert("La fecha de nacimiento no es correcto.");
-				return false;
-			}else if(direccion==""){
-				alert("Introduzca una direccion.");
-				return false;
-			}else if(patronEmail.test(email)==false&&!(email=="")){
-				alert("El email no es correcto.");
-				return false;
-			}else if(patronTelefono.test(telefono)==false){
-				alert("El telefono no es correcto.");
-				return false;
-			}else if(key!=rkey){
-				alert("Las contraseñas no coinciden.");
-				return false;
+			}else{
+				return true;
 			}
 
 		}
@@ -62,7 +68,7 @@
 		</nav>
 		<section id="seccion">
 			<article>
-
+				<div id="error"></div>
 				<?php //Añadir articulo
 				if(isset($_POST['nombre'])&&$_SESSION['dni'] == '00000000A'){
 					include "conexion.php";
@@ -84,7 +90,8 @@
 						}	
 						echo '<div class="correcto"><p> El usuario se ha insertado correctamente </p></div>';
 					}else{
-						echo '<div class="incorrecto"><p> El usuario no se ha insertado correctamente </p></div>';
+						echo '<div class="incorrecto"><p> El usuario no se ha insertado correctamente </p></div>
+						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
 					}
 					CerrarConexionBD($con);
 				}
@@ -104,7 +111,7 @@
 				<form METHOD="POST" onsubmit="return procesaFormulario()" ACTION="add_usuario.php" enctype="multipart/form-data">
 				<ul>
 					<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-					<li><span>Dni: </span><input title="Introduce un DNI correcto" id="dni" pattern="^\w\d{8}|^\d{8}\w" type="text" name="dni" required/></li>
+					<li><span>Dni: </span><input title="Introduce un DNI correcto" id="dni"  type="text" name="dni" pattern="\w\d{8}|\d{8}\w" required/></li>
 					<li><span>Nombre: </span><input type="text" name="nombre" id="nombre" required/></li>
 					<li><span>Año de nacimiento: </span><input type="date" placeholder="ej: 15/03/1999" id="nacido" name="nacido" required/></li>
 					<li><span>Direccion: </span><input type="text" id="direccion" name="direccion" required/></li>

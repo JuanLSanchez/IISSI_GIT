@@ -22,9 +22,11 @@
 			?>
 		</nav>
 		<section id="seccion">
+			<!-- Agregar amigo-->
 			<?php
 				
-				if(isset($_SESSION)&&isset($_GET['agregar'])){
+				if(isset($_SESSION)&& isset($_GET['agregar'])){
+					
 					$con = CrearConexionBD();
 					$amigo1=$_SESSION['dni'];
 					$amigo2=$_GET['dni'];
@@ -39,6 +41,46 @@
 					CerrarConexionBD($con);
 				}
 			?>
+			<!-- Cambiar email-->
+			<?php
+				if(isset($_SESSION) && isset($_POST['email'])){
+					$con = CrearConexionBD();
+					$dni = $_SESSION['dni'];
+					$emailN = $_POST['email'];
+					$sql = "update socios set email = '$emailN'  where dni = '$dni'";
+					$res = $con->exec($sql);
+					if($res){
+						echo '<div class="correcto"><p>Se ha modificado correctamente.</p></div>';
+					}else{
+						echo '<div class="incorrecto"><p>No se ha modificado correctamente.</p></div>
+						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+					}
+					CerrarConexionBD($con);
+					
+				}
+			?>
+			<!-- Cambiar foto-->
+			<?php
+				if(isset($_SESSION) && isset ($_POST['foto'])){
+					$con = CrearConexionBD();
+					$dni=$_SESSION['dni'];
+					$imagen="img_socios/". $dni;
+					
+					
+					if($_FILES['foto']['error']==0){
+						
+						copy($_FILES['foto']['tmp_name'],$imagen);
+						echo '<div class = "correcto"><p>Se ha modificado la imagen.</p></div>';				
+					
+					}else{
+						echo '<div class="incorrecto"><p>No se ha modificado la imagen.</p></div>
+						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';	
+					}			
+					CerrarConexionBD($con);
+				}
+					
+				
+			?>
 				
 				<?php				
 				$con = CrearConexionBD();
@@ -47,19 +89,20 @@
 				if(isset($_SESSION['dni'])){ //si esta registrado y quiere ver su perfil
 					$dniS = $_SESSION['dni'];
 					$dni = $_GET['dni'];
+					
 					$sql = "select * from amigos where amigo1='$dniS' and amigo2='$dni'";
 					$amigo = $con->query($sql)->fetch();
 					$sql = "select dni,nombre,email,registrado from socios where dni = '$dni'";
 					foreach($con->query($sql) as $fila){
 						$dni=$fila[0];					
 						$nombre=$fila[1];
-						$email=$fila[2];
+						$email=$fila[2];											
 						$registrado=$fila[3];
 					}
 				if($dni==$dniS){//Tu perfil
 					echo'<article id="iz">
 						<img src="../img_socios/'.$dni.'" />
-						<form method="POST" action="perfil.php?dni='.$dni.'">
+						<form METHOD="POST" ACTION="perfil.php?dni='.$dni.'" enctype="multipart/form-data">
 							
 							<input type="file" name="foto"/><br />
 							<input type="submit" value="cambiar" name="cambiar"/>
@@ -67,21 +110,18 @@
 						</form>
 						
 						</article>';
-						if(isset($_POST['foto'])){
-							$imagen = "img_socioss/" . $dni;
-							
-						}
 						
 					
-					echo'<article id="de">
-							<h3>Mi Perfil</h3>
+					echo'<h3>Mi Perfil</h3>
+						<table>
+							<tr><td><span>Nombre: '.$nombre.'</span></td></tr>
+							<tr><td><span>E-mail: </span><form method = "POST"  action = "perfil.php?dni='.$dni.'	">
+														<input type="text"  name = "email"  value="'.$email.'"/>														
+														<input type="submit" value="Modificar"/></td></tr>
+												</form>
+							<tr><td><span>Registrado: '.$registrado.'</span></td></tr>
+						</table>';
 					
-							<ul>
-								<li><span>Nombre: '.$nombre.'</span></li><br />							
-								<li><span>E-mail: '.$email.'</span></li><br />
-								<li><span>Registrado: '.$registrado.'</span></li>
-							</ul>
-						</article>';
 					
 					// comentarios
 					$sql = "select id_pelicula_a_nombre(id_pelicula), fecha, texto
@@ -111,8 +151,15 @@
 						echo'<article id="iz">
 						<img src="../img_socios/'.$fila[0].'" />
 						</article>';
+						
+						echo'<h3>Perfil</h3>
+							<table>
+								<tr><td><span>Nombre: '.$nombre.'</span></td></tr>
+								<tr><td><span>E-mail: '.$email.'</span></td></tr>
+								<tr><td><span>Registrado: '.$registrado.'</span></td></tr>
+							</table>';
 					
-					echo'<article id="de">
+					/*echo'<article id="de">
 							<h3>Perfil</h3>
 					
 							<ul>
@@ -120,7 +167,7 @@
 								<li><span class="salta">E-mail: '.$email.'</span></li>	
 								<li><span class="salta">Registrado: '.$registrado.'</span></li>
 							</ul>
-						</article>';
+						</article>';*/
 					}
 					
 					
@@ -153,12 +200,18 @@
 							<img class="bl" src="../img_socios/'.$dni.'" />
 				
 						</article>';
-						echo'<article id="de">
+						
+						echo'<h3>Perfil</h3>
+						<table>
+							<tr><td><span>Nombre: '.$nombre.'</span></td></tr>
+							
+						</table>';
+						/*echo'<article id="de">
 							<h3>Perfil</h3>
 				
 							<ul>
 								<li>Nombre: '.$nombre.'</li></br>					
-							</ul>';							
+							</ul>';	*/						
 												
 							echo'<form METHOD="get" ACTION = "perfil.php">
 									<input type="hidden" value="'.$dni.'" name="dni"/>

@@ -2,71 +2,69 @@
 	height: 16px;
 	width: 16px;
 }
-#seccion .estrellas{
-	margin:0px;
-	list-style: none;
-}
-#seccion .estrellas li{
-	margin:0px;
-	display: inline-block;
-}
-ul{
+#seccion ul{
 	margin:0px;
 	padding: 0px;
 }
-#iz{
+#seccion #iz{
 	float:left;
 	padding:20px;
 }
 #seccion img {
 	width: 200px;
 }
-.bl{
+#seccion .bl{
 	display:block;
 }
-.estado{
+#seccion .estado{
 	width: 80px;
 }
-#de span{
+#seccion #de span{
 	font: bold 14px Verdana, sans-serif;
 }
-#administracion li{
+#seccion #administracion li{
 	display: inline-block;
 }
-h3{
+#seccion h3{
 	clear:right;
 	text-align: center;
 }
 
-#genero{
+#seccion #genero{
 	margin-top: 20px;
     text-align: center;
 }
 
-#comente{
+#seccion #comente{
 	margin-left:20px;
 	margin-top:20px;
 }
+#seccion .tablacomentario{	
+	width: 680px;
+}
 
-#comentarios{
+#seccion #comentarios{
 	clear: both;
 }
-#comentarios ul{
-	list-style: none;
+#seccion .comentario{
+	word-wrap: break-word;
+	max-width:670px;
+
 }
-.fila1{
+#seccion .fila1{
 	background: #FB5741;
 }
-.fila2{
+#seccion .fila2{
+	width: 680px;
 	background: #81BDEB;
 }
-.fecha{
-	float:right;
+#seccion .fecha{
+	width: 200px;
 }
-#comentarios table{
+#seccion #comentarios table{
 	margin-top: 10px;
 }
-.trailer{
+#seccion .trailer{
 	clear:both;
 	margin:20px;
 	margin-left: 60px;

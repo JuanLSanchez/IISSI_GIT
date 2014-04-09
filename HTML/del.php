@@ -37,6 +37,9 @@
 							$sql="delete from ".$articulo."s where id_".$articulo."='$id'";
 							$res=$con->exec($sql);
 							if($res==1){
+								if(file_exists("img_".$articulo."s/".$id)){
+									unlink("img_".$articulo."s/".$id);
+								}
 								echo '<div class="correcto"><p>La pelicula se ha eliminardo</p></div>';
 							}else{
 								echo '<div class="incorrecto"><p>La pelicula no se ha podido eliminar</p></div>';

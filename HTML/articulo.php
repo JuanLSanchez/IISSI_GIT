@@ -113,6 +113,23 @@
 					 (id_opinion_".$articulo.".nextval, '".$_POST['comentario']."', sysdate, '$id', '$dni')";
 					 $res=$con->exec($sql);
 				}
+				if(isset($_POST['eliminarComentario'])){
+					$idComentario = $_POST['eliminarComentario'];
+					$sql = "select dni from opiniones_".$articulo."s where id_opinion_".$articulo."='$idComentario'";
+					foreach ($con->query($sql) as $fila) {
+						$res = $fila[0];
+					}
+					if($res=$dni||$dni=='00000000A'){
+						$sql = "delete from opiniones_".$articulo."s where id_opinion_".$articulo."='$idComentario'";
+						$res = $con->exec($sql);
+						if($res){
+							echo '<div class="correcto"><p>Comentario eliminado.</p></div>';
+						}else{
+							echo '<div class="incorrecto"><p>No se ha podido eliminar el comentario.</p></div>
+								<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+						}
+					}
+				}
 
 				CerrarConexionBD($con);
 				}
@@ -222,7 +239,7 @@
 				}
 				//<input class="bl" type="text" size="2" value="'.$mipuntuacion.'" name="mipuntuacion"/>';
 
-				echo '
+				echo '</div>
 					<select class="bl" name="estado">
 						<option selected>'.$estado.'</option>
 						<option>Favorito</option>
@@ -274,36 +291,33 @@
 				}
 					
 				echo '</article>';
-				?>
-				<?php //Comentarios
+				 //Comentarios
 				if(isset($_SESSION['dni'])){
 					echo '
 				<article id="comentarios">
-
-					<ul>
-						<li>
 						<form METHOD="POST" ACTION="articulo.php?id_'.$articulo.'='.$id.'" enctype="multipart/form-data">
 							<textarea name="comentario" id="comente" cols="90" rows="6" placeholder="Comente algo..."/></textarea>
 							<input type="submit" value="Comentar" id="boton"/>
 						</form>
-						</li>
-						<li>
-							<h3>Comentarios</h3>
-						</li>';
-						$sql = "select dni_a_nombre(dni), to_char(fecha, 'DD/MM/yyyy'), texto 
+							<h3>Comentarios</h3>';
+						$sql = "select dni_a_nombre(dni), to_char(fecha, 'DD/MM/yyyy'), texto, id_opinion_".$articulo.", dni 
 								from opiniones_".$articulo."s 
-								where id_".$articulo."='$id'";
+								where id_".$articulo."='$id'
+								order by fecha desc";
 						foreach ($con->query($sql) as $fila) {
-							echo '<li>
-							<table>
-								<tr class="fila1"><td><spam class="autor">Autor: '.$fila[0].'</spam></td><td> <spam class="fecha"> Fecha: '.$fila[1].'</spam></td></tr>
-								<tr class="fila2"><td colspan="2">'.$fila[2].'</td></tr>
-							</table>
-						</li>';
-						}
+							echo '<table class="tablacomentario">
+									<tr class="fila1"><td class="autor">Autor: '.$fila[0].'</td><td class="fecha">Fecha: '.$fila[1].'</td></tr>
+									<tr class="fila2"><td colspan="2" class="comentario">'.$fila[2].'</td></tr>
+								</table>';
+							if($dni==$fila[4]||$dni=="00000000A"){
+									echo '<form METHOD="POST" ACTION="articulo.php?id_'.$articulo.'='.$id.'" enctype="multipart/form-data">
+											<input type="hidden" value="'.$fila[3].'" name="eliminarComentario"/>
+											<input type="submit" value="eliminar"/>
+										</form>';
+							}
+							}
 						
-			echo'</ul>
-				</article>';
+			echo'</article>';
 				}
 		}else{
 			echo "<p>No existe esa pelicula</p>";

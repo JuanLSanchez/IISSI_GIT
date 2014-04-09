@@ -10,9 +10,9 @@
 #seccion #buscador{
     background-color: #eaf8fc;
     background-image: linear-gradient(#fff, #d4e8ec);
-    -moz-border-radius: 35px;
-	-webkit-border-radius: 35px;
-	border-radius: 35px;
+    -moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
     border-style: solid;
     border-color: #c4d9df #a4c3ca #83afb7;            
     width: 500px;

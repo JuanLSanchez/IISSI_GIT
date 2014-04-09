@@ -18,17 +18,23 @@
 			var patronEdad = /^\d|1[0-8]$/;
 			var trailer = document.getElementById("trailer").value;
 			var sinopsis = document.getElementById("sinopsis").value;
+			var error = "";
 			if(nombre==""){
-				alert("Introduzca un nombre.");
-				return false;
-			}else if(patronYear.test(year)==false){
-				alert("La fecha no es correcta.");
-				return false;
-			}else if(patronEdad.test(edad)==false){
-				alert("La edad no es correcta.");
-				return false;
+				error += '<div class="incorrecto"><p>Introduzca un nombre.</p></div>';
 			}
-			return true;
+			if(patronYear.test(year)==false){
+				error += '<div class="incorrecto"><p>La fecha no es correcta.</p></div>';
+			}
+			if(patronEdad.test(edad)==false){
+				error += '<div class="incorrecto"><p>La edad no es correcta.</p></div>';
+			}
+			if(error!=""){
+				//document.getElementById("error").innerHTML=error;
+				alert(error);
+				return false;
+			}else{
+				return true;
+			}
 		}
 	</script>
 </head>
@@ -46,69 +52,91 @@
 		</nav>
 		<section id="seccion">
 			<article>
-
+				<div id="error"></div>
 				<?php //Añadir articulo
 				if(isset($_POST['nombre'])&&$_SESSION['dni'] == '00000000A'){
-					
 					$con = CrearConexionBD();
 					//Inicializacion de las variables
+					$error = "";
 					$articulo = $_GET['articulo'];
-					//Obtener un ID
-					$sql = "select id_".$articulo.".nextval from dual";
-					$res = $con->query($sql);
-					foreach ($res as $fila) {
-						$id = $fila[0];
-					}
 					$nombre = $_POST["nombre"];
 					$edad = $_POST["edad"];
 					$trailer = $_POST["trailer"];
 					$sinopsis = $_POST["sinopsis"];
-					$year = $_POST["year"];//Definir el insert
-					$imagen = "img_".$articulo."s/" . $id;
-					$sql = "insert into ".$articulo."s values
-							('$id', '$nombre', '$edad', '$imagen', 
-							'$trailer', '$sinopsis', to_date('$year', 'DD/MM/yyyy'))";
-					$salida = '<a href="http://ori/articulo.php?id_'.$articulo.'='.$id.'">'.$nombre.'<a>';
-					//Inserccion de la pelicula
-					$res = $con->exec($sql);
-					//$res=1==1;
-					if($res == 1){						
-						$sql = "select count(*) from generos_".$articulo."s";
-						foreach ($con->query($sql) as $fila) {
-						 	$cont = $fila[0];
-						}					
-						while($cont>0){
-						 	$cont--;
-						 	if(isset($_POST['genero'.$cont])){
-						 		$sql = "insert into relacion_".$articulo."s_genero (id_".$articulo.", genero) 
-						 	 		values ('".$id."', '".$_POST['genero'.$cont]."')";
-						 	 	$res = $con->exec($sql);
-						 	 	//echo $sql.'<br>';
-						 	}
+					$year = $_POST["year"];
+					if ($articulo==""){
+						$error += '<div class="incorrecto"><p>Define el articulo.</p></div>';
+					}
+					if($nombre==""){
+						$error += '<div class="incorrecto"><p>Introduzca un nombre.</p></div>';
+					}
+					if(!($edad<=18&&$edad>=0)){
+						$error += '<div class="incorrecto"><p>Edad restrictiva incorrecta.</p></div>';
+					}
+					if($error==""){
+						//Obtener un ID
+						$sql = "select id_".$articulo.".nextval from dual";
+						$res = $con->query($sql);
+						foreach ($res as $fila) {
+							$id = $fila[0];
 						}
-						if ($articulo=="juego") {
-						 	$sql="insert into relacion_juegos_plataforma values('";
-						 	$sql2="select count(*) from plataformas";
-						}else{
-							$sql="insert into relacion_peliculas_calidad values('";
-							$sql2="select count(*) from calidad_visual";
-						}
-						foreach ($con->query($sql2) as $fila) {
-							$cont=$fila[0];
-						}
-						while($cont>0){
-							$cont--;
-							if(isset($_POST['tipo'.$cont])){
-								$res = $con->exec($sql.$id."','".$_POST['tipo'.$cont]."',".$_POST['precioventa'.$cont].",".$_POST['cantidadventa'.$cont].", ".$_POST['cantidadalquiler'.$cont].")");
-								//echo $sql.$id."','".$_POST['tipo'.$cont]."',".$_POST['precioventa'.$cont].",".$_POST['cantidadventa'.$cont].", ".$_POST['cantidadalquiler'.$cont].")"."<br>";								
+						
+						$imagen = "img_".$articulo."s/" . $id;
+						//Definir el insert
+						$sql = "insert into ".$articulo."s values
+								('$id', '$nombre', '$edad', '$imagen', 
+								'$trailer', '$sinopsis', to_date('$year', 'DD/MM/yyyy'))";
+						$salida = '<a href="http://ori/articulo.php?id_'.$articulo.'='.$id.'">'.$nombre.'<a>';
+						//Inserccion de la pelicula
+
+						$res = $con->exec($sql);
+						if($res == 1){						
+							$sql = "select count(*) from generos_".$articulo."s";
+							foreach ($con->query($sql) as $fila) {
+							 	$cont = $fila[0];
+							}					
+							while($cont>0){
+							 	$cont--;
+							 	if(isset($_POST['genero'.$cont])){
+							 		$sql = "insert into relacion_".$articulo."s_genero (id_".$articulo.", genero) 
+							 	 		values ('".$id."', '".$_POST['genero'.$cont]."')";
+							 	 	$res = $con->exec($sql);
+							 	 	if(!$res){
+							 	 		echo '<div class="incorrecto"><p>Fallo al añadir los generos.</p></div>
+										<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+							 	 	}
+							 	}
 							}
+							if ($articulo=="juego") {
+							 	$sql="insert into relacion_juegos_plataforma values('";
+							 	$sql2="select count(*) from plataformas";
+							}else{
+								$sql="insert into relacion_peliculas_calidad values('";
+								$sql2="select count(*) from calidad_visual";
+							}
+							foreach ($con->query($sql2) as $fila) {
+								$cont=$fila[0];
+							}
+							while($cont>0){
+								$cont--;
+								if(isset($_POST['tipo'.$cont])){
+									$res = $con->exec($sql.$id."','".$_POST['tipo'.$cont]."',".$_POST['precioventa'.$cont].",".$_POST['cantidadventa'.$cont].", ".$_POST['cantidadalquiler'.$cont].")");
+									if(!$res){
+										echo '<div class="incorrecto"><p>Fallo al añadir los precios.</p></div>
+										<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+									}
+								}
+							}
+							if($_FILES['imagen']['error']==0){
+								copy($_FILES['imagen']['tmp_name'],$imagen);	
+							}						
+							echo '<div class="correcto"><p>El articulo, '.$salida.' se ha añadido correctamente</p></div>';						
+						}else{
+							echo '<div class="incorrecto"><p>El articulo no se ha añadido</p></div>
+							<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
 						}
-						if($_FILES['imagen']['error']==0){
-							copy($_FILES['imagen']['tmp_name'],$imagen);	
-						}						
-						echo '<div class="correcto"><p>El articulo, '.$salida.' se ha añadido correctamente</p></div>';						
 					}else{
-						echo '<div class="incorrecto"><p>El articulo no se ha añadido</p></div>';
+						echo $error;
 					}
 					CerrarConexionBD($con);
 				}
@@ -147,13 +175,15 @@
 									</div>';
 							$cont++;
 						}
-						echo '</li>
-								<li><span>Cantidades de peliculas: </span></li>
-								<li>
-								<span>Tipo </span>
-								<span>Cantidad de alquiler</span>
-								<span>Cantidad de venta </span>								
-								<span>Precio de venta</span>';
+						echo '<span>Cantidades de peliculas:</span>
+							<table>
+								<tr>
+								<td> </td>
+								<td>Tipo</td>
+								<td>Cantidad de alquiler</td>
+								<td>Cantidad de venta</td>
+								<td>Precio de venta</td>
+								</tr>';
 						if($_GET['articulo']=="juego"){
 							$sql="select * from plataformas";
 						}else{
@@ -161,16 +191,16 @@
 						}
 						$cont=0;
 						foreach ($con->query($sql) as $fila) {
-							echo '<div class="tipo">
-									<input type="checkbox" name="tipo'.$cont.'" value="'.$fila[0].'"/>
-									<span>'.$fila[0].'</span>
-									<input type="number" size=5 name="cantidadalquiler'.$cont.'"/>
-									<input type="number" size=5 name="cantidadventa'.$cont.'"/>
-									<input type="number" size=5 name="precioventa'.$cont.'"/>
-									</div>';
+							echo '<tr>
+									<td><input type="checkbox" name="tipo'.$cont.'" value="'.$fila[0].'"/></td>
+									<td>'.$fila[0].'</td>
+									<td><input type="number" size=5 name="cantidadalquiler'.$cont.'"/></td>
+									<td><input type="number" size=5 name="cantidadventa'.$cont.'"/></td>
+									<td><input type="number" size=5 name="precioventa'.$cont.'"/></td>
+									</tr>';
 							$cont++;
 						}
-						echo '</li>';
+						echo '</table>';
 					?>
 					<li><input type="SUBMIT" value="Añadir"/></li>
 				</ul>

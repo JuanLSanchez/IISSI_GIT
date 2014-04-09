@@ -87,23 +87,25 @@
 					}
 					if((!isset($_POST['socio']))&&(!isset($_POST['dni']))){//Buscador del socio
 						echo '<form METHOD="GET" ACTION="add_alquiler.php">
-							<span>DNI usuario: </span><input type="text" name="search_dni" value="'.$search_dni.'"/>
+							<span>DNI usuario: </span><input type="text" name="search_dni" value="'.$search_dni.'" pattern="\w\d{1-8}?|\d{1-8}?\w|\w?\d{1-8}|\d{1-8}\w?" required/>
 							<input type="SUBMIT" value="Buscar"/>
 						</form>';	
 					}					
-					if($search_dni!=""){//Seleccionar el socio
+					if($search_dni!=""){//Seleccionar el socio, mostrar la busqueda
 						$sql= "select * from socios where upper(dni) like upper('%".$search_dni."%')";
 						$res = $con->query($sql);
 						echo '<form METHOD="POST" ACTION="add_alquiler.php">';
+						echo "<table>";
 						foreach ($res as $fila) {
-							echo '<div class="usuario">
-								<input type="radio" value="'.$fila[0].'" name="socio"/>
-								<img src="img_socios/'.$fila[0].'"/>
-								<span>'.$fila[0].'</span>
-								<span>'.$fila[1].'</span>
-							</div>';
+							echo '<tr>
+								<td><input type="radio" value="'.$fila[0].'" name="socio"/></td>
+								<td><img src="img_socios/'.$fila[0].'"/></td>
+								<td>'.$fila[0].'</td>
+								<td>'.$fila[1].'</td>
+							</tr>';
 						}
-						echo '<input type="submit" value="Seleccionar"/>
+						echo '</table>
+						<input type="submit" value="Seleccionar"/>
 						</form>';
 					}elseif (isset($_POST['id_alquiler'])){//Confirmar el alquiler
 						$cantidad_total=0;
@@ -172,8 +174,7 @@
 						</form>';
 
 					}elseif (isset($_POST['socio'])) {//Completar el alquiler
-						echo '';
-						echo '
+						echo '<h3>Articulos</h3>
 						<form METHOD="POST" ACTION="add_alquiler.php">
 						<span>Peliculas: </span>
 						<input type="button" onclick="add(\'.pelicula\', \'lineasPeliculas\')" value="+">
@@ -225,18 +226,29 @@
 								</div>';
 						
 						$sql="select * from ofertas";
+						echo "<h3>Ofertas</h3>";
+						$i = 0;
 						foreach ($con->query($sql) as $fila) {
-							echo '<div class="oferta">
-									<input type="radio" value="'.$fila[0].'" name="oferta"/>
-									<span>'.$fila[1].'</span>
-							</div>';
+							if($i==0){
+								echo '<div class="oferta">
+										<input type="radio" value="'.$fila[0].'" name="oferta" checked/>
+										<span>'.$fila[1].'</span>
+									</div>';
+								$i++;
+							}else{
+								echo '<div class="oferta">
+										<input type="radio" value="'.$fila[0].'" name="oferta"/>
+										<span>'.$fila[1].'</span>
+									</div>';
+							}
 						}
 						$sql="select id_alquiler.nextval from dual";
 						foreach ($con->query($sql) as $fila) {
 							echo '<input type="hidden" name="id_alquiler" value="'.$fila[0].'"/>';
 						}
-						echo '<p>Tiempo en 6 horas: </p>
-						<input type="text" name="tiempo"/>
+						echo '<div><h3>Tiempo</h3>
+						<span>Tiempo en 6 horas: </span>
+						<input type="text" name="tiempo"/></div>
 						<input type="submit" value="Terminar alquiler"/>
 						</form>';
 

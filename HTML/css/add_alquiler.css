@@ -1,3 +1,10 @@
 #seccion img{
 	height: 100px;
 }
+#seccion h3{
+	text-align: center;
+	margin-bottom: 0px;
+}
+#seccion table{
+	width: 100%;
+}
