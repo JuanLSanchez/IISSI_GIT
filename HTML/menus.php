@@ -41,9 +41,10 @@ function Menu(){
 				<li><a href="add_devolucion.php?buscar=">Devolucion</a></li>
 				<li><a href="">Compras</a></li>
 				<li><a href="">Ofertas</a></li>
-				<li><a href="">Generos</a></li>
-				<li><a href="">Plataformas</a></li>
-				<li><a href="">Calidades</a></li>
+				<li><a href="generos_juegos.php">Generos Juegos</a></li>
+				<li><a href="plataformas.php">Plataformas</a></li>
+				<li><a href="generos_peliculas.php">Generos Peliculas</a></li>
+				<li><a href="calidad.php">Calidades</a></li>
 
 			</ul>';
 	}
