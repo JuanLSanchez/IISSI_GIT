@@ -1,279 +1,29 @@
-body{
-
-	
-		background: #999999;
-
-
-}
-
-
-#cabecera{
-	
-
-		background: white;
-
-		border: 5px solid #fb5741;
-
-		padding: 20px;
-
-	
-	-moz-border-radius: 20px;
-
-		-webkit-border-radius: 20px;
-
-		border-radius: 20px;
-
-	
-	-moz-box-shadow: #ab4a3d 5px 5px;
-
-		-webkit-box-shadow: #ab4a3d 5px 5px;
-
-		box-shadow: #ab4a3d 5px 5px;
-
-}
-
-
-
-
-#cabecera h1{
-	
-
-		margin: 0px;
-
-		padding: 0px;
-
-		text-align: center;
-
-		color: #fb5741;
-
-		font-size: 75px;
-
-}
-
-
-
-#cuerpo {
-	
-		width: 960px;
-
-		margin: 15px auto;
-
-}
-
-
-
-#navegador{
-	
-
-		background: #81bdeb;
-	
-		padding: 0px;
-	
-		margin: 0px;
-
-
-}
-
-
-#navegador ul{
-	
-
-		margin: 0px;
-	
-		padding: 0px;
-
-
-}
-
-
-
-#navegador li {
-	
-		display: inline-block;
-	
-		list-style: none;
-	
-		padding: 10px;
-	
-		margin: 0px;
-	
-		font: bold 14px verdana, sans-serif;
-
-
-}
-
-
-
-#navegador li:hover{
-	
-		background: #243542;
-	
-		cursor: pointer;
-	
-		color:white;
-
-
-}
-
-
-
-#seccion {
-	
-		float: left;
-	
-		width: 680px;
-	
-		margin: 0px;
-	
-		padding: 10px;
-	
-		background: white;
-
-
-}
-
-
-
-#menu {
-	
-		float: left;
-	
-		width: 220px;
-	
-		margin: 0px;
-	
-		padding: 20px;
-	
-		background: #81bdeb;
-
-
-}
-
-
-
-#menu ul{
-	
-		margin: 0px;
-	
-		padding: 0px;
-
-
-}
-
-
-
-#menu li{
-	
-		display: block;
-	list-style: none;
-	
-		padding: 5px;
-	
-		margin: 0px;
-	
-		font: bold 14px verdana, sans-serif;
-
-}
-
-#menu li:hover{
-	
-		background: #243542;
-	
-		cursor: pointer;
-	
-		color:white;
-
-
-}
-
-
-
-
-#pie {
-	
-		clear: both;
-	
-		text-align: center;
-	
-		padding: 20px;
-	
-		border-top: 2px solid #999999;
-
-
-}
-
-
-
-/*Inicio Alberto*/ 
-
-
 #seccion h2{
 	text-align: center;
 	padding: 0px;
 	border-bottom: 2px solid #999999;
 }
-.ordenar span{
-	float: left;
-	background: #81BDEB;
-	padding: 5px;
-	margin:0px;
-	margin-right:-1px;
-	border:solid #000000 1px;
-	height:40px;
-}
-.ordenar span:hover{
-	background: #81CEFB;
-	cursor: pointer;
-}
-.nombre2{
-	margin-left:40px;
-	width: 320px;
-	text-align:center;
-	font-size:10pt;
-}
-.fechaini{
-	width: 115px;
-	text-align:center;
-	font-size:10pt;
-}
-.fechafinal{
-	width: 60px;
-	text-align:center;
-	font-size:10pt;
-}
-.cantidad{
-	font-size:10pt;
-}
-.espacio{
-	float:left;
-	width: 10px;
-}
-img{
-	margin-left:40px;
-}
 #seccion img {
-	padding-top:20px;
-	padding-left:10px;
-	float:left;
-	width: 100px;
+	width: 110px;
+	margin: 8px;
 }
-#seccion li{
-	clear:left;
-	list-style: none;
-	padding: 5px;
+#seccion .nombre{
+	width: 300px;	
+	border-left: 400px;
 }
-.nombre{
-	margin-top:20px;
-	margin-left:62px;
-	width: 326px;	
-	text-align:center;
+#seccion table{
+	border-collapse:collapse; 
+	border: none;
+	width:100%; 
+	
 }
-span{
-	padding-top:20px;
-	float:left;
-	margin: 20px;
+#seccion tr td {
+	text-align: center;
+	height:30px;
 }
-#seccion a{
-	text-decoration:none; 
-	color: black;
+#seccion .primera{
+	background: #81bdeb;
+}
+#seccion .segunda{
+	background: #81bdeb;
 }
