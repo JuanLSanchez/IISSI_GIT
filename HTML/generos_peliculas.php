@@ -99,7 +99,7 @@
 							
 							echo'<tr>
 								
-								<td><input type = "checkbox" value = "'.$i.'" name ="seleccion"/>
+								<td><input type = "radio" value = "'.$i.'" name ="seleccion"/>
 									<input type = "text" value = "'.$fila[0].'" name ="genero'.$i.'"/>								
 									<input type = "submit" name ="borrar" value = "Borrar"/>
 									<input type = "submit" name ="modificar" value ="Modificar"/></td>

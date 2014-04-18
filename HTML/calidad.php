@@ -27,11 +27,11 @@
 				$con = CrearConexionBD();
 				if($_SESSION['dni'] == '00000000A' && isset($_POST['modificar'])){
 					$seleccion = $_POST['seleccion'];
-					$genero=$_POST['anterior'.$seleccion.''];
+					$calidad=$_POST['anterior'.$seleccion.''];
 					
-					$generoN = $_POST['genero'.$seleccion.''];
+					$calidadN = $_POST['calidad'.$seleccion.''];
 					
-					$sql = "update generos_juegos set genero = '$generoN' where genero = '$genero'";
+					$sql = "update calidad_visual set calidad = '$calidadN' where calidad = '$calidad'";
 					$res = $con->exec($sql);
 					if($res){
 						echo '<div class="correcto"><p>Se ha modificado correctamente.</p></div>';
@@ -48,9 +48,9 @@
 				if($_SESSION['dni'] == '00000000A' && isset($_POST['borrar'])){
 					$seleccion = $_POST['seleccion'];			
 										
-					$genero=$_POST['anterior'.$seleccion.''];				
+					$calidad=$_POST['anterior'.$seleccion.''];				
 					
-					$sql = "delete from generos_juegos where genero = '$genero'";
+					$sql = "delete from calidad_visual where calidad = '$calidad'";
 					$res = $con->exec($sql);
 					if($res){
 						echo '<div class="correcto"><p>Se ha borrado correctamente.</p></div>';
@@ -66,8 +66,8 @@
 				$con = CrearConexionBD();
 				if($_SESSION['dni'] == '00000000A' && isset($_POST['añadir'])){
 					
-					$generoN=$_POST['texto'];					
-					$sql = "insert into generos_juegos values ('$generoN')";
+					$calidadN=$_POST['texto'];					
+					$sql = "insert into calidad_visual values ('$calidadN')";
 					$res = $con->exec($sql);
 					if($res){
 						echo '<div class="correcto"><p>Se ha añadido correctamente.</p></div>';
@@ -85,11 +85,11 @@
 				
 				if($_SESSION['dni']=='00000000A'){
 					
-					echo'<form method="POST" action = "generos_juegos.php">
+					echo'<form method="POST" action = "calidad.php">
 					
 						<table>
 						';
-						$sql = "select * from generos_juegos";
+						$sql = "select * from calidad_visual";
 						echo'<tr>
 							<td><input type="text" name="texto"/>
 								<input type="submit" name ="añadir" value="Añadir"/></td>
@@ -100,7 +100,7 @@
 							echo'<tr>
 								
 								<td><input type = "radio" value = "'.$i.'" name ="seleccion"/>
-									<input type = "text" value = "'.$fila[0].'" name ="genero'.$i.'"/>								
+									<input type = "text" value = "'.$fila[0].'" name ="calidad'.$i.'"/>								
 									<input type = "submit" name ="borrar" value = "Borrar"/>
 									<input type = "submit" name ="modificar" value ="Modificar"/></td>
 								<td><input type = "hidden" name="anterior'.$i.'" value = "'.$fila[0].'" /></td>
