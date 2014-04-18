@@ -6,6 +6,7 @@
 		<meta name="keywords" content="videoclub, ori, peliculas">
 		<title>Videoclub ORI</title>
 		<link rel="stylesheet" href="css/general.css">
+		<link rel="stylesheet" href="css/enumerados.css">
 		
 	</head>
 	<body>
@@ -23,15 +24,13 @@
 		<section id="seccion">
 			
 			<?php
-				
-				$con = CrearConexionBD();
 				if($_SESSION['dni'] == '00000000A' && isset($_POST['modificar'])){
-					$seleccion = $_POST['seleccion'];
-					$genero=$_POST['anterior'.$seleccion.''];
-					
-					$generoN = $_POST['genero'.$seleccion.''];
-					
-					$sql = "update generos_peliculas set genero = '$generoN' where genero = '$genero'";
+					$con = CrearConexionBD();
+
+					$anterior = $_POST['anterior'];
+					$nuevo = $_POST['nuevo'];
+										
+					$sql = "update generos_peliculas set genero = '$nuevo' where genero = '$anterior'";
 					$res = $con->exec($sql);
 					if($res){
 						echo '<div class="correcto"><p>Se ha modificado correctamente.</p></div>';
@@ -39,18 +38,16 @@
 						echo '<div class="incorrecto"><p>No se ha modificado correctamente.</p></div>
 						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
 					}
-					CerrarConexionBD($con);
-					
+					CerrarConexionBD($con);	
 				}
 			?>
 			<?php
-				$con = CrearConexionBD();
 				if($_SESSION['dni'] == '00000000A' && isset($_POST['borrar'])){
-					$seleccion = $_POST['seleccion'];			
-										
-					$genero=$_POST['anterior'.$seleccion.''];				
+					$con = CrearConexionBD();
 					
-					$sql = "delete from generos_peliculas where genero = '$genero'";
+					$anterior = $_POST['anterior'];
+					
+					$sql = "delete from generos_peliculas where genero = '$anterior'";
 					$res = $con->exec($sql);
 					if($res){
 						echo '<div class="correcto"><p>Se ha borrado correctamente.</p></div>';
@@ -63,8 +60,8 @@
 				}
 			?>
 			<?php
-				$con = CrearConexionBD();
 				if($_SESSION['dni'] == '00000000A' && isset($_POST['añadir'])){
+					$con = CrearConexionBD();
 					
 					$generoN=$_POST['texto'];					
 					$sql = "insert into generos_peliculas values ('$generoN')";
@@ -81,47 +78,37 @@
 			?>
 			
 			<?php
-				$con = CrearConexionBD();
+				
 				
 				if($_SESSION['dni']=='00000000A'){
+					$con = CrearConexionBD();
 					
-					echo'<form method="POST" action = "generos_peliculas.php">
-					
-						<table>
-						';
-						$sql = "select * from generos_peliculas";
-						echo'<tr>
-							<td><input type="text" name="texto"/>
-								<input type="submit" name ="añadir" value="Añadir"/></td>
-						</tr>';
-						$i = 0;
-						foreach ($con -> query($sql) as $fila) {						
-							
-							echo'<tr>
-								
-								<td><input type = "radio" value = "'.$i.'" name ="seleccion"/>
-									<input type = "text" value = "'.$fila[0].'" name ="genero'.$i.'"/>								
-									<input type = "submit" name ="borrar" value = "Borrar"/>
-									<input type = "submit" name ="modificar" value ="Modificar"/></td>
-								<td><input type = "hidden" name="anterior'.$i.'" value = "'.$fila[0].'" /></td>
-								
-							
-							</tr>';
-							
-							
-							$i++;
-							
-							
-						}
+					echo'<table>';
+					$sql = "select * from generos_peliculas";
+					echo'<tr>
+						<td><form method="POST" action = "generos_peliculas.php">
+							<input type="text" name="texto"/>
+							<input type="submit" name ="añadir" value="Añadir"/>
+							</form>
+						</td>
+					</tr>';
+					foreach ($con -> query($sql) as $fila) {						
 						
-						echo'</table>
+						echo'<tr>								
+							<td><form method="POST" action = "generos_peliculas.php">
+								<input type = "text" value = "'.$fila[0].'" name ="nuevo"/>								
+								<input type = "submit" name ="borrar" value = "Borrar"/>
+								<input type = "submit" name ="modificar" value ="Modificar"/>
+								<input type = "hidden" name = "anterior" value = "'.$fila[0].'"/>
+								</form>
+							</td>							
+						</tr>';						
 						
-					
-					</form>';
-					
-					
+					}						
+					echo'</table>';	
+					CerrarConexionBD($con);	
 				}
-				CerrarConexionBD($con);
+				
 			?>
 			
 		</section>
