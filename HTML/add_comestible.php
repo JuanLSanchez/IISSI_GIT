@@ -6,7 +6,6 @@
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
-	<link rel="stylesheet" href="css/add.css">
 
 	<script type="text/javascript">
 		function procesaFormulario(){
@@ -89,13 +88,13 @@
 					}
 				?>
 				<form METHOD="POST" onsubmit="return procesaFormulario()" ACTION="add_comestible.php" enctype="multipart/form-data">
-					<ul>
-						<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-						<li><span>Nombre: </span><input type="text" id="nombre" name="nombre" required/></li>
-						<li><span>Cantidad: </span><input type="number" id="cantidad" name="cantidad" pattern="\d*" required/></li>
-						<li><span>Precio: </span><input type="text" id="precio" name="precio" placeholder="Ej: 0,3" title="Siga el ejemplo." pattern="\d{1,5}[\,]\d{1,2}" required/></li>
-						<li><input type="SUBMIT" value="Añadir"/></li>
-					</ul>
+					<table>
+						<tr><td>Seleccione la imagen: </td><td><input type="file" name="imagen" /></td></tr>
+						<tr><td>Nombre: </td><td><input type="text" id="nombre" name="nombre" required/></td></tr>
+						<tr><td>Cantidad: </td><td><input type="number" id="cantidad" name="cantidad" pattern="\d*" required/></td></tr>
+						<tr><td>Precio: </td><td><input type="text" id="precio" name="precio" placeholder="Ej: 0,3" title="Siga el ejemplo." pattern="\d{1,5}[\,]\d{1,2}" required/></td></tr>
+						<tr><td><input type="SUBMIT" value="Añadir"/></td><td></td></tr>
+					</table>
 				</form>
 			</article>
 		</section>

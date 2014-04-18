@@ -7,7 +7,6 @@
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
-	<link rel="stylesheet" href="css/add.css">
 
 	<script type="text/javascript">
 		function procesaFormulario(){
@@ -107,20 +106,19 @@
 						echo '<p>Tienes que loguearte para que se guardaran los cambios</p>';
 					}
 				?>
-				
 				<form METHOD="POST" onsubmit="return procesaFormulario()" ACTION="add_usuario.php" enctype="multipart/form-data">
-				<ul>
-					<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-					<li><span>Dni: </span><input title="Introduce un DNI correcto" id="dni"  type="text" name="dni" pattern="\w\d{8}|\d{8}\w" required/></li>
-					<li><span>Nombre: </span><input type="text" name="nombre" id="nombre" required/></li>
-					<li><span>Año de nacimiento: </span><input type="date" placeholder="ej: 15/03/1999" id="nacido" name="nacido" required/></li>
-					<li><span>Direccion: </span><input type="text" id="direccion" name="direccion" required/></li>
-					<li><span>Email: </span><input type="email" id="email" name="email"/></li>
-					<li><span>Telefono: </span><input type="tel" pattern="\d{9}" id="telefono" name="telefono" maxlength="9" required/></li>
-					<li><span>Contraseña: </span><input type="password" id="key" name="key" required/></li>
-					<li><span>Repita la contraseña: </span><input type="password" id="rkey" name="rkey" required/></li>
-					<li><input type="SUBMIT" value="Añadir"/></li>
-				</ul>
+				<table>
+					<tr><td>Seleccione la imagen: </td><td><input type="file" name="imagen" /></td></tr>
+					<tr><td>Dni: </td><td><input title="Introduce un DNI correcto" id="dni"  type="text" name="dni" pattern="\w\d{8}|\d{8}\w" required/></td></tr>
+					<tr><td>Nombre: </td><td><input type="text" name="nombre" id="nombre" required/></td></tr>
+					<tr><td>Año de nacimiento: </td><td><input type="date" placeholder="ej: 15/03/1999" id="nacido" name="nacido" required/></td></tr>
+					<tr><td>Direccion: </td><td><input type="text" id="direccion" name="direccion" required/></td></tr>
+					<tr><td>Email: </td><td><input type="email" id="email" name="email"/></td></tr>
+					<tr><td>Telefono: </td><td><input type="tel" pattern="\d{9}" id="telefono" name="telefono" maxlength="9" required/></td></tr>
+					<tr><td>Contraseña: </td><td><input type="password" id="key" name="key" required/></td></tr>
+					<tr><td>Repita la contraseña: </td><td><input type="password" id="rkey" name="rkey" required/></td></tr>
+					<tr><td><input type="SUBMIT" value="Añadir"/></td><td></td></tr>
+				</table>
 			</form>
 			</article>
 		</section>

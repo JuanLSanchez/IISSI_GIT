@@ -77,6 +77,9 @@ a{
 	padding: 5px;
 	margin: 0px;
 }
+#navegador a:hover{
+	color:white;
+}
 
 #navegador li:hover{
 	background: #243542;
@@ -99,7 +102,9 @@ a{
 	padding: 20px;
 	background: #81bdeb;
 }
-
+#menu a:hover{
+	color:white;
+}
 #menu ul{
 	margin: 0px;
 	padding: 0px;

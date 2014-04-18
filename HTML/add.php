@@ -153,30 +153,39 @@
 					}
 					echo '<form METHOD="POST" onsubmit="return procesaFormulario()" ACTION="add.php?articulo='.$_GET['articulo'].'" enctype="multipart/form-data">'
 				?>
+				<table id= "informacion">
+					<tr><td>Seleccione la imagen: </td><td><input type="file" name="imagen" /></td></tr>
+					<tr><td>Nombre: </td><td><input type="text" name="nombre" id="nombre" required/></td></tr>
+					<tr><td>Año de lanzamiento: </td><td><input placeholder="ej: 15/03/1999" type="date"  title="Siga el ejemplo de la fecha" pattern="^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/]\d{4}$" id="year" name="year"/></td></tr>
+					<tr><td>Edad restrictiva: </td><td><input type="number" title="La edad esta entre 0 y 18" pattern="^\d|1[0-8]$" name="edad" id="edad" required/></td></tr>
+					<tr><td>Trailer(URL): </td><td><input type="text" id="trailer" name="trailer"/></td></tr>
+					<tr><td>Sinopsis: </td><td><textarea id="sinopsis" name="sinopsis" cols="60" rows="15"></textarea></td></tr>
+				</table>
 				
-				<ul>
-					<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-					<li><span>Nombre: </span><input type="text" name="nombre" id="nombre" required/></li>
-					<li><span>Año de lanzamiento: </span><input placeholder="ej: 15/03/1999" type="date"  title="Siga el ejemplo de la fecha" pattern="^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/]\d{4}$" id="year" name="year"/></li>
-					<li><span>Edad restrictiva: </span><input type="number" title="La edad esta entre 0 y 18" pattern="^\d|1[0-8]$" name="edad" id="edad" required/></li>
-					<li><span>Trailer(URL): </span><input type="text" id="trailer" name="trailer"/></li>
-					<li><span>Sinopsis: </span><textarea id="sinopsis" name="sinopsis" cols="70" rows="15"></textarea></li>
-					<li><span>Generos a los que pertenece: </span></li>
+
+				<h3>Generos a los que pertenece: </h3>
 					<?php
 						$con = CrearConexionBD();
 						$cont = 0;
 						$nombre = "genero";
 						$sql = "select genero from generos_".$_GET['articulo']."s";
-						echo '<li>';
+						echo '<table id="generos">';
+						$i = 0;
 						foreach ($con->query($sql) as $fila) {
-							echo '<div class="check">
-										<input type="checkbox" name="'.$nombre.$cont.'" value="'.$fila[0].'"/>
-										<span>'.$fila[0].'</span>
-									</div>';
+							if($i%3==0){
+								echo "<tr>";
+							}
+							echo '	<td><input type="checkbox" name="'.$nombre.$cont.'" value="'.$fila[0].'"/>
+										<span>'.$fila[0].'</span></td>';
 							$cont++;
+							if($i%3==2){
+								echo "</tr>";
+							}
+							$i++;
 						}
-						echo '<span>Cantidades de peliculas:</span>
-							<table>
+						echo '</table>
+						<h3>Cantidades de peliculas:</h3>
+							<table id="cantidades">
 								<tr>
 								<td> </td>
 								<td>Tipo</td>
@@ -193,7 +202,7 @@
 						foreach ($con->query($sql) as $fila) {
 							echo '<tr>
 									<td><input type="checkbox" name="tipo'.$cont.'" value="'.$fila[0].'"/></td>
-									<td>'.$fila[0].'</td>
+									<td class="tipo">'.$fila[0].'</td>
 									<td><input type="number" size=5 name="cantidadalquiler'.$cont.'"/></td>
 									<td><input type="number" size=5 name="cantidadventa'.$cont.'"/></td>
 									<td><input type="number" size=5 name="precioventa'.$cont.'"/></td>
@@ -202,8 +211,7 @@
 						}
 						echo '</table>';
 					?>
-					<li><input type="SUBMIT" value="Añadir"/></li>
-				</ul>
+					<input type="SUBMIT" value="Añadir"/>
 			</form>
 			</article>
 		</section>

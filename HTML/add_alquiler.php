@@ -87,7 +87,7 @@
 					}
 					if((!isset($_POST['socio']))&&(!isset($_POST['dni']))){//Buscador del socio
 						echo '<form METHOD="GET" ACTION="add_alquiler.php">
-							<span>DNI usuario: </span><input type="text" name="search_dni" value="'.$search_dni.'" pattern="\w\d{1-8}?|\d{1-8}?\w|\w?\d{1-8}|\d{1-8}\w?" required/>
+							<span>DNI usuario: </span><input type="text" title="Ningun dni se puede parecer a eso" name="search_dni" value="'.$search_dni.'" pattern="\d{0,8}\w?|\w?\d{0,8}" required/>
 							<input type="SUBMIT" value="Buscar"/>
 						</form>';	
 					}					
@@ -199,9 +199,9 @@
 							<div id="lineasPeliculas">
 								<div class="pelicula">
 									<span>id_pelicula</span>
-									<input type="text" name="pelicula" class="pelicula"/>
+									<input type="text" name="pelicula" class="pelicula" pattern="\d{1,20}"/>
 									<span>Cantidad</span>
-									<input type="text" size="5" name="pelicula_cantidad" class="cantidad"/>
+									<input type="text" size="5" name="pelicula_cantidad" class="cantidad" pattern="\d|10"/>
 									<select name="calidad" class="calidad">
 									'.$calidad.'
 									</select>
@@ -216,9 +216,9 @@
 							<input type="button" onclick="del(\'.juego\', \'lineasJuegos\')" value="-"/>
 							<div class="juego">
 									<span>id_juego</span>
-									<input type="text" name="juego" class="pelicula"/>
+									<input type="text" name="juego" class="pelicula" pattern="\d{1,20}"/>
 									<span>Cantidad</span>
-									<input type="text" size="5" name="juego_cantidad" class="cantidad"/>
+									<input type="text" size="5" name="juego_cantidad" class="cantidad" pattern="\d|10"/>
 									<select name="plataforma" class="calidad">
 									'.$plataforma.'
 									</select>
@@ -248,7 +248,7 @@
 						}
 						echo '<div><h3>Tiempo</h3>
 						<span>Tiempo en 6 horas: </span>
-						<input type="text" name="tiempo"/></div>
+						<input type="text" name="tiempo" pattern="\d{1,3}" required/></div>
 						<input type="submit" value="Terminar alquiler"/>
 						</form>';
 
