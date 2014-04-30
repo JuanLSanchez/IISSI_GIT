@@ -12,7 +12,7 @@ function Menu(){
 		</form>
 		<ul>				
 			<li><a href="alquileres.php">Alquileres</a></li>
-			<li><a href="devoluciones.php">Devoluciones pendientes</a></li>
+			<li><a href="devoluciones.php?dni='.$_SESSION['dni'].'">Devoluciones pendientes</a></li>
 			<li><a href="amigos.php">Amigos</a></li>
 			<li><a href="pendientes.php">Pendientes</a></li>
 			<li><a href="favoritas.php">Favoritas</a></li>

@@ -25,7 +25,7 @@
 				
 					<?php
 						$con = CrearConexionBD();
-						$sql = "select dni from alquileres where 
+						$sql = "select dni, dni_a_nombre(dni) from alquileres where 
 						id_alquiler in 
 							(select id_alquiler from lineas_alquileres_peliculas)
 						or
@@ -33,7 +33,14 @@
 							(select id_alquiler from lineas_alquileres_juegos)";
 						echo '<ul>';
 						foreach ($con->query($sql) as $fila) {
-							echo '<li><img src="img_socios/'.$fila[0].'"/></li>';
+							echo '<li>
+							<a href="devoluciones.php?dni='.$fila[0].'">
+								<figure title="'.$fila[1].'">
+									<img src="img_socios/'.$fila[0].'"/>
+									<figcaption>'.$fila[0].'</figcaption>
+								</figure>
+								</a>
+							</li>';
 						}
 						echo '</ul>';
 						

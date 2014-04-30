@@ -4,3 +4,40 @@
 #seccion li{
 	display: inline-block;
 }
+#seccion figure{
+    margin: 0px;
+    padding: 4px;
+}
+@-webkit-keyframes pop {
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes pop {
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+#seccion li figure figcaption{
+    visibility: hidden;
+    transition:transform 0.5s;
+}
+#seccion li figure:hover figcaption{
+   visibility: visible;
+   -webkit-animation-name: pop;
+  animation-name: pop;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+}
