@@ -53,7 +53,7 @@
 			</article>
 		';
 		foreach($con->query($sql) as $fila){
-			$duracion = $fila[2]*6;
+			$duracion = $fila[2];
 			echo'
 			<article>
 
@@ -89,7 +89,7 @@
 				foreach ($con->query($juego) as $fila5){
 					echo'
 					<tr>
-						<td><a href="articulo.php?id_pelicula='.$fila4[0].'"><img src="'.$fila5[1].'" /></a></td>
+						<td><a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" /></a></td>
 						<td><span class="nombre">'.$fila5[0].'</span></td>
 						<td><span>'.$fila4[1].'</span></td>
 					</tr>
