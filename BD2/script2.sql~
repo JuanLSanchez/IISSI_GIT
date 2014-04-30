@@ -711,6 +711,20 @@ exception
 		'No esta registrado');
 end;
 /
+--Funcion que te da el nombre de un comestible
+create or replace function id_comestible_a_nombre
+	(identificador comestibles.id_comestible%TYPE)
+	return varchar2
+is
+	res comestibles.nombre%TYPE;
+begin
+	select nombre into res from comestibles where id_comestible = identificador;
+	return res;
+exception
+	when no_data_found then
+		return '-1';
+end;
+/
 --Funcion que recibe el id de un comestible y te devuelve la cantidad disponible
 create or replace function cantidad_comestible
 	(identificador comestibles.id_comestible%TYPE)
@@ -837,9 +851,7 @@ begin
 	return res;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return '-1';
 end;
 /
 
@@ -854,9 +866,7 @@ begin
 	return res;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return '-1';
 end;
 /
 --Funcion que le das el id_pelicula y te devuelve la puntuacion media

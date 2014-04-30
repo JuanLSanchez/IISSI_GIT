@@ -711,6 +711,20 @@ exception
 		'No esta registrado');
 end;
 /
+--Funcion que te da el nombre de un comestible
+create or replace function id_comestible_a_nombre
+	(identificador comestibles.id_comestible%TYPE)
+	return varchar2
+is
+	res comestibles.nombre%TYPE;
+begin
+	select nombre into res from comestibles where id_comestible = identificador;
+	return res;
+exception
+	when no_data_found then
+		return '-1';
+end;
+/
 --Funcion que recibe el id de un comestible y te devuelve la cantidad disponible
 create or replace function cantidad_comestible
 	(identificador comestibles.id_comestible%TYPE)
