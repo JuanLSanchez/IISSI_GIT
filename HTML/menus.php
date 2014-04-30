@@ -31,12 +31,13 @@ function Menu(){
 			</form>';
 	}
 	if($dni=='00000000A'){
-		echo'<p> </p>
+		echo'<p class="separador"> </p>
 			<ul>
 				<li><a href="add.php?articulo=pelicula">Añadir pelicula</a></li>
 				<li><a href="add.php?articulo=juego">Añadir juego</a></li>
 				<li><a href="add_usuario.php">Añadir usuario</a></li>
 				<li><a href="add_comestible.php">Añadir comestble</a></li>
+				<li><a href="usuario_con_devoluciones.php">Usuarios con devoluciones pendientes</a></li>
 				<li><a href="add_alquiler.php">Alquiler</a></li>
 				<li><a href="add_devolucion.php?buscar=">Devolucion</a></li>
 				<li><a href="">Compras</a></li>
@@ -56,6 +57,7 @@ function Navegador(){
 		<li><a href="juegos.php">Juegos</a></li>
 		<li><a href="comestibles.php">Comestibles</a></li>
 		<li><a href="informacion.php">Informacion</a></li>
+		<li><a href="manual.php">Manual</a></li>
 	</ul>';
 }	
 ?>

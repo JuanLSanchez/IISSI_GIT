@@ -9,6 +9,40 @@
 	<link rel="stylesheet" href="css/add_alquiler.css">
 
 	<script>
+		var juegos = 0;
+		var peliculas = 0;
+		function cloneRow(fila, tabla, tipo){
+			var cont = 0;
+			if(juegos+peliculas<10){
+				if(tipo=='juego'){
+					cont = juegos;
+					juegos++;
+				}else{
+					cont = peliculas;
+					peliculas++;
+				}
+				var row = document.querySelector(fila);
+				var table = document.getElementById(tabla);
+				var clone = row.cloneNode(true);
+				clone.querySelector(".id").name=clone.querySelector(".id").name+cont;
+				clone.querySelector(".cantidad").name=clone.querySelector(".cantidad").name+cont;
+				clone.querySelector(".calidad").name=clone.querySelector(".calidad").name+cont;
+				table.appendChild(clone);
+			}
+		}
+		function deleteRow(tabla, tipo){
+			if(tipo=='juego'){
+				if(juegos>0){
+					document.getElementById(tabla).deleteRow(document.getElementById(tabla).rows.length-1);
+					juegos--;
+				}				
+			}else{
+				if(peliculas>0){
+					document.getElementById(tabla).deleteRow(document.getElementById(tabla).rows.length-1);
+					peliculas--;	
+				}				
+			}
+		}
 		var cont=0;
 		var pelicula=0;
 		var juego=0;
@@ -115,70 +149,128 @@
 						$horas=6*$_POST['tiempo'];
 						$sql = "insert into alquileres values($id_alquiler, sysdate, '$horas', '".$_POST['dni']."')";
 						echo '<input type="hidden" name="sql'.$cont.'" value="'.$sql.'"/>';
-						foreach (array("",0,1,2,3,4,5,6,7,8) as $i) {
-							if(isset($_POST['pelicula'.$i])){
-							if($_POST['pelicula'.$i]!=""){
-								$sql = "select id_pelicula, nombre from peliculas where id_pelicula=".$_POST['pelicula'.$i];
-								$res = $con->query($sql);
-								foreach ($res as $fila) {
-									$res = $fila;
+						echo '<table id="resultadoFinal">
+						<tr>
+						<td></td>
+						<td>Nombre</td>
+						<td>Cantidad</td>
+						<td>Calidad/Plataforma</td>
+						</tr>';
+						foreach (array(0,1,2,3,4,5,6,7,8,9) as $i) {
+							if(isset($_POST['pelicula'.$i]) && isset($_POST['pelicula_cantidad'.$i]) && isset($_POST['calidad'.$i])){
+							if($_POST['pelicula'.$i]!="" && $_POST['pelicula_cantidad'.$i]!="" && $_POST['calidad'.$i]!=""){
+								$sql = "select 
+										cantidad_alquiler_pelicula('".$_POST['pelicula'.$i]."', '".$_POST['calidad'.$i]."'), 
+										id_pelicula_a_nombre('".$_POST['pelicula'.$i]."') 
+										from dual";
+								foreach ($con->query($sql) as $fila) {
+									$res = $fila[0];
+									$nombre = $fila[1];
 								}
-								echo '<div>
-										<img src="img_peliculas/'.$res[0].'"/>
-										<span>'.$res[1].'</span>
-										<span>'.$_POST['pelicula_cantidad'.$i].'</span>
-										<span>'.$_POST['calidad'.$i].'</sapn>
-									</div>';
-								$cont++;
-								$cantidad_total=$cantidad_total+$_POST['pelicula_cantidad'.$i] ;
-								$sql = "insert into lineas_alquileres_peliculas values(id_lap.nextval,
-								".$_POST['pelicula_cantidad'.$i].", ".$_POST['oferta'].", 
-								'$id_alquiler', ".$res[0].", '".$_POST['calidad'.$i]."' )";
-								echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/>';
+								if($res != -1){
+									if($res >= $_POST['pelicula_cantidad'.$i]){
+										echo '<tr>
+												<td class="timagen"><img src="img_peliculas/'.$_POST['pelicula'.$i].'"/></td>
+												<td class="tnombre">'.$nombre.'</td>
+												<td class="tcantidad">'.$_POST['pelicula_cantidad'.$i].'</td>
+												<td class="tcalidad">'.$_POST['calidad'.$i];
+										$cont++;
+										$cantidad_total=$cantidad_total+$_POST['pelicula_cantidad'.$i] ;
+										$sql = "insert into lineas_alquileres_peliculas values(id_lap.nextval,
+										".$_POST['pelicula_cantidad'.$i].", ".$_POST['oferta'].", 
+										'$id_alquiler', ".$_POST['pelicula'.$i].", '".$_POST['calidad'.$i]."' )";
+										echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/></td>
+											</tr>';
+									}else{
+										echo '<tr>
+												<td class="timagen"><img src="img_peliculas/'.$_POST['pelicula'.$i].'"/></td>
+												<td class="tnombre">'.$nombre.'</td>
+												<td class="trcantidad">'.$res.'</td>
+												<td class="tcalidad">'.$_POST['calidad'.$i];
+										$cont++;
+										$cantidad_total=$cantidad_total+$res ;
+										$sql = "insert into lineas_alquileres_peliculas values(id_lap.nextval,
+										".$res.", ".$_POST['oferta'].", 
+										'$id_alquiler', ".$_POST['pelicula'.$i].", '".$_POST['calidad'.$i]."' )";
+										echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/></td>
+											</tr>';
+									}
+								}else{
+									echo '<tr class="noExiste"><td colspan="4">No existe la pelicula con el identificador '.$_POST['pelicula'.$i].' y calidad '.$_POST['calidad'.$i].'</td></tr>';
+								}
 							}
 							}
 							
 						}
-						foreach (array("",0,1,2,3,4,5,6,7,8) as $i) {
-							if(isset($_POST['juego'.$i])){
-							if($_POST['juego'.$i]!=""){
-								$sql = "select id_juego, nombre from juegos where id_juego=".$_POST['juego'.$i];
-								$res = $con->query($sql);
-								foreach ($res as $fila) {
-									$res = $fila;
+						foreach (array(0,1,2,3,4,5,6,7,8,9) as $i) {
+							if(isset($_POST['juego'.$i]) && isset($_POST['juego_cantidad'.$i]) && isset($_POST['plataforma'.$i])){
+							if($_POST['juego'.$i]!="" && $_POST['juego_cantidad'.$i]!="" && $_POST['plataforma'.$i]!=""){
+								$sql = "select 
+										cantidad_alquiler_juego('".$_POST['juego'.$i]."', '".$_POST['plataforma'.$i]."'), 
+										id_juego_a_nombre('".$_POST['juego'.$i]."') 
+										from dual";
+								foreach ($con->query($sql) as $fila) {
+									$res = $fila[0];
+									$nombre = $fila[1];
 								}
-								echo '<div>
-										<img src="img_juegos/'.$res[0].'"/>
-										<span>'.$res[1].'</span>
-										<span>'.$_POST['juego_cantidad'.$i].'</span>
-										<span>'.$_POST['plataforma'.$i].'</sapn>
-									</div>';
-								$cont++;
-								$cantidad_total=$cantidad_total+$_POST['pelicula_cantidad'.$i] ;
-								$sql = "insert into lineas_alquileres_juegos values(id_laj.nextval,
-								".$_POST['juego_cantidad'.$i].", ".$_POST['oferta'].", 
-								'$id_alquiler', ".$res[0].", '".$_POST['plataforma'.$i]."' )";
-								echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/>';
+								if($res != -1){
+									if($res >= $_POST['juego_cantidad'.$i]){
+										echo '<tr>
+												<td class="timagen"><img src="img_juegos/'.$_POST['juego'.$i].'"/></td>
+												<td class="tnombre">'.$nombre.'</td>
+												<td class="tcantidad">'.$_POST['juego_cantidad'.$i].'</td>
+												<td class="tcalidad">'.$_POST['plataforma'.$i];
+										$cont++;
+										$cantidad_total=$cantidad_total+$_POST['juego_cantidad'.$i] ;
+										$sql = "insert into lineas_alquileres_juegos values(id_laj.nextval,
+										".$_POST['juego_cantidad'.$i].", ".$_POST['oferta'].", 
+										'$id_alquiler', ".$_POST['juego'.$i].", '".$_POST['plataforma'.$i]."' )";
+										echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/></td>
+										</tr>';
+									}else{
+										echo '<tr>
+												<td class="timagen"><img src="img_juegos/'.$_POST['juego'.$i].'"/></td>
+												<td class="tnombre">'.$nombre.'</td>
+												<td class="trcantidad">'.$res.'</td>
+												<td class="tcalidad">'.$_POST['plataforma'.$i];
+										$cont++;
+										$cantidad_total=$cantidad_total+$res ;
+										$sql = "insert into lineas_alquileres_juegos values(id_laj.nextval,
+										".$res.", ".$_POST['oferta'].", 
+										'$id_alquiler', ".$_POST['juego'.$i].", '".$_POST['plataforma'.$i]."' )";
+										echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/></td>
+										</tr>';
+									}
+								}else{
+									echo '<tr class="noExiste"><td colspan="4">No existe el juego con el identificador '.$_POST['juego'.$i].' y plataforma '.$_POST['plataforma'.$i].'</td></tr>';
+								}
 							}
 							}
 							
 						}
+						echo '</table>';
 						$sql="select to_char(precio, '990.99') from ofertas where id_oferta=".$_POST['oferta'];
 						$res = $con->query($sql);
 						foreach ($res as $fila) {
 							$precio=$fila[0];
 						}
 						$precio_total = $cantidad_total*$precio;
-						echo '<span>Cantidad total: '.$cantidad_total.'   Precio total: '.$precio_total;
+						echo '<span>Cantidad total: '.$cantidad_total.'   Precio total: '.$precio_total.'</span>';
 						echo '<input type="submit" value="Confirmar alquiler"/>
 						</form>';
 
-					}elseif (isset($_POST['socio'])) {//Completar el alquiler
+					}elseif (isset($_POST['socio'])) {//Seleccionar articulos
+						$socio = $_POST['socio'];
+						$sql = "select articulos_para_devolver('$socio') from dual";
+						foreach ($con->query($sql) as $fila) {
+							$res = $fila[0];
+						}
+						if($res<1){
 						echo '<h3>Articulos</h3>
 						<form METHOD="POST" ACTION="add_alquiler.php">
 						<span>Peliculas: </span>
-						<input type="button" onclick="add(\'.pelicula\', \'lineasPeliculas\')" value="+">
-						<input type="button" onclick="del(\'.pelicula\', \'lineasPeliculas\')" value="-">
+						<input type="button" onclick="cloneRow(\'.filaPelicula\', \'tablaPeliculas\', \'pelicula\')" value="+"/>
+						<input type="button" onclick="deleteRow(\'tablaPeliculas\', \'pelicula\')" value="-"/>
 								<input type="hidden" value="'.$_POST['socio'].'" name="dni"/>';
 						$sql="select calidad from calidad_visual";
 						$res = $con->query($sql);
@@ -194,36 +286,57 @@
 							$plataforma= $plataforma.'
 									<option>'.$fila[0].'</option>';
 						}
-						
-							echo '
-							<div id="lineasPeliculas">
-								<div class="pelicula">
-									<span>id_pelicula</span>
-									<input type="text" name="pelicula" class="pelicula" pattern="\d{1,20}"/>
-									<span>Cantidad</span>
-									<input type="text" size="5" name="pelicula_cantidad" class="cantidad" pattern="\d|10"/>
-									<select name="calidad" class="calidad">
-									'.$calidad.'
-									</select>
-								</div>
-								</div>';
-						
+							echo '<table id="tablaPeliculas">
+							<tr class="filaPelicula">
+							<td>ID Pelicula</td>
+							<td><input type="text" name="pelicula" class="id" pattern="\d{1,20}"/></td>
+							<td>Cantidad: </td>
+							<td><input type="text" size="5" name="pelicula_cantidad" class="cantidad" pattern="\d|10"/></td>
+							<td><select name="calidad" class="calidad">'.$calidad.'</select></td>
+							</tr>
+							</table>';
+							// echo '
+							// <div id="lineasPeliculas">
+							// 	<div class="pelicula">
+							// 		<span>id_pelicula</span>
+							// 		<input type="text" name="pelicula" class="pelicula" pattern="\d{1,20}"/>
+							// 		<span>Cantidad</span>
+							// 		<input type="text" size="5" name="pelicula_cantidad" class="cantidad" pattern="\d|10"/>
+							// 		<select name="calidad" class="calidad">
+							// 		'.$calidad.'
+							// 		</select>
+							// 	</div>
+							// 	</div>';
 						
 							echo '<div id="lineasJuegos">
 
 							<span>Juegos: </span>
-							<input type="button" onclick="add(\'.juego\', \'lineasJuegos\')" value="+"/>
-							<input type="button" onclick="del(\'.juego\', \'lineasJuegos\')" value="-"/>
-							<div class="juego">
-									<span>id_juego</span>
-									<input type="text" name="juego" class="pelicula" pattern="\d{1,20}"/>
-									<span>Cantidad</span>
-									<input type="text" size="5" name="juego_cantidad" class="cantidad" pattern="\d|10"/>
-									<select name="plataforma" class="calidad">
-									'.$plataforma.'
-									</select>
-								</div>
-								</div>';
+							<input type="button" onclick="cloneRow(\'.filaJuego\', \'tablaJuegos\', \'juego\')" value="+"/>
+							<input type="button" onclick="deleteRow(\'tablaJuegos\', \'juego\')" value="-"/></div>
+							<table id="tablaJuegos">
+							<tr class="filaJuego">
+								<td>ID Juego</td>
+								<td><input type="text" name="juego" class="id" pattern="\d{1,20}"/></td>
+								<td>Cantidad: </td>
+								<td><input type="text" size="5" name="juego_cantidad" class="cantidad" pattern="\d|10"/></td>
+								<td><select name="plataforma" class="calidad">'.$plataforma.'</select></td>
+							</tr>
+							</table>';
+							// echo '<div id="lineasJuegos">
+
+							// <span>Juegos: </span>
+							// <input type="button" onclick="add(\'.juego\', \'lineasJuegos\')" value="+"/>
+							// <input type="button" onclick="del(\'.juego\', \'lineasJuegos\')" value="-"/>
+							// <div class="juego">
+							// 		<span>id_juego</span>
+							// 		<input type="text" name="juego" class="pelicula" pattern="\d{1,20}"/>
+							// 		<span>Cantidad</span>
+							// 		<input type="text" size="5" name="juego_cantidad" class="cantidad" pattern="\d|10"/>
+							// 		<select name="plataforma" class="calidad">
+							// 		'.$plataforma.'
+							// 		</select>
+							// 	</div>
+							// 	</div>';
 						
 						$sql="select * from ofertas";
 						echo "<h3>Ofertas</h3>";
@@ -251,7 +364,9 @@
 						<input type="text" name="tiempo" pattern="\d{1,3}" required/></div>
 						<input type="submit" value="Terminar alquiler"/>
 						</form>';
-
+						}else{
+							echo '<div class="incorrecto"><p>Este socio todavia no ha devuelto todos los alquileres.</p></div>';
+						}
 					}elseif(isset($_POST['sql0'])){//Insertando alquiler
 						$i=0;
 						$res = 1==1;

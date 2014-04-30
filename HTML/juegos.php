@@ -195,7 +195,7 @@
 								foreach ( $con->query($sql2) as $fila) {
 									//if($cont>=$pagina_inicio&&$cont<$pagina_fin){
 										echo '<tr>
-												<td class="imagen"><img src="'.$fila[1].'" /></td>
+												<td class="imagen"><a href="articulo.php?id_juego='.$fila[0].'"><img src="'.$fila[1].'" /></a></td>
 												<td class="nombre"><a href="articulo.php?id_juego='.$fila[0].'">'.$fila[2].'</a></td>
 												<td class="ano">'.$fila[3].'</td>
 												<td class="punt">'.$fila[4].'</td>

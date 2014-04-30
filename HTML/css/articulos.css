@@ -1,18 +1,22 @@
-#seccion img{
-	height: 150px;
-	width: 110px;
-	float:left;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
+#seccion .imagen img{
+    height: 150px;
+    width: 110px;
+    -moz-border-radius: 1px;
+    -webkit-border-radius: 1px;
+    border-radius: 3px;
+    box-shadow: 5px 5px 10px #333333;
+    transition: 0.5s;
 }
-
+#seccion .imagen img:hover{
+    transform: scale(0.9,0.9);
+    box-shadow: 5px 5px 10px #ffffff;
+}
 #seccion #buscador{
     background-color: #eaf8fc;
     background-image: linear-gradient(#fff, #d4e8ec);
     -moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
     border-style: solid;
     border-color: #c4d9df #a4c3ca #83afb7;            
     width: 500px;
@@ -21,12 +25,12 @@
     margin: 0px auto 0px;
 }
 #seccion #buscador .search{
-	 margin:0 auto 4px auto; 
-	 width:300px;
+     margin:0 auto 4px auto; 
+     width:300px;
 }
 #seccion #buscador .search #busqueda{
-	height: 22px;
-	width:220px;
+    height: 22px;
+    width:220px;
 }
 
 #seccion #buscador .search #buscar{       
@@ -61,35 +65,45 @@
 }
 
 #seccion #separador{
-	border: solid #000000 1px;
+    border: solid #000000 1px;
 }
 #seccion .imagen{
-	width: 120px;
+    width: 120px;
 }
 #seccion .nombre{
-	width: 270px;
+    width: 270px;
+}
+#seccion .nombre a:hover{
+    font-weight: bold;
 }
 #seccion .ano{
-	text-align:center;
-	width: 70px;
+    text-align:center;
+    width: 70px;
 }
 #seccion .punt{
-	text-align:center;
-	width: 79px;
+    text-align:center;
+    width: 79px;
 }
 #seccion .punt img{
-	text-align:center;
-	width: 79px;
-	height: 16px;	
+    text-align:center;
+    width: 79px;
+    height: 16px;   
 }
 #seccion .num{
-	text-align:center;
-	width: 95px;
+    text-align:center;
+    width: 95px;
+}
+#seccion #paginacion{
+    text-align:center;
 }
 #seccion #paginacion li{
-	display: inline-block;
+    display: inline-block;
+    font-weight: bold;
+}
+#seccion #paginacion a{
+    margin: 1px;
 }
 #seccion a{
-	text-decoration:none; 
-	color: black;
+    text-decoration:none; 
+    color: black;
 }

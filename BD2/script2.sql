@@ -738,9 +738,7 @@ begin
 	return aux1;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return -1;
 end;
 /
 
@@ -755,9 +753,7 @@ begin
 	return aux1;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return -1;
 end;
 /
 
@@ -772,9 +768,7 @@ begin
 	return aux1;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return -1;
 end;
 /
 
@@ -789,9 +783,7 @@ begin
 	return aux1;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return -1;
 end;
 /
 
@@ -845,9 +837,7 @@ begin
 	return res;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return '-1';
 end;
 /
 
@@ -862,9 +852,7 @@ begin
 	return res;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return '-1';
 end;
 /
 --Funcion que le das el id_pelicula y te devuelve la puntuacion media

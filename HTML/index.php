@@ -49,7 +49,7 @@
 						echo '</ul>
 							</article>
 							<article>
-								<h2>Novedades Juegs</h2>
+								<h2>Novedades Juegos</h2>
 								<ul>';
 						$sql= 'select nombre, imagen, id_juego from juegos order by year desc';
 						$contador = 0;
@@ -193,7 +193,10 @@
 			?>
 		</aside>
 		<footer id="pie">
-			Derechos Reservados &copy; 2013-2014
+			<p>
+			    <img src="img_ori/vcss.gif" />
+			    <img src="img_ori/valid-html5.png"/>
+			</p>
 		</footer>
 	</div>
 </body>

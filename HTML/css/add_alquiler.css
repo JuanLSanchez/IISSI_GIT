@@ -8,3 +8,28 @@
 #seccion table{
 	width: 100%;
 }
+#seccion #tablaPeliculas tr:first-child{
+    display:none;
+}
+#seccion #tablaJuegos tr:first-child{
+    display:none;
+}
+#seccion #resultadoFinal .tcalidad{
+    text-align:center;
+}
+#seccion #resultadoFinal .tcantidad{
+    text-align:center;
+}
+#seccion #resultadoFinal .timagen{
+    text-align:center;
+}
+#seccion #resultadoFinal .trcantidad{
+    text-align:center;
+    font-weight: 900;
+    color:red;
+}
+#seccion #resultadoFinal .noExiste td{
+	text-align: center;
+    background:#eb9881;
+    border-radius: 5px;
+}

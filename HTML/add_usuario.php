@@ -7,6 +7,7 @@
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
+	<link rel="stylesheet" href="css/add.css">
 
 	<script type="text/javascript">
 		function procesaFormulario(){
@@ -80,8 +81,27 @@
 					$email = $_POST['email'];
 					$telefono = $_POST['telefono'];
 					$key = $_POST['key'];
-					$sql = "insert into socios values ('$dni', '$nombre', to_date('$nacido', 'DD/MM/yyyy'), sysdate, '$direccion', '$email', '$telefono', '$key')";
-					$res = $con->exec($sql);
+					list ($month1, $day1, $year1) = explode ("/", $nacido);
+					$res = 0;
+					if(!checkdate($month1, $day1, $year1)){
+						echo '<div class="incorrecto"><p>Fecha incorrecta.</p></div>';
+					}elseif(!(preg_match("/^\w\d{8}|^\d{8}\w/",$dni))){
+						echo '<div class="incorrecto"><p>DNI, incorrecto.</p></div>';
+					}elseif(strlen ($nombre)>50||strlen ($nombre)<1){
+						echo '<div class="incorrecto"><p>Longitud del nombre incorrecta, tiene que estar entre 1 y 50 caracteres</p></div>';
+					}elseif(strlen ($direccion)>50||strlen ($direccion)<1){
+						echo '<div class="incorrecto"><p>Longitud de la direccion incorrecta, tiene que estar entre 1 y 50 caracteres</p></div>';
+					}elseif(strlen ($email)>50||strlen ($email)<1){
+						echo '<div class="incorrecto"><p>Longitud del email incorrecta, tiene que estar entre 1 y 50 caracteres</p></div>';
+					}elseif(!preg_match("/^\d{9}|^$/", $telefono)){
+						echo '<div class="incorrecto"><p>Telefono incorrecto tiene que ser un numero de 9 digitos o dejarlo en blanco</p></div>';
+					}else{
+						$sql = "insert into socios values ('$dni', '$nombre', to_date('$nacido', 'DD/MM/yyyy'), sysdate, '$direccion', '$email', '$telefono', '$key')";
+						$res = $con->exec($sql);
+						if(!$res==1){
+							echo '<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';	
+						}
+					}
 
 					if($res==1){
 						if($_FILES['imagen']['error']==0){
@@ -89,8 +109,9 @@
 						}	
 						echo '<div class="correcto"><p> El usuario se ha insertado correctamente </p></div>';
 					}else{
-						echo '<div class="incorrecto"><p> El usuario no se ha insertado correctamente </p></div>
-						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+						echo '<div class="incorrecto"><p> El usuario no se ha insertado correctamente </p></div>';
+						
+						
 					}
 					CerrarConexionBD($con);
 				}

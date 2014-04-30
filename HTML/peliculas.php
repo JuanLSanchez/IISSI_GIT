@@ -195,7 +195,7 @@
 								foreach ( $con->query($sql2) as $fila) {
 									//if($cont>=$pagina_inicio&&$cont<$pagina_fin){
 										echo '<tr>
-												<td class="imagen"><img src="'.$fila[1].'" /></td>
+												<td class="imagen"><a href="articulo.php?id_pelicula='.$fila[0].'"><img src="'.$fila[1].'"/></a></td>
 												<td class="nombre"><a href="articulo.php?id_pelicula='.$fila[0].'">'.$fila[2].'</a></td>
 												<td class="ano">'.$fila[3].'</td>';
 												if($fila[4]=="-"){
@@ -230,6 +230,7 @@
 									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina+1).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'">></a></li>
 										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.ceil($cont).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'">>></a></li>';
 								}
+								echo "</ul>";
 								CerrarConexionBD($con);
 							}else{
 								echo '</table>';

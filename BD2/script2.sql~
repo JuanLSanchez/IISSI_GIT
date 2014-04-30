@@ -738,9 +738,7 @@ begin
 	return aux1;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return -1;
 end;
 /
 
@@ -755,9 +753,7 @@ begin
 	return aux1;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return -1;
 end;
 /
 
@@ -772,9 +768,7 @@ begin
 	return aux1;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return -1;
 end;
 /
 
@@ -789,9 +783,7 @@ begin
 	return aux1;
 exception
 	when no_data_found then
-		raise_application_error
-		(-20600,
-		'No disponemos de ese articulo');
+		return -1;
 end;
 /
 
@@ -1170,7 +1162,7 @@ begin
 		update relacion_peliculas_calidad set alquiler = alquiler-:new.cantidad where id_pelicula=:new.id_pelicula and calidad=:new.calidad;
 	end if;
 	if deleting then
-		update relacion_peliculas_calidad set alquiler = alquiler+:old.cantidad where id_pelicula=:old.id_pelicula and calidad=:new.calidad;
+		update relacion_peliculas_calidad set alquiler = alquiler+:old.cantidad where id_pelicula=:old.id_pelicula and calidad=:old.calidad;
 	end if;
 	if updating then
 		select dni into socio from alquileres where id_alquiler=:old.id_alquiler;

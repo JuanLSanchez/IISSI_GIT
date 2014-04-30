@@ -1,0 +1,6 @@
+#seccion img{
+	height: 100px;
+}
+#seccion li{
+	display: inline-block;
+}

@@ -5,4 +5,12 @@
 #seccion #cantidades .tipo{
 	text-align: left;
 }
+#seccion input:focus{
+    background:#F0F94D;
+    border-radius: 5px;
+}
+#seccion textarea:focus{
+    background:#F0F94D;
+    border-radius: 5px;
+}
 
