@@ -1,0 +1,45 @@
+#seccion li{
+	display: inline-block;
+	list-style: none;
+	padding: 10px;
+	margin: 0px;
+}
+
+#seccion ul{
+	padding: 0px;
+	margin: 0px;
+}
+
+#seccion figcaption{
+	margin:0px;
+	padding: 0px;
+	width: 100px;
+	white-space: nowrap;
+	overflow: hidden; 
+	text-overflow: ellipsis;
+	
+	text-align: center;	
+}
+
+#seccion h2, h3{
+	clear: both;
+	text-align: center;
+	padding: 0px;
+	border-bottom: 2px solid #999999;
+}
+
+
+#seccion img {
+	
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;	
+	height: 150px;
+	
+	
+}
+
+.iz{
+	float:left;
+}
+
