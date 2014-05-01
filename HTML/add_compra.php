@@ -12,6 +12,27 @@
 		var cont=0;
 		var pelicula=0;
 		var juego=0;
+		var comestible=0;
+		function getNumPeliculas(){
+			return pelicula;
+		}
+		function getNumJuegos(){
+			return juego;
+		}
+		function getNumComestible(){
+			return comestible;
+		}
+		function addComestible(clonado, lugar){
+			var aux=0;
+			cont=comestible;
+			var itm=document.querySelector(clonado);
+			var cln=itm.cloneNode(true);
+			cln.querySelector(".pelicula").setAttribute("name",cln.querySelector(".pelicula").getAttribute("name")+cont);
+			cln.querySelector(".cantidad").setAttribute("name",cln.querySelector(".cantidad").getAttribute("name")+cont);
+			document.getElementById(lugar).appendChild(cln);
+			comestible++;
+			document.compra.elements["numcomestibles"].value = comestible;
+		};
 		function add(clonado, lugar){
 			if(clonado==".pelicula"){
 				cont=pelicula;
@@ -26,8 +47,10 @@
 			document.getElementById(lugar).appendChild(cln);
 			if(clonado==".pelicula"){
 				pelicula++;
+				document.compra.elements["numcomestibles"].value = pelicula;
 			}else{
 				juego++;
+				document.compra.elements["numcomestibles"].value = juego;
 			}
 		};
 
@@ -36,10 +59,16 @@
 			if(clonado==".pelicula" && pelicula>0){
 				puntero.removeChild(puntero.childNodes[puntero.childNodes.length-1]);
 				pelicula--;
+				document.compra.elements["numcomestibles"].value = pelicula;
 			}else if(clonado==".juego" && juego>0){
 				puntero.removeChild(puntero.childNodes[puntero.childNodes.length-1]);
 				juego--;
-			} 
+				document.compra.elements["numcomestibles"].value = juego;
+			}else if(clonado==".comestible" && comestible>0){
+				puntero.removeChild(puntero.childNodes[puntero.childNodes.length-1]);
+				comestible--;
+				document.compra.elements["numcomestibles"].value = comestible;
+			}
 		}
 
 	</script>
@@ -112,7 +141,11 @@
 						$id_compras=$_POST['id_compra'];
 						$sql = "insert into compras values($id_compras, sysdate, '".$_POST['dni']."')";
 						echo '<input type="hidden" name="sql'.$cont.'" value="'.$sql.'"/>';
-						foreach (array("",0,1,2,3,4,5,6,7,8) as $i) {
+						$array1 = array("");
+						for($i=0;$i<$_POST['numpeliculas'];$i++){
+							$array1[$i+1] = $i;
+						}
+						foreach ($array1 as $i) {
 							if(isset($_POST['pelicula'.$i])){
 							if($_POST['pelicula'.$i]!=""){
 								$sql = "select id_pelicula, nombre from peliculas where id_pelicula=".$_POST['pelicula'.$i];
@@ -124,7 +157,7 @@
 										<img src="img_peliculas/'.$res[0].'"/>
 										<span>'.$res[1].'</span>
 										<span>'.$_POST['pelicula_cantidad'.$i].'</span>
-										<span>'.$_POST['calidad'.$i].'</sapn>
+										<span>'.$_POST['calidad'.$i].'</span>
 									</div>';
 								$cont++;
 								$cantidad_total=$cantidad_total+$_POST['pelicula_cantidad'.$i] ;
@@ -134,7 +167,11 @@
 							}
 							
 						}
-						foreach (array("",0,1,2,3,4,5,6,7,8) as $i) {
+						$array2 = array("");
+						for($i=0;$i<$_POST['numjuegos'];$i++){
+							$array2[$i+1] = $i;
+						}
+						foreach ($array2 as $i) {
 							if(isset($_POST['juego'.$i])){
 							if($_POST['juego'.$i]!=""){
 								$sql = "select id_juego, nombre from juegos where id_juego=".$_POST['juego'.$i];
@@ -146,23 +183,46 @@
 										<img src="img_juegos/'.$res[0].'"/>
 										<span>'.$res[1].'</span>
 										<span>'.$_POST['juego_cantidad'.$i].'</span>
-										<span>'.$_POST['plataforma'.$i].'</sapn>
+										<span>'.$_POST['plataforma'.$i].'</span>
 									</div>';
 								$cont++;
-								$cantidad_total=$cantidad_total+$_POST['pelicula_cantidad'.$i] ;
+								$cantidad_total=$cantidad_total+$_POST['juego_cantidad'.$i] ;
 								$sql = "insert into lineas_compras_juegos values(".$res[0].", '$id_compras',".$_POST['juego_cantidad'.$i].",'".$_POST['plataforma'.$i]."')";
+								echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/>';
+							}
+							}
+						}
+						$array3 = array("");
+						for($i=0;$i<$_POST['numcomestibles'];$i++){
+							$array3[$i+1] = $i;
+						}
+						foreach ($array3 as $i) {
+							if(isset($_POST['comestible'.$i])){
+							if($_POST['comestible'.$i]!=""){
+								$sql = "select id_comestible, nombre from comestibles where id_comestible=".$_POST['comestible'.$i];
+								$res = $con->query($sql);
+								foreach ($res as $fila) {
+									$res = $fila;
+								}
+								echo '<div>
+										<img src="img_comestibles/'.$res[0].'"/>
+										<span>'.$res[1].'</span>
+										<span>'.$_POST['comestible_cantidad'.$i].'</span>
+									</div>';
+								$cont++;
+								$cantidad_total=$cantidad_total+$_POST['comestible_cantidad'.$i] ;
+								$sql = "insert into lineas_compras_comestibles values(".$_POST['comestible_cantidad'.$i].",".$res[0].",'$id_compras')";
 								echo '<input type="hidden" value="'.$sql.'" name="sql'.$cont.'"/>';
 							}
 							}
 							
 						}
-						
 						echo '<input type="submit" value="Confirmar compra"/>
 						</form>';
 
 					}elseif (isset($_POST['socio'])) {//Completar la compra
 						echo '<h3>Articulos</h3>
-						<form METHOD="POST" ACTION="add_compra.php">
+						<form name="compra" METHOD="POST" ACTION="add_compra.php">
 						<span>Peliculas: </span>
 						<input type="button" onclick="add(\'.pelicula\', \'lineasPeliculas\')" value="+">
 						<input type="button" onclick="del(\'.pelicula\', \'lineasPeliculas\')" value="-">
@@ -211,12 +271,26 @@
 									</select>
 								</div>
 								</div>';
-						
+							echo '<div id="lineasComestibles">
+
+							<span>Juegos: </span>
+							<input type="button" onclick="addComestible(\'.comestible\', \'lineasComestibles\')" value="+"/>
+							<input type="button" onclick="del(\'.comestible\', \'lineasComestibles\')" value="-"/>
+							<div class="comestible">
+									<span>id_comestible</span>
+									<input type="text" name="comestible" class="pelicula" pattern="\d{1,20}"/>
+									<span>Cantidad</span>
+									<input type="text" size="5" name="comestible_cantidad" class="cantidad"/>
+								</div>
+								</div>';
 						$sql="select id_compra.nextval from dual";
 						foreach ($con->query($sql) as $fila) {
 							echo '<input type="hidden" name="id_compra" value="'.$fila[0].'"/>';
 						}
 						echo '
+						<input type="hidden" value="1" name="numpeliculas" id="np"/>
+						<input type="hidden" value="1" name="numcomestibles" id="nc"/>
+						<input type="hidden" value="1" name="numjuegos" id="nj"/>
 						<input type="submit" value="Terminar Compra"/>
 						</form>';
 
