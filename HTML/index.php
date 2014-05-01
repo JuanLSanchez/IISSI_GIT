@@ -30,7 +30,9 @@
 						$sql = 'select nombre, imagen, id_pelicula from peliculas order by year desc';
 						$contador = 0;
 						echo '<article >
-									<h2>Novedades Peliculas</h2>
+									<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Fecha&torden=desc&peliculas=5">
+										<h2>Novedades Peliculas</h2>
+									</a>
 									<ul>';
 						foreach ($con->query($sql) as $fila){
 							echo '<li>
@@ -49,7 +51,9 @@
 						echo '</ul>
 							</article>
 							<article>
-								<h2>Novedades Juegos</h2>
+								<a href="juegos.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Fecha&torden=desc&juegos=5">
+									<h2>Novedades Juegos</h2>
+								</a>
 								<ul>';
 						$sql= 'select nombre, imagen, id_juego from juegos order by year desc';
 						$contador = 0;
@@ -70,15 +74,20 @@
 						echo '</ul>
 							</article>
 							<article>
-								<h2> Películas mas Populares</h2>
+								<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Alquileres&torden=desc&peliculas=5">
+									<h2> Películas mas Populares</h2>
+								</a>
 								<ul>';
 
 						$con = CrearConexionBD();
 							$sql = "select id_pelicula, imagen, nombre, 
-							id_pelicula_a_alquileres(id_pelicula) alquileres
-							from peliculas
-							where rownum<=5
-							order by alquileres desc";
+								id_pelicula_a_alquileres(id_pelicula) alquileres
+								from
+									(select id_pelicula, imagen, nombre, 
+									id_pelicula_a_alquileres(id_pelicula) alquileres
+									from peliculas
+									order by alquileres desc)
+								where rownum<=5";
 							foreach ($con->query($sql) as $fila) {
 							 	echo '<li>
 										<a href="articulo.php?id_pelicula='.$fila[0].'">
@@ -96,15 +105,20 @@
 					</ul>
 				</article>
 				<article>
-					<h2>Juegos mas Populares</h2>
+					<a href="juegos.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Alquileres&torden=desc&juegos=5">
+						<h2>Juegos mas Populares</h2>
+					</a>
 					<ul>
 						<?php
 							$con = CrearConexionBD();
 							$sql = "select id_juego, imagen, nombre, 
 							id_juego_a_alquileres(id_juego) alquileres
-							from juegos
-							where rownum<=5
-							order by alquileres desc";
+							from
+								(select id_juego, imagen, nombre, 
+								id_juego_a_alquileres(id_juego) alquileres
+								from juegos
+								order by alquileres desc)
+							where rownum<=5";
 							foreach ($con->query($sql) as $fila) {
 							 	echo '<li>
 										<a href="articulo.php?id_juego='.$fila[0].'">
@@ -122,15 +136,20 @@
 					</ul>
 				</article>
 				<article>
-					<h2> Películas mas Valoradas</h2>
+					<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Puntuacion&torden=desc&peliculas=5">
+						<h2> Películas mas Valoradas</h2>
+					</a>
 					<ul>
 						<?php
 							$con = CrearConexionBD();
 							$sql = "select id_pelicula, imagen, nombre, 
 									id_pelicula_a_puntuacion(id_pelicula) puntuacion
-									from peliculas
-									where rownum<=5
-									order by puntuacion desc";
+									from
+										(select id_pelicula, imagen, nombre, 
+										id_pelicula_a_puntuacion(id_pelicula) puntuacion
+										from peliculas
+										order by puntuacion desc)
+									where rownum<=5";
 							foreach ($con->query($sql) as $fila) {
 							 	echo '<li>
 							<a href="articulo.php?id_pelicula='.$fila[0].'">
@@ -145,15 +164,20 @@
 					</ul>
 				</article>
 				<article>
-					<h2>Juegos mas Valorados</h2>
+					<a href="juegos.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Puntuacion&torden=desc&juegos=5">
+						<h2>Juegos mas Valorados</h2>
+					</a>
 					<ul>
 						<?php
 							$con = CrearConexionBD();
 							$sql = "select id_juego, imagen, nombre, 
 									id_juego_a_puntuacion(id_juego) puntuacion
-									from juegos
-									where rownum<=5
-									order by puntuacion desc";
+									from
+										(select id_juego, imagen, nombre, 
+										id_juego_a_puntuacion(id_juego) puntuacion
+										from juegos 
+										order by puntuacion desc)
+									where rownum<=5";
 							foreach ($con->query($sql) as $fila) {
 							 	echo '<li>
 							<a href="articulo.php?id_juego='.$fila[0].'">

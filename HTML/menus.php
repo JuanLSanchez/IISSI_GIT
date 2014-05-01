@@ -11,15 +11,15 @@ function Menu(){
 			<input type="submit" value="Logout" class="boton"/>
 		</form>
 		<ul>				
-			<li><a href="alquileres.php">Alquileres</a></li>
-			<li><a href="devoluciones.php?dni='.$_SESSION['dni'].'">Devoluciones pendientes</a></li>
-			<li><a href="amigos.php">Amigos</a></li>
-			<li><a href="pendientes.php">Pendientes</a></li>
-			<li><a href="favoritas.php">Favoritas</a></li>
-			<li><a href="vistas.php">Vistas</a></li>
-			<li><a href="puntuaciones.php?dni='.$_SESSION['dni'].'">Mis puntuaciones</a></li>
-			<li><a href="perfil.php?dni='.$_SESSION['dni'].'">Mi perfil</a></li>
-			<li><a href="buscasocio.php">Buscar Socio</a></li>
+			<li onclick="location.href=\'alquileres.php\'">Alquileres</li>
+			<li onclick="location.href=\'devoluciones.php?dni='.$_SESSION['dni'].'\'">Devoluciones pendientes</li>
+			<li onclick="location.href=\'amigos.php\'">Amigos</li>
+			<li onclick="location.href=\'pendientes.php\'">Pendientes</li>
+			<li onclick="location.href=\'favoritas.php\'">Favoritas</li>
+			<li onclick="location.href=\'vistas.php\'">Vistas</li>
+			<li onclick="location.href=\'puntuaciones.php?dni='.$_SESSION['dni'].'\'">Mis puntuaciones</li>
+			<li onclick="location.href=\'perfil.php?dni='.$_SESSION['dni'].'\'">Mi perfil</li>
+			<li onclick="location.href=\'buscasocio.php\'">Buscar Socio</li>
 		</ul>';	
 	}else{				
 		echo '<form method="POST" action="index.php" enctype="application/x-www-form-urlencoded">
@@ -33,31 +33,31 @@ function Menu(){
 	if($dni=='00000000A'){
 		echo'<p class="separador"> </p>
 			<ul>
-				<li><a href="add.php?articulo=pelicula">Añadir pelicula</a></li>
-				<li><a href="add.php?articulo=juego">Añadir juego</a></li>
-				<li><a href="add_usuario.php">Añadir usuario</a></li>
-				<li><a href="add_comestible.php">Añadir comestble</a></li>
-				<li><a href="usuario_con_devoluciones.php">Usuarios con devoluciones pendientes</a></li>
-				<li><a href="add_alquiler.php">Alquiler</a></li>
-				<li><a href="add_devolucion.php?buscar=">Devolucion</a></li>
-				<li><a href="">Compras</a></li>
-				<li><a href="">Ofertas</a></li>
-				<li><a href="generos_juegos.php">Generos Juegos</a></li>
-				<li><a href="plataformas.php">Plataformas</a></li>
-				<li><a href="generos_peliculas.php">Generos Peliculas</a></li>
-				<li><a href="calidad.php">Calidades</a></li>
+				<li onclick="location.href=\'add.php?articulo=pelicula\'">Añadir pelicula</li>
+				<li onclick="location.href=\'add.php?articulo=juego\'">Añadir juego</li>
+				<li onclick="location.href=\'add_usuario.php\'">Añadir usuario</li>
+				<li onclick="location.href=\'add_comestible.php\'">Añadir comestble</li>
+				<li onclick="location.href=\'usuario_con_devoluciones.php\'">Usuarios con devoluciones pendientes</li>
+				<li onclick="location.href=\'add_alquiler.php\'">Alquiler</li>
+				<li onclick="location.href=\'add_devolucion.php?buscar=\'">Devolucion</li>
+				<li onclick="location.href=\'\'">Compras</li>
+				<li onclick="location.href=\'ofertas.php\'">Ofertas</li>
+				<li onclick="location.href=\'generos_juegos.php\'">Generos Juegos</li>
+				<li onclick="location.href=\'plataformas.php\'">Plataformas</li>
+				<li onclick="location.href=\'generos_peliculas.php\'">Generos Peliculas</li>
+				<li onclick="location.href=\'calidad.php\'">Calidades</li>
 
 			</ul>';
 	}
 }
 function Navegador(){
 	echo '<ul>
-		<li><a href="index.php">Inicio</a></li>
-		<li><a href="peliculas.php">Peliculas</a></li>
-		<li><a href="juegos.php">Juegos</a></li>
-		<li><a href="comestibles.php">Comestibles</a></li>
-		<li><a href="informacion.php">Informacion</a></li>
-		<li><a href="manual.php">Manual</a></li>
+		<li onclick="location.href=\'index.php\'">Inicio</li>
+		<li onclick="location.href=\'peliculas.php\'">Peliculas</li>
+		<li onclick="location.href=\'juegos.php\'">Juegos</li>
+		<li onclick="location.href=\'comestibles.php\'">Comestibles</li>
+		<li onclick="location.href=\'informacion.php\'">Informacion</li>
+		<li onclick="location.href=\'manual.php\'">Manual</li>
 	</ul>';
 }	
 ?>

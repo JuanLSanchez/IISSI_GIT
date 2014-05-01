@@ -30,6 +30,11 @@
 						$inicio_year = "";
 						$fin_year = "";
 						$genero = "Ninguno";
+						if(isset($_GET['visualizacion'])){
+							$visualizacion = $_GET['visualizacion'];
+						}else{
+							$visualizacion = 'extendida';
+						}
 						if(isset($_GET['busqueda'])){
 							$busqueda = $_GET['busqueda'];
 							$genero = $_GET['genero'];
@@ -92,7 +97,7 @@
 							<span>Peliculas por paginas: </span>
 							<select name="peliculas">';
 							$cont=5;
-							while($cont<21){
+							while($cont<41){
 								if($_GET["peliculas"]==$cont){
 									echo "<option selected>".$cont."</option>";
 								}else{
@@ -101,7 +106,21 @@
 								$cont=$cont+5;
 							}
 						echo '</select>
-						</div>						
+						</div>
+						<div>
+						<input type="radio" name="visualizacion" value="extendida" id="extendida" ';
+						if($visualizacion == 'extendida'){ echo 'checked';}
+						echo '/>
+						<label for="extendida">Extendido</label>
+						<input type="radio" name="visualizacion" value="resumen" id="resumen" ';
+						if($visualizacion == 'resumen'){ echo 'checked';}
+						echo '/>
+						<label for="resumen">Resumido</label>
+						<input type="radio" name="visualizacion" value="imagenes" id="imagenes" ';
+						if($visualizacion == 'imagenes'){ echo 'checked';}
+						echo '/>
+						<label for="imagenes">Imagenes</label>
+						</div>					
 						</form>
 						<p id="separador"> </p>';
 												
@@ -110,14 +129,7 @@
 					
 				</article>
 				<article >
-					<table>
-						<tr>
-							<td class="imagen"></td>
-							<td class="nombre">Nombre</td>
-							<td class="ano">Año</td>
-							<td class="punt">Puntuacion</td>
-							<td class="num">Alquileres</td>
-						</tr>
+					
 
 						<?php
 							if(isset($_GET['busqueda'])){
@@ -192,24 +204,60 @@
 											where rownum<".$pagina_fin.")
 											where rn>".$pagina_inicio;
 											//echo $sql2;
-								foreach ( $con->query($sql2) as $fila) {
-									//if($cont>=$pagina_inicio&&$cont<$pagina_fin){
-										echo '<tr>
-												<td class="imagen"><a href="articulo.php?id_pelicula='.$fila[0].'"><img src="'.$fila[1].'"/></a></td>
-												<td class="nombre"><a href="articulo.php?id_pelicula='.$fila[0].'">'.$fila[2].'</a></td>
-												<td class="ano">'.$fila[3].'</td>';
-												if($fila[4]=="-"){
-													$puntuacion="<span>-</span>";
-												}else{
-													$puntuacion='<img src="img_ori/'.round($fila[4]).'_estrellas.png"/>';
-												}
-										echo '<td class="punt">'.$puntuacion.'</td>
-												<td class="num">'.$fila[5].'</td>
+								if($visualizacion=="imagenes"){
+									echo '<ul class="imagenes">';
+									foreach ( $con->query($sql2) as $fila) {
+										//if($cont>=$pagina_inicio&&$cont<$pagina_fin){
+											echo '<li class="imagen">
+													<a href="articulo.php?id_pelicula='.$fila[0].'"><img title="'.$fila[2].'" src="'.$fila[1].'"/></a>
+												</li>';
+									}
+									echo "</ul>";
+								}elseif($visualizacion=="resumen"){
+									foreach ( $con->query($sql2) as $fila) {
+											if($fila[4]=="-"){
+														$puntuacion='<td class="punt">-</td>';
+													}else{
+														$puntuacion='<td class="punt"><img src="img_ori/'.round($fila[4]).'_estrellas.png"/></td>';
+													}
+											echo '<table class="resumen">
+												<tr>
+													<td class="imagen" rowspan="4"><a href="articulo.php?id_pelicula='.$fila[0].'"><img src="'.$fila[1].'"/></a></td>
+													<td class="nombre"><a href="articulo.php?id_pelicula='.$fila[0].'">'.$fila[2].'</a></td>
+												</tr>
+												<tr>';
+											echo $puntuacion;	
+											echo '</tr>
+											</table>';										
+									}
+								}else{
+									echo '<table>
+											<tr>
+												<td class="imagen"></td>
+												<td class="nombre">Nombre</td>
+												<td class="ano">Año</td>
+												<td class="punt">Puntuacion</td>
+												<td class="num">Alquileres</td>
 											</tr>';
-									//}
-									//$cont++;
-								}								
-								echo '</table>';
+									foreach ( $con->query($sql2) as $fila) {
+										//if($cont>=$pagina_inicio&&$cont<$pagina_fin){
+											echo '<tr>
+													<td class="imagen"><a href="articulo.php?id_pelicula='.$fila[0].'"><img src="'.$fila[1].'"/></a></td>
+													<td class="nombre"><a href="articulo.php?id_pelicula='.$fila[0].'">'.$fila[2].'</a></td>
+													<td class="ano">'.$fila[3].'</td>';
+													if($fila[4]=="-"){
+														$puntuacion="<span>-</span>";
+													}else{
+														$puntuacion='<img src="img_ori/'.round($fila[4]).'_estrellas.png"/>';
+													}
+											echo '<td class="punt">'.$puntuacion.'</td>
+													<td class="num">'.$fila[5].'</td>
+												</tr>';
+										//}
+										//$cont++;
+									}								
+									echo '</table>';
+								}
 								/*Paginacion*/
 								$sql = "select count(*) from (".$sql.")";
 								foreach ($con->query($sql) as $fila) {
@@ -217,18 +265,18 @@
 								}
 								echo '<ul id="paginacion">';
 								if($pagina>1){
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina=1&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'"><<</a></li>
-										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina-1).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'"><</a></li>';
+									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina=1&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'"><<</a></li>
+										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina-1).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'"><</a></li>';
 								}
 								$i = 0;
 								while ($cont>$i) {
 									$i=$i+1;
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.$i.'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'">'.$i.'</a></li>';
+									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.$i.'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'">'.$i.'</a></li>';
 										
 								}
 								if($pagina<$cont){
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina+1).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'">></a></li>
-										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.ceil($cont).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'">>></a></li>';
+									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina+1).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'">></a></li>
+										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.ceil($cont).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'">>></a></li>';
 								}
 								echo "</ul>";
 								CerrarConexionBD($con);

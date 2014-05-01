@@ -12,20 +12,27 @@
 		function procesaFormulario(){
 			var nombre = document.getElementById("nombre").value;
 			var cantidad = document.getElementById("cantidad").value;
-			var patronCantidad = /\d*/;
+			var patronCantidad = /\d{1,4}/;
 			var precio = document.getElementById("precio").value;
 			var patronPrecio = /\d{1,5}[\,]\d{1,2}/;
+			var error = "";
 			if(nombre==""){
-				alert("Introduzca un nombre valido.");
-				return false;
-			}else if(patronCantidad.test(cantidad)==false){
-				alert("La cantidad tiene que ser mayor o igual a 0.");
-				return false;
-			}else if(patronPrecio.test(precio)==false){
-				alert("Precio incorrecto, siga el ejemplo.");
+				error += '<div class="incorrecto"><p>Introduzca un nombre valido.<div class="incorrecto"><p>';
+			}
+			if(patronCantidad.test(cantidad)==false){
+				error += '<div class="incorrecto"><p>La cantidad tiene que ser mayor o igual a 0.<div class="incorrecto"><p>';
+			}
+			if(patronPrecio.test(precio)==false){
+				error += '<div class="incorrecto"><p>Precio incorrecto, siga el ejemplo.<div class="incorrecto"><p>';
+			}
+			if(error==""){
+				return true;
+			}else{
+
+				document.getElementById("error").innerHTML=error;
 				return false;
 			}
-			return true;			
+			
 		}
 	</script>
 </head>
@@ -43,6 +50,7 @@
 		</nav>
 		<section id="seccion">
 			<article>
+				<div id="error"></div>
 				<?php
 					if(isset($_POST['nombre'])&&$_SESSION['dni'] == '00000000A'){
 						include "conexion.php";
@@ -66,7 +74,7 @@
 						if($_FILES['imagen']['error']==0){
 							copy($_FILES['imagen']['tmp_name'],$imagen);
 						}else{
-							echo "<p>No se h añadido imagen</p>";
+							echo "<p>No se ha añadido imagen</p>";
 						}
 						$res = $con->exec("insert into comestibles values('$id', '$nombre', '$cantidad', '$precio')");
 						if($res==1){
@@ -92,7 +100,7 @@
 					<table>
 						<tr><td>Seleccione la imagen: </td><td><input type="file" name="imagen" /></td></tr>
 						<tr><td>Nombre: </td><td><input type="text" id="nombre" name="nombre" required/></td></tr>
-						<tr><td>Cantidad: </td><td><input type="number" id="cantidad" name="cantidad" pattern="\d*" required/></td></tr>
+						<tr><td>Cantidad: </td><td><input type="number" id="cantidad" name="cantidad"  pattern="\d{1,4}"prequired/></td></tr>
 						<tr><td>Precio: </td><td><input type="text" id="precio" name="precio" placeholder="Ej: 0,3" title="Siga el ejemplo." pattern="\d{1,5}[\,]\d{1,2}" required/></td></tr>
 						<tr><td><input type="SUBMIT" value="Añadir"/></td><td></td></tr>
 					</table>

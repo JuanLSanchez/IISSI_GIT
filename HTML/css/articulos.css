@@ -1,3 +1,17 @@
+#seccion .resumen .nombre{
+    vertical-align: bottom;
+}
+#seccion .resumen .punt{
+    text-align:left;
+    vertical-align: top;
+}
+#seccion .resumen{
+    display: inline-block;
+    width: 50%;
+}
+#seccion .imagenes li{
+    display:inline-block;
+}
 #seccion .imagen img{
     height: 150px;
     width: 110px;
@@ -8,9 +22,11 @@
     transition: 0.5s;
 }
 #seccion .imagen img:hover{
-    transform: scale(0.9,0.9);
+    -webkit-transform: scale(0.9) rotate(4deg);
+    transform: scale(0.9) rotate(4deg);
     box-shadow: 5px 5px 10px #ffffff;
 }
+    
 #seccion #buscador{
     background-color: #eaf8fc;
     background-image: linear-gradient(#fff, #d4e8ec);

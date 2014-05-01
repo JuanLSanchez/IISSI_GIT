@@ -28,8 +28,8 @@
 				error += '<div class="incorrecto"><p>La edad no es correcta.</p></div>';
 			}
 			if(error!=""){
-				//document.getElementById("error").innerHTML=error;
-				alert(error);
+				document.getElementById("error").innerHTML=error;
+				//alert(error);
 				return false;
 			}else{
 				return true;
@@ -55,22 +55,36 @@
 				<?php //Añadir articulo
 				if(isset($_POST['nombre'])&&$_SESSION['dni'] == '00000000A'){
 					$con = CrearConexionBD();
+					//Variables de sesion
+					$_SESSION['addPelicula']['imagen'] = $_FILES['imagen'];
+					$_SESSION['addPelicula']['nombre'] = $_POST["nombre"];
+					$_SESSION['addPelicula']['year'] = $_POST["year"];
+					$_SESSION['addPelicula']['edad'] = $_POST["edad"];
+					$_SESSION['addPelicula']['trailer'] =  $_POST["trailer"];
+					$_SESSION['addPelicula']['sinopsis'] = $_POST["sinopsis"];
 					//Inicializacion de las variables
 					$error = "";
 					$articulo = $_GET['articulo'];
-					$nombre = $_POST["nombre"];
+					$nombre = str_replace("'", "''", $_POST["nombre"]);
 					$edad = $_POST["edad"];
-					$trailer = $_POST["trailer"];
-					$sinopsis = $_POST["sinopsis"];
+					$trailer = str_replace("'", "''", $_POST["trailer"]);
+					$sinopsis = str_replace("'", "''", $_POST["sinopsis"]);
 					$year = $_POST["year"];
-					if ($articulo==""){
-						$error += '<div class="incorrecto"><p>Define el articulo.</p></div>';
+					list ($month1, $day1, $year1) = explode ("/", $year);
+					if(!checkdate($day1, $month1, $year1)){
+						echo '<div class="incorrecto"><p>Fecha incorrecta.</p></div>';
 					}
-					if($nombre==""){
-						$error += '<div class="incorrecto"><p>Introduzca un nombre.</p></div>';
+					if ($articulo==""){
+						$error = $error.'<div class="incorrecto"><p>Define el articulo.</p></div>';
+					}
+					if($nombre==""||strlen($nombre)>50){
+						$error = $error.'<div class="incorrecto"><p>Introduzca un nombre que contenga menos de 50 caracteres.</p></div>';
 					}
 					if(!($edad<=18&&$edad>=0)){
-						$error += '<div class="incorrecto"><p>Edad restrictiva incorrecta.</p></div>';
+						$error = $error.'<div class="incorrecto"><p>Edad restrictiva incorrecta, introduzca una edad entre 0 y 18 años.</p></div>';
+					}
+					if(strlen($sinopsis)>3500){
+						$error = $error.'<div class="incorrecto"><p>Sinopsis demasiado grande, debe tener menos de 3500 caracteres.</p></div>';	
 					}
 					if($error==""){
 						//Obtener un ID
@@ -146,19 +160,45 @@
 					if (isset($_SESSION['dni'])) {
 						if(!($_SESSION['dni'] == '00000000A')){
 							echo '<div class="incorrecto"><p>No eres el administrador, no se guardaran los cambios</p></div>';
+						}else{
+							if(!isset($_SESSION['addPelicula'])||isset($_POST['borrar'])){
+								$_SESSION['addPelicula']['imagen'] = "";
+								$_SESSION['addPelicula']['nombre'] = "";
+								$_SESSION['addPelicula']['year'] = "";
+								$_SESSION['addPelicula']['edad'] = "";
+								$_SESSION['addPelicula']['trailer'] = "" ;
+								$_SESSION['addPelicula']['sinopsis'] = "";
+							}
+							$formulario =$_SESSION['addPelicula'];
 						}
 					}else{
 						echo '<div class="incorrecto"><p>Tienes que loguearte para que se guardaran los cambios</p></div>';
 					}
-					echo '<form METHOD="POST" onsubmit="return procesaFormulario()" ACTION="add.php?articulo='.$_GET['articulo'].'" enctype="multipart/form-data">'
+					echo '<form METHOD="POST" ACTION="add.php?articulo='.$_GET['articulo'].'" enctype="multipart/form-data">
+							<input type="SUBMIT" value="Borrar formulario" name="borrar"/>
+						</form>
+					<form METHOD="POST" onsubmit="return procesaFormulario()" ACTION="add.php?articulo='.$_GET['articulo'].'" enctype="multipart/form-data">'
 				?>
+				<div id="error"></div>
 				<table id= "informacion">
-					<tr><td>Seleccione la imagen: </td><td><input type="file" name="imagen" /></td></tr>
-					<tr><td>Nombre: </td><td><input type="text" name="nombre" id="nombre" required/></td></tr>
-					<tr><td>Año de lanzamiento: </td><td><input placeholder="ej: 15/03/1999" type="date"  title="Siga el ejemplo de la fecha" pattern="^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/]\d{4}$" id="year" name="year"/></td></tr>
-					<tr><td>Edad restrictiva: </td><td><input type="number" title="La edad esta entre 0 y 18" pattern="^\d|1[0-8]$" name="edad" id="edad" required/></td></tr>
-					<tr><td>Trailer(URL): </td><td><input type="text" id="trailer" name="trailer"/></td></tr>
-					<tr><td>Sinopsis: </td><td><textarea id="sinopsis" name="sinopsis" cols="60" rows="15"></textarea></td></tr>
+					<tr><td>Seleccione la imagen: </td><td><input type="file" name="imagen" <?php
+						if($formulario['imagen']!=""){ echo ' value="'.$formulario['imagen']['name'].'" ';}
+					?> /></td></tr>
+					<tr><td>Nombre: </td><td><input type="text" name="nombre" id="nombre" required <?php
+						if($formulario['nombre']!=""){ echo ' value="'.$formulario['nombre'].'" ';}
+					?> /></td></tr>
+					<tr><td>Año de lanzamiento: </td><td><input placeholder="ej: 15/03/1999" type="date"  title="Siga el ejemplo de la fecha" pattern="^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[012])[\/]\d{4}$" id="year" name="year" <?php
+						if($formulario['year']!=""){ echo ' value="'.$formulario['year'].'" ';}
+					?>/></td></tr>
+					<tr><td>Edad restrictiva: </td><td><input type="number" title="La edad esta entre 0 y 18" pattern="^\d|1[0-8]$" name="edad" id="edad" required <?php
+						if($formulario['edad']!=""){ echo ' value="'.$formulario['edad'].'" ';}
+					?>/></td></tr>
+					<tr><td>Trailer(URL): </td><td><input type="text" id="trailer" name="trailer" <?php
+						if($formulario['trailer']!=""){ echo ' value="'.$formulario['trailer'].'" ';}
+					?>/></td></tr>
+					<tr><td>Sinopsis: </td><td><textarea id="sinopsis" name="sinopsis" cols="60" rows="15"><?php
+						if($formulario['sinopsis']!=""){ echo $formulario['sinopsis'];}
+					?></textarea></td></tr>
 				</table>
 				
 

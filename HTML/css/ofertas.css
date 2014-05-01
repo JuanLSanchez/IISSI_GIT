@@ -1,0 +1,23 @@
+#seccion #ofertasActuales{
+    width:100%;
+}
+#seccion #ofertasActuales tr:first-child{
+    height: 30px;
+    font-weight: bold;
+}
+#seccion #ofertasActuales tr{
+    height: 80px;
+}
+#seccion #ofertasActuales input{
+    width:70px;
+}
+#seccion #ofertasActuales .des{
+    width: 300px;
+}
+#seccion #ofertasActuales .des textarea{
+    width: 90%;
+    height: 60px;
+}
+#seccion #nuevo .text textarea{
+    width: 95%;
+}

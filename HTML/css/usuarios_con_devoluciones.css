@@ -8,6 +8,9 @@
     margin: 0px;
     padding: 4px;
 }
+#seccion img{
+  border-radius: 5px;
+}
 @-webkit-keyframes pop {
   50% {
     -webkit-transform: scale(1.2);
