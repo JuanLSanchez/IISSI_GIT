@@ -142,7 +142,7 @@
 						$sql = "insert into compras values($id_compras, sysdate, '".$_POST['dni']."')";
 						echo '<input type="hidden" name="sql'.$cont.'" value="'.$sql.'"/>';
 						$array1 = array("");
-						for($i=0;$i<$_POST['numjuegos'];$i++){
+						for($i=0;$i<$_POST['numpeliculas'];$i++){
 							$array1[$i+1] = $i;
 						}
 						foreach ($array1 as $i) {
@@ -193,7 +193,7 @@
 							}
 						}
 						$array3 = array("");
-						for($i=0;$i<$_POST['numjuegos'];$i++){
+						for($i=0;$i<$_POST['numcomestibles'];$i++){
 							$array3[$i+1] = $i;
 						}
 						foreach ($array3 as $i) {
