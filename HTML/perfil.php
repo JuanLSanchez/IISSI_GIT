@@ -61,10 +61,9 @@
 			?>
 			<!-- Cambiar foto-->
 			<?php
-				if(isset($_SESSION) && isset ($_POST['foto'])){
-					$con = CrearConexionBD();
+				if(isset($_SESSION) && isset ($_POST['cambiarFoto'])){
 					$dni=$_SESSION['dni'];
-					$imagen="img_socios/". $dni;
+					$imagen="img_socios/".$dni;
 					
 					
 					if($_FILES['foto']['error']==0){
@@ -73,10 +72,9 @@
 						echo '<div class = "correcto"><p>Se ha modificado la imagen.</p></div>';				
 					
 					}else{
-						echo '<div class="incorrecto"><p>No se ha modificado la imagen.</p></div>
-						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';	
+						echo '<div class="incorrecto"><p>No se ha modificado la imagen.</p></div>';
 					}			
-					CerrarConexionBD($con);
+					
 				}
 					
 				
@@ -101,11 +99,11 @@
 					}
 				if($dni==$dniS){//Tu perfil
 					echo'<article id="iz">
-						<img src="../img_socios/'.$dni.'" />
-						<form METHOD="POST" ACTION="perfil.php?dni='.$dni.'" enctype="multipart/form-data">
+						<img src="img_socios/'.$dni.'" />
+						<form method="POST" action="perfil.php?dni='.$dni.'" enctype="multipart/form-data">
 							
 							<input type="file" name="foto"/><br />
-							<input type="submit" value="cambiar" name="cambiar"/>
+							<input type="submit" value="cambiar" name="cambiarFoto"/>
 							
 						</form>
 						
@@ -115,10 +113,10 @@
 					echo'<h3>Mi Perfil</h3>
 						<table>
 							<tr><td><span>Nombre: '.$nombre.'</span></td></tr>
-							<tr><td><span>E-mail: </span><form method = "POST"  action = "perfil.php?dni='.$dni.'	">
+							<tr><td><span>E-mail: <form method = "POST"  action = "perfil.php?dni='.$dni.'	">
 														<input type="text"  name = "email"  value="'.$email.'"/>														
-														<input type="submit" value="Modificar"/></td></tr>
-												</form>
+														<input type="submit" value="Modificar"/></form></span></td></tr>
+												
 							<tr><td><span>Registrado: '.$registrado.'</span></td></tr>
 						</table>';
 					
@@ -126,17 +124,16 @@
 					// comentarios
 					$sql = "select id_pelicula_a_nombre(id_pelicula), fecha, texto
 					 	from opiniones_peliculas
-					  	where dni='$dni'";
+					  	where dni='$dni' order by fecha desc";
 					echo '<article id="comentarios">';
+					echo'<h3>Comentarios</h3>';
 					foreach ($con->query($sql) as $fila) {
 						echo'
 							<ul>
-								<li>
-									<h3>Comentarios</h3>
-								</li>
+								
 								<li>
 									<table>
-										<tr class="fila1"><td></span> <span class="Película"> Película: '.$fila[0].' </span></td></tr>
+										<tr class="fila1"><td><span class="Película"> Película: '.$fila[0].' </span></td></tr>
 										<tr class="fila2"><td><span class="Fecha">Fecha del comentario: '.$fila[1].' </span></td></tr>
 										<tr class="fila3"><td>'.$fila[2].'</td></tr>
 									</table>
