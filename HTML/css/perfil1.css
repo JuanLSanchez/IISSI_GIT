@@ -1,0 +1,79 @@
+
+
+ul{
+	margin:0px;
+	padding: 0px;
+}
+#iz{
+	float:left;
+}
+#seccion img {
+	width: 200px;
+}
+
+#de span{
+	font: bold 14px Verdana, sans-serif;
+}
+h3{
+	text-align: center;
+}
+
+
+#genero{
+	width:450px;
+	margin-top: 20px;
+	margin-left: 220px;
+}
+
+
+
+#boton{
+	margin-left: 20px;
+}
+#comentarios{
+	clear: both;
+}
+#comentarios ul{
+	list-style: none;
+}
+.fila1{
+	background: #FB5741;
+}
+.fila2{
+	background: #FB5741;
+}
+.fila3{
+	background: #81BDEB;
+}
+.fecha{
+	float:right;
+}
+#comentarios table{
+	margin-top: 10px;
+	width: 100%;
+	word-wrap: break-word;
+    word-break:break-all;
+	
+}
+
+#de ul li{
+	display:block;
+	margin-left:10px;
+	float:left;
+	
+	
+.autor{
+	margin-right: 20px;
+}
+
+#ACambiosB{
+	
+	margin-top: 10px;
+	
+}
+.salta{
+	margin-right: 20px;
+}
+
+
+
