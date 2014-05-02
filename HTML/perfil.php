@@ -35,8 +35,7 @@
 					if($res){
 						echo '<div class="correcto"><p>Se ha añadido correctamente.</p></div>';
 					}else{
-						echo '<div class="incorrecto"><p>No se ha añadido correctamente.</p></div>
-						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+						echo '<div class="incorrecto"><p>No se ha añadido correctamente.</p></div>';
 					}
 					CerrarConexionBD($con);
 				}
@@ -52,8 +51,8 @@
 					if($res){
 						echo '<div class="correcto"><p>Se ha modificado correctamente.</p></div>';
 					}else{
-						echo '<div class="incorrecto"><p>No se ha modificado correctamente.</p></div>
-						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+						echo '<div class="incorrecto"><p>No se ha modificado correctamente.</p></div>';
+						
 					}
 					CerrarConexionBD($con);
 					
@@ -97,7 +96,30 @@
 						$email=$fila[2];											
 						$registrado=$fila[3];
 					}
+				
+				
+					
 				if($dni==$dniS){//Tu perfil
+					if($_SESSION['dni']=='00000000A'){
+						echo '<div id="administrador">
+						<article>
+							<div id="administracion">
+							<ul>
+							<li>
+							<form METHOD="POST" ACTION="deluser.php?id_'.$articulo.'='.$id.'&eliminar=">
+								<input type="submit" value="Eliminar" id="eliminar"/>
+							</form>
+							</li>
+							<li>
+							<form METHOD="POST" ACTION="moduser.php?id_'.$articulo.'='.$id.'">
+								<input type="submit" value="Modificar" id="modificar"/>
+							</form>
+							</li>
+							</ul>
+							</div>
+						</article>
+						</div>';
+					}
 					echo'<article id="iz">
 						<img src="img_socios/'.$dni.'" />
 						<form method="POST" action="perfil.php?dni='.$dni.'" enctype="multipart/form-data">
@@ -143,10 +165,29 @@
 					
 					echo "</article>";
 				}elseif($amigo){//Perfil de un amigo
-					
+					if($_SESSION['dni']=='00000000A'){
+						echo '<div id="administrador">
+						<article>
+							<div id="administracion">
+								<ul>
+									<li>
+										<form METHOD="POST" ACTION="deluser.php?dni='.$dni.'&eliminar=">											
+											<input type="submit" value="Eliminar" id="eliminar"/>
+										</form>
+									</li>
+									<li>
+										<form METHOD="POST" ACTION="moduser.php?dni='.$dni.'">
+											<input type="submit" value="Modificar" id="modificar"/>
+										</form>
+									</li>
+								</ul>
+							</div>
+						</article>
+						</div>';
+						}
 					foreach ($con->query($sql) as $fila) {
 						echo'<article id="iz">
-						<img src="../img_socios/'.$fila[0].'" />
+						<img src="img_socios/'.$fila[0].'" />
 						</article>';
 						
 						echo'<h3>Perfil</h3>
@@ -156,29 +197,19 @@
 								<tr><td><span>Registrado: '.$registrado.'</span></td></tr>
 							</table>';
 					
-					/*echo'<article id="de">
-							<h3>Perfil</h3>
 					
-							<ul>
-								<li><span class="salta">Nombre: '.$nombre.'</span></li>							
-								<li><span class="salta">E-mail: '.$email.'</span></li>	
-								<li><span class="salta">Registrado: '.$registrado.'</span></li>
-							</ul>
-						</article>';*/
-					}
-					
+					}					
 					
 					// comentarios
 					$sql = "select id_pelicula_a_nombre(id_pelicula), fecha, texto
 					 	from opiniones_peliculas
 					  	where dni='$dni'";
-					echo '<article id="comentarios">';
+					echo '<article id="comentarios">
+						   <h3>Comentarios</h3>';
 					foreach ($con->query($sql) as $fila) {
 						echo'
 							<ul>
-								<li>
-									<h3>Comentarios</h3>
-								</li>
+								
 								<li>
 									<table>
 										<tr class="fila1"><td></span> <span class="Película"> Película: '.$fila[0].' </span></td></tr>
@@ -191,10 +222,30 @@
 					
 					echo "</article>";
 					}else{//perfil de no amigo
+						if($_SESSION['dni']=='00000000A'){
+						echo '<div id="administrador">
+						<article>
+							<div id="administracion">
+								<ul>
+									<li>
+										<form METHOD="POST" ACTION="deluser.php?dni='.$dni.'&eliminar=">
+											<input type="submit" value="Eliminar" id="eliminar"/>
+										</form>
+									</li>
+									<li>
+										<form METHOD="POST" ACTION="moduser.php?dni='.$dni.'">
+											<input type="submit" value="Modificar" id="modificar"/>
+										</form>
+									</li>
+								</ul>
+							</div>
+						</article>
+						</div>';
+						}
 						echo '<div class="incorrecto"><p>No eres amigo</p></div>';
 						foreach ($con->query($sql) as $fila) {
 						echo'<article id="iz">
-							<img class="bl" src="../img_socios/'.$dni.'" />
+							<img class="bl" src="img_socios/'.$dni.'" />
 				
 						</article>';
 						
@@ -203,12 +254,7 @@
 							<tr><td><span>Nombre: '.$nombre.'</span></td></tr>
 							
 						</table>';
-						/*echo'<article id="de">
-							<h3>Perfil</h3>
-				
-							<ul>
-								<li>Nombre: '.$nombre.'</li></br>					
-							</ul>';	*/						
+										
 												
 							echo'<form METHOD="get" ACTION = "perfil.php">
 									<input type="hidden" value="'.$dni.'" name="dni"/>
