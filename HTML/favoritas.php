@@ -40,21 +40,21 @@
 			include "conexion.php";
 			$con = CrearConexionBD();	
 			$dni = $_SESSION['dni'];
-			$sql = "select id_pelicula, id_pelicula_a_nombre(id_pelicula) from peliculas_favoritas where dni='$dni'";
+			$sql = "select id_pelicula, id_pelicula_a_nombre(id_pelicula) from peliculas_favoritos where dni='$dni'";
 			echo'
 		<div id="inicio">
 				
 			<article>
 					<h2>Películas Favoritas</h2>
 			</article>
-
+			<article>
+					
+				<ul>
 			';
 			foreach($con->query($sql) as $fila){
 			
 				echo'
-			<article>
-					
-				<ul>
+
 						
 					<li>
 						<figure>	
@@ -64,12 +64,13 @@
 						</figure>	
 					</li>
 
-				</ul>
-				
-			</article>
+
 			';
 			}
 		echo'
+						</ul>
+				
+			</article>
 		</div>
 		';
 					CerrarConexionBD($con);

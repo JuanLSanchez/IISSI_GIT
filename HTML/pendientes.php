@@ -47,14 +47,15 @@
 			<article>
 					<h2>Películas Pendientes</h2>
 			</article>
-
+			<article>
+			<ul>
 			';
 			foreach($con->query($sql) as $fila){
 			
 				echo'
-			<article>
+			
 					
-				<ul>
+				
 						
 					<li>
 						<figure>	
@@ -64,12 +65,14 @@
 						</figure>	
 					</li>
 
-				</ul>
 				
-			</article>
+				
+			
 			';
 			}
 		echo'
+		</ul>
+		</article>
 		</div>
 		';
 					CerrarConexionBD($con);
