@@ -35,10 +35,10 @@
 						$articulo="juego";
 						$id=$_GET['id_juego'];
 					}//Obtener un ID
-					$nombre = $_POST["nombre"];
+					$nombre = str_replace("'", "''", $_POST["nombre"]);
 					$edad = $_POST["edad"];
-					$trailer = $_POST["trailer"];
-					$sinopsis = $_POST["sinopsis"];
+					$trailer = str_replace("'", "''", $_POST["trailer"]);
+					$sinopsis = str_replace("'", "''", $_POST["sinopsis"]);
 					$year = $_POST["year"];
 					$imagen = "img_".$articulo."s/".$id;
 					//Definir el insert
@@ -134,43 +134,48 @@
 						$year=$fila[5];
 					}
 				echo '<form METHOD="POST" ACTION="mod.php?id_'.$articulo.'='.$id.'" enctype="multipart/form-data">
-				<ul>
-					<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-					<li><img src="'.$imagen.'" /></li>
-					<li><span>Nombre: </span><input type="text" name="nombre" value="'.$nombre.'"/></li>
-					<li><span>Año de lanzamiento(ej: 05/03/1999): </span><input type="text" name="year" value="'.$year.'"/></li>
-					<li><span>Edad restrictiva: </span><input type="text" name="edad" value="'.$edad.'"/></li>
-					<li><span>Trailer(URL): </span><input type="text" name="trailer" value="'.'"/></li>
-					<li><span>Sinopsis: </span><textarea id="sinopsis" name="sinopsis" cols="70" rows="15">'.$sinopsis.'</textarea></li>
-					<li><span>Generos a los que pertenece: </span></li>';
+				<h2>Información General</h2>
+				<table id="informacion">
+					<tr><td colspan="2"><img src="'.$imagen.'" />
+					<input type="file" name="imagen" /></td></tr>
+					<tr><td class="span">Nombre: </td><td><input id="nombre" title="No puede tener mas de 50 caracteres." type="text" name="nombre" value="'.$nombre.'" pattern=".{1,50}" required/></td></tr>
+					<tr><td class="span">Año de lanzamiento: </td><td><input  id="year" placeholder="ej: 05/03/1999" type="text" name="year" value="'.$year.'" pattern="(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/]\d{4}$"/></td></tr>
+					<tr><td class="span">Edad restrictiva: </td><td><input id="edad" type="text" name="edad" value="'.$edad.'" pattern="[0-9]|1[0-8]" title="La edad tiene que estar entre 0 y 18." required/></td></tr>
+					<tr><td class="span">Trailer(URL): </td><td><input id="trailer" type="text" name="trailer" value="'.'" pattern=".{1,150}" title="Maximo 150 caracteres." /></td></tr>
+					<tr><td class="span">Sinopsis: </td><td><textarea id="sinopsis" name="sinopsis" pattern=".{1,3500}" title="Maximo 3500 caracteres.">'.$sinopsis.'</textarea></td></tr>
+				</table>
+					<h2>Generos a los que pertenece: </h2>';
 						//Genero
 						$cont = 0;
 						$nombre = "genero";
 						$sql = "select genero from generos_".$articulo."s";
-						echo '<li>';
 						$sql2 = "select genero from relacion_".$articulo."s_genero where id_".$articulo."=".$id." and genero='";
+						echo '<table>';
 						foreach ($con->query($sql) as $fila) {
+							if($cont%3==0){	echo '<tr>';}
 							if(($con->query($sql2.$fila[0]."'")->fetch())){
-								echo '<div class="check">
-										<input type="checkbox" name="'.$nombre.$cont.'" value="'.$fila[0].'" checked/>
-										<span>'.$fila[0].'</span>
-									</div>';
+								echo '	<td>
+											<input type="checkbox" name="'.$nombre.$cont.'" value="'.$fila[0].'" checked/>
+											'.$fila[0].'
+										</td>';
 							}else{
-								echo '<div class="check">
+								echo '<td>
 										<input type="checkbox" name="'.$nombre.$cont.'" value="'.$fila[0].'"/>
 										<span>'.$fila[0].'</span>
-									</div>';	
+									</td>';	
 							}
-							
+							if($cont%3==2){ echo '</tr>';}
 							$cont++;
 						}
-						echo '</li>
-								<li><span>Cantidades de peliculas: </span></li>
-								<li>
-								<span>Tipo </span>
-								<span>Cantidad de alquiler</span>
-								<span>Cantidad de venta </span>								
-								<span>Precio de venta</span>';
+						echo '</table>';
+						
+						echo '<h2>Cantidades de peliculas: </h2>
+								<table id="cantidades">
+								<tr><td></td>
+								<td>Tipo</td>
+								<td>Cantidad de alquiler</td>
+								<td>Cantidad de venta</td>
+								<td>Precio de venta</td></tr>';
 						if($articulo=="juego"){
 							$sql="select * from plataformas";
 							$sql2="select * from relacion_juegos_plataforma where id_juego=".$id." and plataforma='";
@@ -182,28 +187,27 @@
 						foreach ($con->query($sql) as $fila) {
 							$res=$con->query($sql2.$fila[0]."'")->fetch();
 							if($res){
-								echo '<div class="tipo">
-									<input type="checkbox" name="tipo'.$cont.'" value="'.$fila[0].'" checked/>
-									<span>'.$fila[0].'</span>
-									<input type="text" size=5 name="cantidadalquiler'.$cont.'" value="'.$res[4].'"/>
-									<input type="text" size=5 name="cantidadventa'.$cont.'" value="'.$res[3].'"/>
-									<input type="text" size=5 name="precioventa'.$cont.'" value="'.$res[2].'"/>
-									</div>';
+								echo '<tr>
+									<td><input type="checkbox" name="tipo'.$cont.'" value="'.$fila[0].'" checked/></td>
+									<td class="calidad">'.$fila[0].'</td>
+									<td><input type="text" size=5 name="cantidadalquiler'.$cont.'" value="'.$res[4].'"/></td>
+									<td><input type="text" size=5 name="cantidadventa'.$cont.'" value="'.$res[3].'"/></td>
+									<td><input type="text" size=5 name="precioventa'.$cont.'" value="'.$res[2].'"/></td>
+									</tr>';
 							}else{
-							echo '<div class="tipo">
-									<input type="checkbox" name="tipo'.$cont.'" value="'.$fila[0].'"/>
-									<span>'.$fila[0].'</span>
-									<input type="text" size=5 name="cantidadalquiler'.$cont.'"/>
-									<input type="text" size=5 name="cantidadventa'.$cont.'"/>
-									<input type="text" size=5 name="precioventa'.$cont.'"/>
-									</div>';	
+							echo '<tr>
+									<td><input type="checkbox" name="tipo'.$cont.'" value="'.$fila[0].'"/></td>
+									<td class="calidad">'.$fila[0].'</td>
+									<td><input type="text" size=5 name="cantidadalquiler'.$cont.'"/></td>
+									<td><input type="text" size=5 name="cantidadventa'.$cont.'"/></td>
+									<td><input type="text" size=5 name="precioventa'.$cont.'"/></td>
+									</tr>';	
 							}							
 							$cont++;
 						}
-						echo '</li>';
+						echo '</table>';
 					?>
-					<li><input type="SUBMIT" value="Modificar"/></li>
-				</ul>
+					<input type="SUBMIT" value="Modificar"/>
 			</form>
 			</article>
 		</section>

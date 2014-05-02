@@ -40,7 +40,7 @@ function Menu(){
 				<li onclick="location.href=\'usuario_con_devoluciones.php\'">Usuarios con devoluciones pendientes</li>
 				<li onclick="location.href=\'add_alquiler.php\'">Alquiler</li>
 				<li onclick="location.href=\'add_devolucion.php?buscar=\'">Devolucion</li>
-				<li onclick="location.href=\'\'">Compras</li>
+				<li onclick="location.href=\'add_compra.php\'">Compras</li>
 				<li onclick="location.href=\'ofertas.php\'">Ofertas</li>
 				<li onclick="location.href=\'generos_juegos.php\'">Generos Juegos</li>
 				<li onclick="location.href=\'plataformas.php\'">Plataformas</li>

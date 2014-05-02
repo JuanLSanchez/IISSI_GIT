@@ -1,3 +1,31 @@
+#seccion input{
+  border-radius:5px;
+  border: 1px solid #777777;
+  box-shadow: 2px 1px 0 #828181 inset;
+}
+#seccion input[type="submit"]{
+    background: #ffffff;
+    box-shadow: 2px 1px 0 #828181;
+}
+#seccion input[type="submit"]:active{
+  outline: none;
+  background: #eeeeee;
+  box-shadow: 2px 1px 0 #828181 inset;
+}
+#seccion input[type="submit"]::-moz-focus-inner {
+  border: 0;
+}
+#seccion input[type="submit"]:focus{
+  background: #ffffff;
+}
+#seccion input:focus{
+  background: #F3F781;
+}
+#seccion textarea{
+   border-radius:5px;
+  border: 1px solid #777777;
+  box-shadow: 2px 1px 0 #828181 inset;
+}
 body{
 	background: #999999;
 }

@@ -1,10 +1,37 @@
-ul{
-	margin:0px;
-	padding: 0px;
-}
 #seccion img {
 	width: 200px;
 }
-li{
-	list-style-type: none;
+#seccion textarea{
+	width: 100%;
+	height: 20em;
+}
+#seccion table{
+	width: 100%;
+}
+#seccion .span{
+    text-align: right;
+	width: 12em;
+}
+#seccion #cantidades{
+	text-align: center;
+}
+#seccion #cantidades input{
+    text-align: center;
+    width: 3em;
+}
+#seccion .calidad{
+	text-align: left;
+}
+#seccion #nombre{
+    width: 100%;
+}
+#seccion #year{
+    width: 10em;
+}
+#seccion #edad{
+    width: 3em;
+    text-align: center;
+}
+#seccion #trailer{
+    width: 100%;
 }
