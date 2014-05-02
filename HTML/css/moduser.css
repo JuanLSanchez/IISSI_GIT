@@ -1,0 +1,19 @@
+ul{
+	margin:0px;
+	padding: 0px;
+}
+#seccion img {
+	width: 200px;
+}
+li{
+	list-style-type: none;
+}
+.incorrecto{
+	background: #eb9881;
+	text-align: center;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding-bottom:15px;
+	padding-top: 15px;
+}
