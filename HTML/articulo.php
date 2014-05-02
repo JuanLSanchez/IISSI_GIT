@@ -260,10 +260,9 @@
 							echo "<option>$fila[0]</option>";
 						}
 					}
-					echo '</select>
-					</form>';	
+					echo '</select>';	
 				}
-				
+				echo '</form>';
 			}				
 			echo '</article>
 			</div>
@@ -296,7 +295,7 @@
 					echo '
 				<article id="comentarios">
 						<form METHOD="POST" ACTION="articulo.php?id_'.$articulo.'='.$id.'" enctype="multipart/form-data">
-							<textarea name="comentario" id="comente" cols="90" rows="6" placeholder="Comente algo..."/></textarea>
+							<textarea name="comentario" id="comente" placeholder="Comente algo..."></textarea>
 							<input type="submit" value="Comentar" id="boton"/>
 						</form>
 							<h3>Comentarios</h3>';

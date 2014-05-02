@@ -1,13 +1,5 @@
 #seccion li{
 	display: inline-block;
-	list-style: none;
-	padding: 10px;
-	margin: 0px;
-}
-
-#seccion ul{
-	padding: 0px;
-	margin: 0px;
 }
 
 #seccion figcaption{
@@ -16,27 +8,26 @@
 	width: 100px;
 	white-space: nowrap;
 	overflow: hidden; 
-	text-overflow: ellipsis;
-	
+	text-overflow: ellipsis;	
 	text-align: center;	
 }
 
 #seccion h2{
-	clear: both;
 	text-align: center;
-	padding: 0px;
 	border-bottom: 2px solid #999999;
 }
 
-img {height: 150px}
+#seccion img {
+    height: 150px;
+}
 
-
-#formulario{
+#seccion #formulario{
 	text-align: center;
 	padding-bottom: 10px; 
 	
 }
 
-.iz{
-	float: left;
+#seccion figure{
+    margin:5px;
+    padding: 0px;
 }

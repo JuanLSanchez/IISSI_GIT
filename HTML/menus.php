@@ -11,8 +11,9 @@ function Menu(){
 			<input type="submit" value="Logout" class="boton"/>
 		</form>
 		<ul>				
-			<li onclick="location.href=\'alquileres.php\'">Alquileres</li>
+			<li onclick="location.href=\'alquileres.php\'">Mis Alquileres</li>
 			<li onclick="location.href=\'devoluciones.php?dni='.$_SESSION['dni'].'\'">Devoluciones pendientes</li>
+			<li onclick="location.href=\'mis_reservas.php?dni='.$_SESSION['dni'].'\'">Mis Reservas</li>
 			<li onclick="location.href=\'amigos.php\'">Amigos</li>
 			<li onclick="location.href=\'pendientes.php\'">Pendientes</li>
 			<li onclick="location.href=\'favoritas.php\'">Favoritas</li>

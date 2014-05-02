@@ -53,24 +53,17 @@
 								$sql = "select dni, nombre from socios where 
 											upper(nombre) like upper('%".$cad."%')";
 								
-								
+								echo '<ul>';
 								foreach ( $con->query($sql) as $fila) {
-										echo '<ul class="iz">
-												
-												<li>
-													<a href="perfil.php?dni='.$fila[0].'"><img src="../img_socios/'.$fila[0].'" />
-													<figcaption class="nombre">'.$fila[1].'</figcaption>
+										echo '<li>
+													<a href="perfil.php?dni='.$fila[0].'"><figure><img src="../img_socios/'.$fila[0].'" />
+													<figcaption class="nombre">'.$fila[1].'</figcaption></figure></a>
 													
-												</li>											
-																								
-											</ul>';
-										
-									
-								}						
+												</li>';
+								}
+								echo '</ul>';	
 																
 								CerrarConexionBD($con);
-							}else{
-								echo '</table>';
 							}
 							
 						?>
