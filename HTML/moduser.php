@@ -27,16 +27,14 @@
 						if($_SESSION['dni']=='00000000A'){
 							if($_POST['key']==$_POST['keyr']){
 								$con=CrearConexionBD();
-								$dni=$_SESSION['dni'];
-								
+								$dni=$_SESSION['dni'];								
 								$dni=$_GET['dni'];								
 								$nombreN = $_POST['nombre'];							
 								$nacidoN = $_POST['nacido'];
 								$direccionN = $_POST['direccion'];
 								$emailN = $_POST['email'];
 								$telefonoN = $_POST['telefono'];
-								$keyN = $_POST['key'];														
-								
+								$keyN = $_POST['key'];								
 								$sql="update socios set nombre='$nombreN',nacido='$nacidoN',direccion='$direccionN',
 										email='$emailN',telefono='$telefonoN',key='$keyN' where dni='$dni'";
 								$res=$con->exec($sql);
@@ -49,16 +47,11 @@
 								CerrarConexionBD($con);
 							}else{
 								echo'<p class="incorrecto"> Las contraseñas no coinciden</p>';								
-							}
-							
+							}						
 							
 						}
-					}
-					
+					}	
 						
-						
-						
-					
 				?>
 
 				<?php
@@ -79,18 +72,23 @@
 							}
 							echo'<form METHOD="POST" ACTION="moduser.php?dni='.$dniGet.'">
 									
-									<ul>										
-										<li><input type="hidden" name="dni" value="'.$dni.'"/></li>
-										<li><p>Nombre:<input type="text" name="nombre" value="'.$nombre.'"/></p></li>
-										<li><p>Nacido:<input type="text" name="nacido" value="'.$nacido.'"/></p></li>
-										<li><p>Diección:<input type="text" name="direccion" value="'.$direccion.'"/></p></li>
-										<li><p>E-mail:<input type="text" name="email" value="'.$email.'"/></p></li>
-										<li><p>Teléfono:<input type="text" name="telefono" value="'.$telefono.'"/></p></li>
-										<li><p>Contraseña:<input type="password" name="key" value="'.$key.'"/></p></li>
-										<li><p>Repetir ontraseña:<input type="password" name="keyr" value="'.$keyr.'"/></p></li>
-										<li><input type="submit" name="modificar" value="Modificar"/></li>
-									</ul>
+									<table>										
+										<tr><td>Nombre:</td><td><input type="text" name="nombre" value="'.$nombre.'"/></td></tr>
+										<tr><td>Nacido:</td><td><input type="text" name="nacido" value="'.$nacido.'"/></td></tr>
+										<tr><td>Dirección:</td><td><input type="text" name="direccion" value="'.$direccion.'"/></td></tr>
+										<tr><td>E-mail:</td><td><input type="text" name="email" value="'.$email.'"/></td></tr>
+										<tr><td>Teléfono:</td><td><input type="text" name="telefono" value="'.$telefono.'"/></td></tr>
+										<tr><td>Contraseña:</td><td><input type="password" name="key" value="'.$key.'"/></td></tr>
+										<tr><td>Repetir contraseña:</td><td><input type="password" name="keyr" value="'.$keyr.'"/></td></tr>
+										<tr><td><input type="submit" name="modificar" value="Modificar"/></td></tr>
+										<tr><td><input type="hidden" name="dni" value="'.$dni.'"/></td></tr>
+												
+											
+									</table>
+									
 								 </form>';
+								 
+								 
 							CerrarConexionBD($con);
 						}
 					}

@@ -28,15 +28,14 @@
 					$con = CrearConexionBD();
 
 					$anterior = $_POST['anterior'];
-					$nuevo = $_POST['nuevo'];
-										
+					$nuevo = $_POST['nuevo'];										
 					$sql = "update plataformas set plataforma = '$nuevo' where plataforma = '$anterior'";
 					$res = $con->exec($sql);
 					if($res){
 						echo '<div class="correcto"><p>Se ha modificado correctamente.</p></div>';
 					}else{
-						echo '<div class="incorrecto"><p>No se ha modificado correctamente.</p></div>
-						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+						echo '<div class="incorrecto"><p>No se ha modificado correctamente.</p></div>';
+						
 					}
 					CerrarConexionBD($con);	
 				}
@@ -52,8 +51,8 @@
 					if($res){
 						echo '<div class="correcto"><p>Se ha borrado correctamente.</p></div>';
 					}else{
-						echo '<div class="incorrecto"><p>No se ha borrado correctamente.</p></div>
-						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+						echo '<div class="incorrecto"><p>No se ha borrado correctamente.</p></div>';
+						
 					}
 					CerrarConexionBD($con);
 					
@@ -69,8 +68,8 @@
 					if($res){
 						echo '<div class="correcto"><p>Se ha añadido correctamente.</p></div>';
 					}else{
-						echo '<div class="incorrecto"><p>No se ha añadido correctamente.</p></div>
-						<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+						echo '<div class="incorrecto"><p>No se ha añadido correctamente.</p></div>';
+						
 					}
 					CerrarConexionBD($con);
 					
