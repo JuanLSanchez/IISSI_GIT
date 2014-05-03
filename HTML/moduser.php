@@ -22,19 +22,28 @@
 		</nav>
 		<section id="seccion">
 			<article>
+				
 				<?php
 					if(isset($_POST['modificar'])){//modificar datos
 						if($_SESSION['dni']=='00000000A'){
 							if($_POST['key']==$_POST['keyr']){
-								$con=CrearConexionBD();
-								$dni=$_SESSION['dni'];								
+								$con=CrearConexionBD();																
 								$dni=$_GET['dni'];								
 								$nombreN = $_POST['nombre'];							
 								$nacidoN = $_POST['nacido'];
 								$direccionN = $_POST['direccion'];
 								$emailN = $_POST['email'];
 								$telefonoN = $_POST['telefono'];
-								$keyN = $_POST['key'];								
+								$keyN = $_POST['key'];
+								$imagen="img_socios/".$dni;				
+								if($_FILES['foto']['error']==0){
+							
+									copy($_FILES['foto']['tmp_name'],$imagen);
+									echo '<div class = "correcto"><p>Se ha modificado la imagen.</p></div>';				
+							
+								}else{
+									echo '<div class="incorrecto"><p>No se ha modificado la imagen.</p></div>';
+								}								
 								$sql="update socios set nombre='$nombreN',nacido='$nacidoN',direccion='$direccionN',
 										email='$emailN',telefono='$telefonoN',key='$keyN' where dni='$dni'";
 								$res=$con->exec($sql);
@@ -70,9 +79,10 @@
 								$key = $fila[6];
 								$keyr = $fila[6];
 							}
-							echo'<form METHOD="POST" ACTION="moduser.php?dni='.$dniGet.'">
+							echo'<form METHOD="POST" ACTION="moduser.php?dni='.$dniGet.'" enctype="multipart/form-data">
 									
-									<table>										
+									<table>	
+										<tr><td><input type="file" name="foto"/></td></tr>									
 										<tr><td>Nombre:</td><td><input type="text" name="nombre" value="'.$nombre.'"/></td></tr>
 										<tr><td>Nacido:</td><td><input type="text" name="nacido" value="'.$nacido.'"/></td></tr>
 										<tr><td>Dirección:</td><td><input type="text" name="direccion" value="'.$direccion.'"/></td></tr>

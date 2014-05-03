@@ -61,19 +61,19 @@ h3{
 	margin-left:10px;
 	float:left;
 	
-	
+}	
 .autor{
 	margin-right: 20px;
 }
 
-#ACambiosB{
-	
-	margin-top: 10px;
-	
+#seccion #administracion li{
+	display: inline-block;
 }
-.salta{
-	margin-right: 20px;
-}
+
+
+
+
+
 
 
 
