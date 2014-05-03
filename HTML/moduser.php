@@ -38,11 +38,7 @@
 								$imagen="img_socios/".$dni;				
 								if($_FILES['foto']['error']==0){
 							
-									copy($_FILES['foto']['tmp_name'],$imagen);
-									echo '<div class = "correcto"><p>Se ha modificado la imagen.</p></div>';				
-							
-								}else{
-									echo '<div class="incorrecto"><p>No se ha modificado la imagen.</p></div>';
+									copy($_FILES['foto']['tmp_name'],$imagen);									
 								}								
 								$sql="update socios set nombre='$nombreN',nacido='$nacidoN',direccion='$direccionN',
 										email='$emailN',telefono='$telefonoN',key='$keyN' where dni='$dni'";
@@ -80,7 +76,7 @@
 								$keyr = $fila[6];
 							}
 							echo'<form METHOD="POST" ACTION="moduser.php?dni='.$dniGet.'" enctype="multipart/form-data">
-									
+									<img src="img_socios/'.$dni.'" />
 									<table>	
 										<tr><td><input type="file" name="foto"/></td></tr>									
 										<tr><td>Nombre:</td><td><input type="text" name="nombre" value="'.$nombre.'"/></td></tr>
