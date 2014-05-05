@@ -14,10 +14,10 @@ function Menu(){
 			<li onclick="location.href=\'alquileres.php\'">Mis Alquileres</li>
 			<li onclick="location.href=\'devoluciones.php?dni='.$_SESSION['dni'].'\'">Devoluciones pendientes</li>
 			<li onclick="location.href=\'mis_reservas.php?dni='.$_SESSION['dni'].'\'">Mis Reservas</li>
-			<li onclick="location.href=\'amigos.php\'">Amigos</li>
-			<li onclick="location.href=\'pendientes.php\'">Pendientes</li>
-			<li onclick="location.href=\'favoritas.php\'">Favoritas</li>
-			<li onclick="location.href=\'vistas.php\'">Vistas</li>
+			<li onclick="location.href=\'amigos.php?dni='.$_SESSION['dni'].'\'">Amigos</li>
+			<li onclick="location.href=\'pendientes.php?dni='.$_SESSION['dni'].'\'">Pendientes</li>
+			<li onclick="location.href=\'favoritas.php?dni='.$_SESSION['dni'].'\'">Favoritas</li>
+			<li onclick="location.href=\'vistas.php?dni='.$_SESSION['dni'].'\'">Vistas</li>
 			<li onclick="location.href=\'puntuaciones.php?dni='.$_SESSION['dni'].'\'">Mis puntuaciones</li>
 			<li onclick="location.href=\'perfil.php?dni='.$_SESSION['dni'].'\'">Mi perfil</li>
 			<li onclick="location.href=\'buscasocio.php\'">Buscar Socio</li>

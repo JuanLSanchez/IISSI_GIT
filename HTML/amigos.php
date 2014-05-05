@@ -35,44 +35,57 @@
 		
 		<section id="seccion">
 			
+			
 			<?php
 			include "conexion.php";
-			if(isset($_SESSION['dni'])){
+			if(isset($_SESSION['dni']) && isset($_GET['dni'])){
 
-			$con = CrearConexionBD();	
-			$dni = $_SESSION['dni'];
-			$sql = "select amigo2 from amigos where amigo1='$dni'";			
-			echo'
-			<article >					
-				<h2>Tus Amigos</h2>
-			</article>
-			<article id="amigos">
-			
-				<ul>	
-			';	
-				foreach($con->query($sql) as $fila){
-				$amigo = "select nombre from socios where dni='$fila[0]'";	
-					foreach($con->query($amigo) as $fila2){
-					echo'
-					<a href="perfil.php?dni='.$fila[0].'"><li>
-							
-						<img src=img_socios/'.$fila[0].'>
-								
-						<figcaption class="nombre">'.$fila2[0].'</span>
-					</li></a>
-					';
+				$con = CrearConexionBD();	
+				$dni = $_GET['dni'];
+				$usuario = $_SESSION['dni'];
+				$res = 0;
+				$sql = "select dni_a_nombre(amigo2) from amigos where amigo1='$usuario' and amigo2='$dni'";
+
+				foreach ($con->query($sql) as $fila) {
+					$res = $fila[0];
+				}				
+
+				if($res || $dni == $usuario){
+					if($res){
+						echo '<article >					
+								<h2>Amigos de '.$res.'</h2>
+							</article>
+							<article id="amigos">			
+								<ul>';
+					}else{
+						echo '<article >					
+								<h2>Mis Amigos</h2>
+							</article>
+							<article id="amigos">			
+								<ul>';
 					}
+
+					$sql = "select amigo2, dni_a_nombre(amigo2) from amigos where amigo1='$dni'";	
+					foreach($con->query($sql) as $fila){
+						echo'<li>
+								<a href="perfil.php?dni='.$fila[0].'">
+									<figure>								
+										<img src=img_socios/'.$fila[0].'>									
+										<figcaption class="nombre">'.$fila[1].'</figcaption>
+									</figure>
+								</a>
+							</li>';
+					}
+				}else{
+					header('Location: perfil.php?dni='.$dni);
 				}
-			echo'
+				CerrarConexionBD($con);
+					
+				}
+			?>
 				</ul>
 				
 			</article>
-			';
-			CerrarConexionBD($con);
-			
-			}
-			?>
-			
 		</section>
 
 		

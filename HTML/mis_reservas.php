@@ -32,11 +32,11 @@
 							$sql = "select id_pelicula, id_pelicula_a_nombre(id_pelicula) from reservas_peliculas";
 							echo '<ul>';
 							foreach ($con->query($sql) as $fila) {
-								echo '<a href="articulo.php?id_pelicula='.$fila[0].'"><img title="'.$fila[1].'" src="img_peliculas/'.$fila[0].'"/></a>';
+								echo '<li><a href="articulo.php?id_pelicula='.$fila[0].'"><img title="'.$fila[1].'" src="img_peliculas/'.$fila[0].'"/></a></li>';
 							}
-							$sql = "select id_juego from reservas_juegos";
+							$sql = "select id_juego, id_juego_a_nombre(id_juego) from reservas_juegos";
 							foreach ($con->query($sql) as $fila) {
-								echo '<a href="articulo.php?id_pelicula='.$fila[0].'"><img title="'.$fila[1].'" src="img_peliculas/'.$fila[0].'"/></a>';
+								echo '<li><a href="articulo.php?id_juego='.$fila[0].'"><img title="'.$fila[1].'" src="img_juegos/'.$fila[0].'"/></a></li>';
 							}
 							echo '</ul>';
 							CerrarConexionBD($con);
