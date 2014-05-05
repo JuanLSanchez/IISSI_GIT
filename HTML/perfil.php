@@ -6,7 +6,7 @@
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
-	<link rel="stylesheet" href="css/perfil1.css">
+	<link rel="stylesheet" href="css/perfil.css">
 </head>
 <body>
 	
@@ -114,16 +114,16 @@
 								<img src="img_socios/'.$dni.'" />
 								<form method="POST" action="perfil.php?dni='.$dni.'" enctype="multipart/form-data">
 									
-									<input type="file" name="foto"/><br />
+									<input type="file" name="foto" class="boton_examinar"/><br />
 									<input type="submit" value="cambiar" name="cambiarFoto"/>
 									
 								</form>								
 							</article>
 							<article>
 								<h3>Mi Perfil</h3>
-								<table>
+								<table class="de">
 									<tr><td>Nombre: '.$nombre.'</td></tr>
-									<tr><td>E-mail: <form method = "POST"  action = "perfil.php?dni='.$dni.'	">
+									<tr><td>E-mail: <form method = "POST"  action = "perfil.php?dni='.$dni.'">
 											<input type="text"  name = "email"  value="'.$email.'"/>														
 											<input type="submit" value="Modificar"/></form></td></tr>
 														
@@ -139,7 +139,7 @@
 								</article>
 								<article>
 									<h3>Perfil</h3>
-									<table>
+									<table class="de">
 										<tr><td><span>Nombre: '.$nombre.'</span></td></tr>
 										<tr><td><span>E-mail: '.$email.'</span></td></tr>
 										<tr><td><span>Registrado: '.$registrado.'</span></td></tr>
@@ -155,7 +155,7 @@
 								<img class="bl" src="img_socios/'.$dni.'" />					
 							</article>';						
 							echo'<h3>Perfil</h3>
-								<table>						
+								<table class="de">						
 									<tr><td><span>Nombre: '.$nombre.'</span></td></tr>							
 								</table>';									
 							echo'<form METHOD="get" ACTION = "perfil.php">
@@ -170,29 +170,37 @@
 					if($dni==$dniS || $amigo){
 						echo '<article id="acciones">
 								<ul>
-									<li><a href="amigos.php?dni='.$dni.'">Amigos</a></li>
-									<li><a href="pendientes.php?dni='.$dni.'">Pendientes</a></li>
-									<li><a href="favoritas.php?dni='.$dni.'">Favoritas</a></li>
-									<li><a href="vistas.php?dni='.$dni.'">Vistas</a></li>
-									<li><a href="puntuaciones.php?dni='.$dni.'">Puntuaciones</a></li>
-								<ul>
+									<li onclick="location.href=\'amigos.php?dni='.$dni.'\'">Amigos</li>
+									<li onclick="location.href=\'pendientes.php?dni='.$dni.'\'">Pendientes</li>
+									<li onclick="location.href=\'favoritas.php?dni='.$dni.'\'">Favoritas</a></li>
+									<li onclick="location.href=\'vistas.php?dni='.$dni.'\'">Vistas</li>
+									<li onclick="location.href=\'puntuaciones.php?dni='.$dni.'\'">Puntuaciones</li>
+								</ul>
 						</article>';
-						//comentarios
+						//comentarios peliculas
 						$sql = "select id_pelicula_a_nombre(id_pelicula), fecha, texto from opiniones_peliculas
 					  	where dni='$dni'";
 						echo '<article id="comentarios">
 							   <h3>Comentarios</h3>';
 						foreach ($con->query($sql) as $fila) {
 							echo'
-								<ul>								
-									<li>
-										<table>
-											<tr class="fila1"><td><span class="Película"> Película: '.$fila[0].' </span></td></tr>
-											<tr class="fila2"><td><span class="Fecha">Fecha del comentario: '.$fila[1].' </span></td></tr>
-											<tr class="fila3"><td>'.$fila[2].'</td></tr>
-										</table>
-									</li>
-								</ul>';
+								<table>
+									<tr class="fila1"><td><span> Película: '.$fila[0].' </span></td></tr>
+									<tr class="fila2"><td><span>Fecha del comentario: '.$fila[1].' </span></td></tr>
+									<tr class="fila3"><td>'.$fila[2].'</td></tr>
+								</table>';
+						}
+						echo'</article>
+							 <article id="comentarios">';//comentarios juegos
+						$sql = "select id_juego_a_nombre(id_juego), fecha, texto from opiniones_juegos
+					  	where dni='$dni'";
+						foreach ($con->query($sql) as $fila){
+							echo'
+								<table>
+									<tr class="fila1"><td><span> Juego: '.$fila[0].' </span></td></tr>
+									<tr class="fila2"><td><span>Fecha del comentario: '.$fila[1].' </span></td></tr>
+									<tr class="fila3"><td>'.$fila[2].'</td></tr>
+								</table>';
 						}
 						echo'</article>';
 						
