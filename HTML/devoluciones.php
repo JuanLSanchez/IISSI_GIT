@@ -55,6 +55,17 @@
 			';
 			foreach($con->query($sql) as $fila){
 				$duracion = $fila[2];
+				$pelis = 'select id_pelicula, cantidad from lineas_alquileres_peliculas where id_alquiler='.$fila[0];
+				$juegos = 'select id_juego, cantidad from lineas_alquileres_juegos where id_alquiler='.$fila[0];
+				$array;
+				$cont = 0;
+				foreach($con->query($pelis) as $f){
+					$cont++;
+				}
+				foreach($con->query($juegos) as $fi){
+					$cont++;
+				}
+				if($cont>=1){
 				echo'
 				<article>
 
@@ -70,7 +81,7 @@
 								<td></td>
 						</tr>
 				';
-				$pelis = 'select id_pelicula, cantidad from lineas_alquileres_peliculas where id_alquiler='.$fila[0];
+
 				foreach($con->query($pelis) as $fila2){
 					$peli = 'select nombre, imagen from peliculas where id_pelicula='.$fila2[0];
 					foreach ($con->query($peli) as $fila3){
@@ -84,7 +95,7 @@
 					}
 				}
 				
-				$juegos = 'select id_juego, cantidad from lineas_alquileres_juegos where id_alquiler='.$fila[0];			
+						
 				foreach($con->query($juegos) as $fila4){
 					$juego = 'select nombre, imagen from juegos where id_juego='.$fila4[0];
 					foreach ($con->query($juego) as $fila5){
@@ -103,6 +114,7 @@
 					</table>
 				</article>
 				';
+				}
 			}			
 			echo'	
 			</div>
