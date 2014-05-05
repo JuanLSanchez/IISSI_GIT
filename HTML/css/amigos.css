@@ -1,29 +1,23 @@
-
 #seccion img{
-	
-		max-width: 100px;
+	border-radius: 10px;
+	width: 100px;
 }
 
-#seccion h2{
-	
-		text-align: center;
-		padding: 0px;
-		border-bottom: 2px solid #999999;
+#seccion h2{	
+	text-align: center;
+	border-bottom: 2px solid #999999;
+}
 
+#seccion #amigos li{
+	display:inline-block;	
 }
-#amigos li{
-	display:inline-block;
-	margin-right:40px;
-	
-}
-#amigos img{
-	float:left;
-	:center;
-}
+
 #amigos figcaption{
-	margin-top: 36px;
 	text-align:center;
-	
+    margin:0px;
+}
+#seccion figure{
+    margin:5px;
 }
 #seccion a{
 	text-decoration:none; 
