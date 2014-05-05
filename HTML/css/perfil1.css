@@ -1,4 +1,10 @@
+#seccion #acciones ul{
+	clear: both;
+}
 
+#seccion #acciones li{
+	display: inline-block;
+}
 
 ul{
 	margin:0px;

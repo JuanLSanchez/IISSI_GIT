@@ -81,15 +81,19 @@
 							</a>	
 						</li>';
 				}
+				echo '</ul>				
+					</article>';
 			}else{
 				header('Location: perfil.php?dni='.$dni);
 			}
 			CerrarConexionBD($con);
+		}else{
+								
+			echo'<div class="incorrecto"><p>Tienes que estar logeado</p></div>';
 		}
 		?>
 		
-				</ul>				
-			</article>
+				
 		</section>
 
 		

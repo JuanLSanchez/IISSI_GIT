@@ -70,14 +70,11 @@
 					
 					}else{
 						echo '<div class="incorrecto"><p>No se ha modificado la imagen.</p></div>';
-					}			
-					
-				}				
-				
+					}						
+				}						
 			?>
 			
-			<?php
-				
+			<?php				
 				$con = CrearConexionBD();
 				//tu perfil
 				if(isset($_SESSION['dni'])){ //si esta registrado y quiere ver su perfil
@@ -93,109 +90,113 @@
 						$email=$fila[2];											
 						$registrado=$fila[3];
 					}
-				
-				
-				if($_SESSION['dni']=='00000000A'){//modificar/eliminar solo lo ve el administrador
-						echo '<div id="administrador">
-						<article>
-							<div id="administracion">
-								<ul>
-									<li>
-										<form METHOD="POST" ACTION="deluser.php?dni='.$dni.'&eliminar=">
-											<input type="submit" value="Eliminar" id="eliminar"/>
-										</form>
-									</li>
-									<li>
-										<form METHOD="POST" ACTION="moduser.php?dni='.$dni.'">
-											<input type="submit" value="Modificar" id="modificar"/>
-										</form>
-									</li>
-								</ul>
-							</div>
-						</article>
-						</div>';
-					}	
-				if($dni==$dniS){//Tu perfil
-					
-					echo'<article id="iz">
-							<img src="img_socios/'.$dni.'" />
-							<form method="POST" action="perfil.php?dni='.$dni.'" enctype="multipart/form-data">
-								
-								<input type="file" name="foto"/><br />
-								<input type="submit" value="cambiar" name="cambiarFoto"/>
-								
-							</form>
 							
-						</article>';						
-					
-					echo'<h3>Mi Perfil</h3>
-						<table>
-							<tr><td><span>Nombre: '.$nombre.'</span></td></tr>
-							<tr><td><span>E-mail: <form method = "POST"  action = "perfil.php?dni='.$dni.'	">
-														<input type="text"  name = "email"  value="'.$email.'"/>														
-														<input type="submit" value="Modificar"/></form></span></td></tr>
-												
-							<tr><td><span>Registrado: '.$registrado.'</span></td></tr>
-						</table>';
-					
-					
-					
-				}elseif($amigo){//Perfil de un amigo
-					
-					foreach ($con->query($sql) as $fila) {
+					if($_SESSION['dni']=='00000000A'){//modificar/eliminar solo lo ve el administrador
+							echo '<article id="administracion">
+									<ul>
+										<li>
+											<form METHOD="POST" ACTION="deluser.php?dni='.$dni.'&eliminar=">
+												<input type="submit" value="Eliminar" id="eliminar"/>
+											</form>
+										</li>
+										<li>
+											<form METHOD="POST" ACTION="moduser.php?dni='.$dni.'">
+												<input type="submit" value="Modificar" id="modificar"/>
+											</form>
+										</li>
+									</ul>
+								</article>';
+					}
+
+					if($dni==$dniS){//Tu perfil
+						
 						echo'<article id="iz">
-								<img src="img_socios/'.$fila[0].'" />
+								<img src="img_socios/'.$dni.'" />
+								<form method="POST" action="perfil.php?dni='.$dni.'" enctype="multipart/form-data">
+									
+									<input type="file" name="foto"/><br />
+									<input type="submit" value="cambiar" name="cambiarFoto"/>
+									
+								</form>								
+							</article>
+							<article>
+								<h3>Mi Perfil</h3>
+								<table>
+									<tr><td>Nombre: '.$nombre.'</td></tr>
+									<tr><td>E-mail: <form method = "POST"  action = "perfil.php?dni='.$dni.'	">
+											<input type="text"  name = "email"  value="'.$email.'"/>														
+											<input type="submit" value="Modificar"/></form></td></tr>
+														
+									<tr><td>Registrado: '.$registrado.'</td></tr>
+								</table>
 							</article>';						
-						echo'<h3>Perfil</h3>
-							<table>
-								<tr><td><span>Nombre: '.$nombre.'</span></td></tr>
-								<tr><td><span>E-mail: '.$email.'</span></td></tr>
-								<tr><td><span>Registrado: '.$registrado.'</span></td></tr>
-							</table>';				
-					}					
-					
-					
-				}if($dni==$dniS || $amigo){//comentarios
-					
-					$sql = "select id_pelicula_a_nombre(id_pelicula), fecha, texto from opiniones_peliculas
-				  	where dni='$dni'";
-					echo '<article id="comentarios">
-						   <h3>Comentarios</h3>';
-					foreach ($con->query($sql) as $fila) {
-						echo'
-							<ul>								
-								<li>
+						
+					}elseif($amigo){//Perfil de un amigo
+						
+						foreach ($con->query($sql) as $fila) {
+							echo'<article id="iz">
+									<img src="img_socios/'.$fila[0].'" />
+								</article>
+								<article>
+									<h3>Perfil</h3>
 									<table>
-										<tr class="fila1"><td><span class="Película"> Película: '.$fila[0].' </span></td></tr>
-										<tr class="fila2"><td><span class="Fecha">Fecha del comentario: '.$fila[1].' </span></td></tr>
-										<tr class="fila3"><td>'.$fila[2].'</td></tr>
+										<tr><td><span>Nombre: '.$nombre.'</span></td></tr>
+										<tr><td><span>E-mail: '.$email.'</span></td></tr>
+										<tr><td><span>Registrado: '.$registrado.'</span></td></tr>
 									</table>
-								</li>
-							</ul>';
+								</article>';
+						}
+
+					}else{//perfil de no amigo
+							
+						echo '<div class="incorrecto"><p>No eres amigo</p></div>';
+						foreach ($con->query($sql) as $fila) {
+							echo'<article id="iz">
+								<img class="bl" src="img_socios/'.$dni.'" />					
+							</article>';						
+							echo'<h3>Perfil</h3>
+								<table>						
+									<tr><td><span>Nombre: '.$nombre.'</span></td></tr>							
+								</table>';									
+							echo'<form METHOD="get" ACTION = "perfil.php">
+									<input type="hidden" value="'.$dni.'" name="dni"/>
+									<input type="hidden" value="yes" name="agregar"/>
+									<input type="submit" value="Añadir como amigo">
+							</form>';						
+							
+						}
 					}
-					echo'</article>';
-					
-				}else{//perfil de no amigo
-						
-					echo '<div class="incorrecto"><p>No eres amigo</p></div>';
-					foreach ($con->query($sql) as $fila) {
-						echo'<article id="iz">
-							<img class="bl" src="img_socios/'.$dni.'" />					
-						</article>';						
-						echo'<h3>Perfil</h3>
-							<table>						
-								<tr><td><span>Nombre: '.$nombre.'</span></td></tr>							
-							</table>';									
-						echo'<form METHOD="get" ACTION = "perfil.php">
-								<input type="hidden" value="'.$dni.'" name="dni"/>
-								<input type="hidden" value="yes" name="agregar"/>
-								<input type="submit" value="Añadir como amigo">
-						</form>';						
+
+					if($dni==$dniS || $amigo){
+						echo '<article id="acciones">
+								<ul>
+									<li><a href="amigos.php?dni='.$dni.'">Amigos</a></li>
+									<li><a href="pendientes.php?dni='.$dni.'">Pendientes</a></li>
+									<li><a href="favoritas.php?dni='.$dni.'">Favoritas</a></li>
+									<li><a href="vistas.php?dni='.$dni.'">Vistas</a></li>
+									<li><a href="puntuaciones.php?dni='.$dni.'">Puntuaciones</a></li>
+								<ul>
+						</article>';
+						//comentarios
+						$sql = "select id_pelicula_a_nombre(id_pelicula), fecha, texto from opiniones_peliculas
+					  	where dni='$dni'";
+						echo '<article id="comentarios">
+							   <h3>Comentarios</h3>';
+						foreach ($con->query($sql) as $fila) {
+							echo'
+								<ul>								
+									<li>
+										<table>
+											<tr class="fila1"><td><span class="Película"> Película: '.$fila[0].' </span></td></tr>
+											<tr class="fila2"><td><span class="Fecha">Fecha del comentario: '.$fila[1].' </span></td></tr>
+											<tr class="fila3"><td>'.$fila[2].'</td></tr>
+										</table>
+									</li>
+								</ul>';
+						}
+						echo'</article>';
 						
 					}
-											
-						
-				}
 				}
 				CerrarConexionBD($con)
 			?>
