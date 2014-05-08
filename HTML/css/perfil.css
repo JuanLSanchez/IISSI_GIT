@@ -1,45 +1,47 @@
 #seccion #acciones ul{
 	clear: both;
+    background:#777777;
+    text-align:center;
+    
 }
-
 #seccion #acciones li{
 	display: inline-block;
+    padding:5px;
+    cursor: pointer;
+    color:#ffffff;
+   
+}
+#seccion #acciones li:hover{
+    background:#cccccc;
 }
 
-ul{
+#seccion ul{
 	margin:0px;
 	padding: 0px;
 }
-#iz{
+#seccion #iz{
+    margin-top:10px;
 	float:left;
 }
 #seccion img {
 	width: 200px;
 }
 
-#de span{
-	font: bold 14px Verdana, sans-serif;
-}
-h3{
+#seccion h3{
 	text-align: center;
 }
-
-
-#genero{
+#seccion #genero{
 	width:450px;
 	margin-top: 20px;
 	margin-left: 220px;
 }
-
-
-
-#boton{
+#seccion #boton{
 	margin-left: 20px;
 }
-#comentarios{
+#seccion #comentarios{
 	clear: both;
 }
-#comentarios ul{
+#seccion #comentarios ul{
 	list-style: none;
 }
 .fila1{
@@ -58,24 +60,22 @@ h3{
 	margin-top: 10px;
 	width: 100%;
 	word-wrap: break-word;
-    word-break:break-all;
-	
+    word-break:break-all;	
 }
-
-#de ul li{
+.de{
 	display:block;
-	margin-left:10px;
-	float:left;
-	
+	margin-left:140px;
+	float:left;	
 }	
 .autor{
 	margin-right: 20px;
 }
-
 #seccion #administracion li{
 	display: inline-block;
 }
-
+.boton_examinar{
+	width: 90px;
+}
 
 
 

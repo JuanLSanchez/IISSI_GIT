@@ -42,21 +42,20 @@
 			$dni = $_SESSION['dni'];
 			$sql = "select id_devolucion,fecha from devoluciones where dni='$dni' order by fecha desc";
 			echo'
-		<div id="alquileres">
-				
 			<article>
 					<h2>Alquileres Realizados</h2>
 			</article>
+			<article>
 			';
 			foreach ($con->query($sql) as $fila){
 			echo'
-			<article>
+			
 
 				<table>
 					<tr>
-						<td class="fecha">Fecha: '.$fila[1].'</td>
+						<td class="imagen">Fecha: '.$fila[1].'</td>
 						<td class="nombre">Nombre</td>
-						<td class="precio">Precio</td>
+						<td class="cantidad">Cantidad</td>
 					</tr>
 					';
 					$pelis = 'select id_pelicula, cantidad from lineas_devoluciones_peliculas where id_devolucion='.$fila[0];
@@ -80,8 +79,8 @@
 					foreach ($con->query($juego) as $fila5){
 					echo'
 					<tr>
-						<td class="nombre"><a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" /></a></td>
-						<td class="imagen"><a href="articulo.php?id_juego='.$fila4[0].'"><span class="nombre">'.$fila5[0].'</span></a></td>
+						<td class="imagen"><a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" /></a></td>
+						<td class="nombre"><a href="articulo.php?id_juego='.$fila4[0].'"><span class="nombre">'.$fila5[0].'</span></a></td>
 						<td class="cantidad"><span>'.$fila4[1].'</span></td>
 					</tr>
 					';
@@ -91,12 +90,12 @@
 
 			echo'
 				</table>
-			</article>
+			
 			';
 
 			}
-			echo'				
-		</div>
+			echo'
+			</article>	
 		';
 				CerrarConexionBD($con);
 				}

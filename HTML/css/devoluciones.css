@@ -3,27 +3,45 @@
 	padding: 0px;
 	border-bottom: 2px solid #999999;
 }
-#seccion img {
-	width: 110px;
-	margin: 8px;
-}
 #seccion .nombre{
 	width: 300px;	
 	border-left: 400px;
 }
+#seccion img {
+	width: 110px;
+    margin: 20px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 5px 5px 10px #333333;
+    transition: 0.5s;
+}
+#seccion img:hover{
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    box-shadow: 5px 5px 10px #ffffff;
+}
 #seccion table{
 	border-collapse:collapse; 
-	border: none;
 	width:100%; 
-	
+}
+#seccion td{
+    text-align: center;
 }
 #seccion tr td {
-	text-align: center;
 	height:30px;
 }
-#seccion .primera{
-	background: #81bdeb;
+#seccion tr:first-child td{
+	background: #81bdeb; 
 }
-#seccion .segunda{
-	background: #81bdeb;
+#seccion tr:first-child td:first-child{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#seccion tr:first-child td:last-child{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+#seccion .fechaini{
+    width: 200px;
 }
