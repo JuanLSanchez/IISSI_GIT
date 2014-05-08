@@ -7,6 +7,7 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/mis_reservas.css">
+	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 
 </head>
 <body>
@@ -29,7 +30,9 @@
 						$dni = $_GET['dni'];
 						if($dni==$_SESSION['dni'] || $_SESSION['dni'] == "00000000A"){
 							$con = CrearConexionBD();
-							$sql = "select id_pelicula, id_pelicula_a_nombre(id_pelicula) from reservas_peliculas";
+							$sql = "select id_pelicula, id_pelicula_a_nombre(id_pelicula) 
+										from reservas_peliculas 
+										where dni='$dni'";
 							echo '<ul>';
 							foreach ($con->query($sql) as $fila) {
 								echo '<li><a href="articulo.php?id_pelicula='.$fila[0].'"><img title="'.$fila[1].'" src="img_peliculas/'.$fila[0].'"/></a></li>';

@@ -7,6 +7,7 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/mod.css">
+	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 </head>
 <body>
 		<header id="cabecera">
@@ -141,7 +142,7 @@
 					<tr><td class="span">Nombre: </td><td><input id="nombre" title="No puede tener mas de 50 caracteres." type="text" name="nombre" value="'.$nombre.'" pattern=".{1,50}" required/></td></tr>
 					<tr><td class="span">Año de lanzamiento: </td><td><input  id="year" placeholder="ej: 05/03/1999" type="text" name="year" value="'.$year.'" pattern="(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/]\d{4}$"/></td></tr>
 					<tr><td class="span">Edad restrictiva: </td><td><input id="edad" type="text" name="edad" value="'.$edad.'" pattern="[0-9]|1[0-8]" title="La edad tiene que estar entre 0 y 18." required/></td></tr>
-					<tr><td class="span">Trailer(URL): </td><td><input id="trailer" type="text" name="trailer" value="'.'" pattern=".{1,150}" title="Maximo 150 caracteres." /></td></tr>
+					<tr><td class="span">Trailer(URL): </td><td><input id="trailer" type="text" name="trailer" value=\''.$trailer.'\' pattern=".{1,150}" title="Maximo 150 caracteres." /></td></tr>
 					<tr><td class="span">Sinopsis: </td><td><textarea id="sinopsis" name="sinopsis" pattern=".{1,3500}" title="Maximo 3500 caracteres.">'.$sinopsis.'</textarea></td></tr>
 				</table>
 					<h2>Generos a los que pertenece: </h2>';

@@ -5,8 +5,8 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="stylesheet" href="../css/general.css">
-	<link rel="stylesheet" href="../css/puntuaciones.css">
+	<link rel="stylesheet" href="css/general.css">
+	<link rel="stylesheet" href="css/puntuaciones.css">
 </head>
 <body>
 	

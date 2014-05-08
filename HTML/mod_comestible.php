@@ -7,6 +7,7 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/add.css">
+	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 </head>
 <body>
 	
@@ -23,7 +24,7 @@
 		</nav>
 		<section id="seccion">
 			<article>
-				<?php
+				<?php //Modificar
 					if(isset($_POST['nombre'])&&$_SESSION['dni'] == '00000000A'){
 						$con = CrearConexionBD();
 
@@ -59,22 +60,22 @@
 						}else{
 							$con = CrearConexionBD();
 							$id = $_GET['id_comestible'];
-							$sql = "select * from comestibles where id_comestible='$id'";
+							$sql = "select nombre, cantidad, to_char(precio, '990.99') from comestibles where id_comestible='$id'";
 							
 							$res = $con->query($sql);
 							foreach ($res as $fila) {
-								$nombre = $fila[1];
-								$cantidad = $fila[2];
-								$precio = $fila[3];
+								$nombre = $fila[0];
+								$cantidad = $fila[1];
+								$precio = str_replace(".", ",",$fila[2]);
 							}
 							echo '<form METHOD="POST" ACTION="mod_comestible.php?id_comestible='.$id.'" enctype="multipart/form-data">
-									<ul>
-										<li><span>Seleccione la imagen: </span><input type="file" name="imagen" /></li>
-										<li><span>Nombre: </span><input type="text" name="nombre" value="'.$nombre.'"/></li>
-										<li><span>Cantidad: </span><input type="text" name="cantidad" value="'.$cantidad.'"/></li>
-										<li><span>Precio: </span><input type="text" name="precio" value="'.$precio.'"/></li>
-										<li><input type="SUBMIT" value="Añadir"/></li>
-									</ul>
+									<table>
+										<tr><td>Seleccione la imagen: </td><td><input type="file" name="imagen" /></td></tr>
+										<tr><td>Nombre: </td><td><input type="text" name="nombre" value="'.$nombre.'"/></td></tr>
+										<tr><td>Cantidad: </td><td><input type="text" name="cantidad" value="'.$cantidad.'"/></td></tr>
+										<tr><td>Precio: </td><td><input type="text" name="precio" value="'.$precio.'"/></td></tr>
+										<tr><td><input type="SUBMIT" value="Añadir"/></td><td></td></tr>
+									</table>
 								</form>';
 							CerrarConexionBD($con);
 						}

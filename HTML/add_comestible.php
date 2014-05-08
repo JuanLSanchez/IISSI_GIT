@@ -7,6 +7,8 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/add.css">
+	
+	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 
 	<script type="text/javascript">
 		function procesaFormulario(){
@@ -59,7 +61,7 @@
 						foreach ($res as $fila) {
 							$id=$fila[0];
 						}
-						$nombre=$_POST['nombre'];
+						$nombre=str_replace("'", "''", $_POST['nombre']);
 						if(isset($_POST['cantidad'])){
 							$cantidad=$_POST['cantidad'];
 						}else{

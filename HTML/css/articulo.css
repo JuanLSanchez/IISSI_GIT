@@ -70,6 +70,11 @@
 }
 #seccion .trailer{
 	clear:both;
-	margin:20px;
-	margin-left: 60px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+	max-width: 100%;
+}
+#seccion .trailer iframe{
+    max-width: 100%;
 }

@@ -7,6 +7,7 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/moduser.css">
+	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 </head>
 <body>
 		<header id="cabecera">

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="es">
 
@@ -93,8 +93,8 @@
 					CerrarConexionBD($con);
 		}else{
 								
-								echo'<div class="incorrecto"><p>Tienes que estar logeado</p></div>';
-							}
+			echo'<div class="incorrecto"><p>Tienes que estar logeado</p></div>';
+		}
 		?>
 	</section>
 

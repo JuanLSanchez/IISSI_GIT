@@ -4,9 +4,26 @@
 	<meta charset="utf-8">
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
-	<title>Videoclub ORI</title>
+	<?php
+		include "conexion.php";
+		$con = CrearConexionBD();
+		if(isset($_GET['id_pelicula'])){
+			$id=$_GET['id_pelicula'];
+			$sql = "select nombre from peliculas where id_pelicula='$id'";
+		}else if(isset($_GET['id_juego'])){
+			$id=$_GET['id_juego'];
+			$sql = "select nombre from juegos where id_juego='$id'";
+		}
+		foreach ($con->query($sql) as $fila) {
+			$nom = $fila[0];
+		}
+		echo '<title>'.$nom.'</title>'	;
+		CerrarConexionBD($con);
+	?>
+	
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/articulo.css">
+	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 	<script type="text/javascript">
 		var ul;
 		var b = true;
@@ -47,7 +64,6 @@
 		<div id="cuerpo">
 		<nav id="navegador">
 			<?php
-				include "conexion.php";
 				include "menus.php";
 				Navegador();
 
@@ -106,7 +122,14 @@
 					}else{
 						$sql="delete from reservas_".$articulo."s where id_".$articulo."=$id and dni='$dni'";
 					}
-					$con->exec($sql);
+					$res = $con->exec($sql);
+					if($res){
+						echo '<div class="correcto"><p>Reservada</p></div>';
+					}else{
+						echo '<div class="incorrecto"><p>No se ha podido reservar, asegurese de no tener devoluciones pendientes</p></div>';
+								//<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+					}
+
 				}
 				if(isset($_POST['comentario'])){
 					$sql="insert into opiniones_".$articulo."s values
@@ -286,7 +309,7 @@
 				}
 				echo '.</span></div>';
 				if($trailer!=""){
-					echo '	<div class="trailer"><iframe width="560" height="315" src="'.$trailer.'" frameborder="0" allowfullscreen></iframe></div>';
+					echo '<div class="trailer">'.$trailer.'</div>';
 				}
 					
 				echo '</article>';
