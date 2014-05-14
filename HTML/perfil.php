@@ -122,6 +122,7 @@
 							<article>
 								<h3>Mi Perfil</h3>
 								<table class="de">
+									<tr><td>DNI: '.$dni.'</td></tr>
 									<tr><td>Nombre: '.$nombre.'</td></tr>
 									<tr><td>E-mail: <form method = "POST"  action = "perfil.php?dni='.$dni.'">
 											<input type="text"  name = "email"  value="'.$email.'"/>														
@@ -178,28 +179,28 @@
 								</ul>
 						</article>';
 						//comentarios peliculas
-						$sql = "select id_pelicula_a_nombre(id_pelicula), fecha, texto from opiniones_peliculas
+						$sql = "select id_pelicula_a_nombre(id_pelicula), fecha, id_pelicula, texto from opiniones_peliculas
 					  	where dni='$dni'";
 						echo '<article id="comentarios">
 							   <h3>Comentarios</h3>';
 						foreach ($con->query($sql) as $fila) {
 							echo'
 								<table>
-									<tr class="fila1"><td><span> Película: '.$fila[0].' </span></td></tr>
+									<tr class="fila1"><td><a href="articulo.php?id_pelicula='.$fila[2].'"><span> Película: '.$fila[0].' </span></a></td></tr>
 									<tr class="fila2"><td><span>Fecha del comentario: '.$fila[1].' </span></td></tr>
-									<tr class="fila3"><td>'.$fila[2].'</td></tr>
+									<tr class="fila3"><td>'.$fila[3].'</td></tr>
 								</table>';
 						}
 						echo'</article>
 							 <article id="comentarios">';//comentarios juegos
-						$sql = "select id_juego_a_nombre(id_juego), fecha, texto from opiniones_juegos
+						$sql = "select id_juego_a_nombre(id_juego), fecha, id_juego, texto from opiniones_juegos
 					  	where dni='$dni'";
 						foreach ($con->query($sql) as $fila){
 							echo'
 								<table>
-									<tr class="fila1"><td><span> Juego: '.$fila[0].' </span></td></tr>
+									<tr class="fila1"><td><a href="articulo.php?id_juego='.$fila[2].'"><span> Juego: '.$fila[0].' </span></a></td></tr>
 									<tr class="fila2"><td><span>Fecha del comentario: '.$fila[1].' </span></td></tr>
-									<tr class="fila3"><td>'.$fila[2].'</td></tr>
+									<tr class="fila3"><td>'.$fila[3].'</td></tr>
 								</table>';
 						}
 						echo'</article>';
