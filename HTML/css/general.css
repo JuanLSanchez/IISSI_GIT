@@ -6,6 +6,9 @@ a{
 	text-decoration: none;
 	color:black;
 }
+#menu #login span{
+    font-weight: 900;
+}
 .incorrecto p{
 	background: #eb9881;
 	text-align: center;

@@ -210,7 +210,7 @@
 									foreach ( $con->query($sql2) as $fila) {
 										//if($cont>=$pagina_inicio&&$cont<$pagina_fin){
 											echo '<li class="imagen">
-													<a href="articulo.php?id_pelicula='.$fila[0].'"><img title="'.$fila[2].'" src="'.$fila[1].'"/></a>
+													<a href="articulo.php?id_pelicula='.$fila[0].'"><img alt="'.$fila[2].'" title="'.$fila[2].'" src="'.$fila[1].'"/></a>
 												</li>';
 									}
 									echo "</ul>";
@@ -219,11 +219,11 @@
 											if($fila[4]=="-"){
 														$puntuacion='<td class="punt">-</td>';
 													}else{
-														$puntuacion='<td class="punt"><img src="img_ori/'.round($fila[4]).'_estrellas.png"/></td>';
+														$puntuacion='<td class="punt"><img alt="" src="img_ori/'.round($fila[4]).'_estrellas.png"/></td>';
 													}
 											echo '<table class="resumen">
 												<tr>
-													<td class="imagen" rowspan="4"><a href="articulo.php?id_pelicula='.$fila[0].'"><img src="'.$fila[1].'"/></a></td>
+													<td class="imagen" rowspan="4"><a href="articulo.php?id_pelicula='.$fila[0].'"><img alt="'.$fila[2].'" src="'.$fila[1].'"/></a></td>
 													<td class="nombre"><a href="articulo.php?id_pelicula='.$fila[0].'">'.$fila[2].'</a></td>
 												</tr>
 												<tr>';
@@ -243,13 +243,13 @@
 									foreach ( $con->query($sql2) as $fila) {
 										//if($cont>=$pagina_inicio&&$cont<$pagina_fin){
 											echo '<tr>
-													<td class="imagen"><a href="articulo.php?id_pelicula='.$fila[0].'"><img src="'.$fila[1].'"/></a></td>
+													<td class="imagen"><a href="articulo.php?id_pelicula='.$fila[0].'"><img alt="'.$fila[2].'" src="'.$fila[1].'"/></a></td>
 													<td class="nombre"><a href="articulo.php?id_pelicula='.$fila[0].'">'.$fila[2].'</a></td>
 													<td class="ano">'.$fila[3].'</td>';
 													if($fila[4]=="-"){
 														$puntuacion="<span>-</span>";
 													}else{
-														$puntuacion='<img src="img_ori/'.round($fila[4]).'_estrellas.png"/>';
+														$puntuacion='<img alt="" src="img_ori/'.round($fila[4]).'_estrellas.png"/>';
 													}
 											echo '<td class="punt">'.$puntuacion.'</td>
 													<td class="num">'.$fila[5].'</td>

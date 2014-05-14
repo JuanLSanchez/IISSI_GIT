@@ -5,29 +5,34 @@ function Menu(){
 	if(isset($_SESSION['nombre'])){
 		$nombre = $_SESSION['nombre'];
 		$dni = $_SESSION['dni'];
-		echo '<h4>Usuario: </h4>
+		echo '<div><h4>Usuario: </h4></div>
 		<h4>'.$nombre.'</h4>
 		<form method="POST" action="index.php?logout=" enctype="application/x-www-form-urlencoded">
 			<input type="submit" value="Logout" class="boton"/>
 		</form>
-		<ul>				
+		<ul>
+			<li onclick="location.href=\'perfil.php?dni='.$_SESSION['dni'].'\'">Mi Perfil</li>				
 			<li onclick="location.href=\'alquileres.php\'">Mis Alquileres</li>
-			<li onclick="location.href=\'devoluciones.php?dni='.$_SESSION['dni'].'\'">Devoluciones pendientes</li>
 			<li onclick="location.href=\'mis_reservas.php?dni='.$_SESSION['dni'].'\'">Mis Reservas</li>
-			<li onclick="location.href=\'amigos.php?dni='.$_SESSION['dni'].'\'">Amigos</li>
-			<li onclick="location.href=\'pendientes.php?dni='.$_SESSION['dni'].'\'">Pendientes</li>
+			<li onclick="location.href=\'puntuaciones.php?dni='.$_SESSION['dni'].'\'">Mis Puntuaciones</li>
+			<li onclick="location.href=\'amigos.php?dni='.$_SESSION['dni'].'\'">Mis Amigos</li>
+			<li onclick="location.href=\'historial_compra.php?dni='.$_SESSION['dni'].'\'">Mis Compras</li>
+			<li onclick="location.href=\'devoluciones.php?dni='.$_SESSION['dni'].'\'">Devoluciones Pendientes</li>
+			<li onclick="location.href=\'pendientes.php?dni='.$_SESSION['dni'].'\'">Pendientes Por Ver</li>
 			<li onclick="location.href=\'favoritas.php?dni='.$_SESSION['dni'].'\'">Favoritas</li>
 			<li onclick="location.href=\'vistas.php?dni='.$_SESSION['dni'].'\'">Vistas</li>
-			<li onclick="location.href=\'puntuaciones.php?dni='.$_SESSION['dni'].'\'">Mis puntuaciones</li>
-			<li onclick="location.href=\'perfil.php?dni='.$_SESSION['dni'].'\'">Mi perfil</li>
 			<li onclick="location.href=\'buscasocio.php\'">Buscar Socio</li>
 		</ul>';	
 	}else{				
 		echo '<form method="POST" action="index.php" enctype="application/x-www-form-urlencoded">
 				<div id="login">
-					<span>DNI: </span><input type="text" name="dni"/>
-					<span>Contraseña: </span><input type="password" name="key"/>
+				<ul>
+					<div><span>DNI: </span></div>
+					<div><input type="text" name="dni"/></div>
+					<div><span>Contraseña: </span></div>
+					<div><input type="password" name="key"/></div>
 					<input type="submit" value="Logear" class="boton"/>
+				</ul>
 				</div>
 			</form>';
 	}
