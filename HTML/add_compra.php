@@ -7,7 +7,6 @@
 	<title>Videoclub ORI</title>
 	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/add_compra.css">
-	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 
 	<script>
 		var cont=0;
@@ -124,6 +123,14 @@
 						$res = $con->query($sql);
 						echo '<form METHOD="POST" ACTION="add_compra.php">';
 						echo "<table>";
+						echo'
+								  <tr>
+								  	<td><input type="radio" value="11111111A" name="socio"/></td>
+								  	<td><img src="img_socios/11111111A"/></td>
+									<td>11111111A</td>
+									<td>Usuario Anónimo</td>
+								  </tr>
+						';
 						foreach ($res as $fila) {
 							echo '<tr>
 								<td><input type="radio" value="'.$fila[0].'" name="socio"/></td>
