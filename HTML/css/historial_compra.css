@@ -1,45 +1,29 @@
-#seccion li{
-	display: inline-block;
-	list-style: none;
-	padding: 10px;
-	margin: 0px;
-}
-
-#seccion ul{
-	padding: 0px;
-	margin: 0px;
-}
-
-#seccion figcaption{
-	margin:0px;
-	padding: 0px;
-	width: 100px;
-	white-space: nowrap;
-	overflow: hidden; 
-	text-overflow: ellipsis;
-	
-	text-align: center;	
-}
-
-#seccion h2, h3{
-	clear: both;
+#seccion h2{
 	text-align: center;
 	padding: 0px;
 	border-bottom: 2px solid #999999;
 }
-
-
 #seccion img {
+	width: 110px;
+	margin-top: 5px;
+	border-radius: 10px;
+}
+#seccion .nombre{
+	width: 300px;	
+	border-left: 400px;
+}
+#seccion table{
+	border-collapse:collapse; 
+	border: none;
+	width:100%; 
 	
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;	
-	height: 150px;
-	
-	
+}
+#seccion tr:first-of-type{
+	background: #81bdeb;
+}
+#seccion tr td {
+	text-align: center;
+	height:30px;
 }
 
-.iz{
-	float:left;
-}
 
