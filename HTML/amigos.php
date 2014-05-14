@@ -70,7 +70,7 @@
 						echo'<li>
 								<a href="perfil.php?dni='.$fila[0].'">
 									<figure>								
-										<img src=img_socios/'.$fila[0].'>									
+										<img src="img_socios/'.$fila[0].'" alt="" />									
 										<figcaption class="nombre">'.$fila[1].'</figcaption>
 									</figure>
 								</a>
@@ -99,7 +99,8 @@
 		
 <footer id="pie">
 			
-Derechos Reservados &copy; 2013-2014
+<img src="img_ori/valid-html5.png" alt="" />
+<img src="img_ori/vcss.gif" alt="" />
 		
 </footer>
 	

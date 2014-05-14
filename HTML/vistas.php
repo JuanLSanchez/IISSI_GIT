@@ -64,7 +64,7 @@
 					echo'<li>
 							<a href="articulo.php?id_pelicula='.$fila[0].'">
 								<figure>	
-									<img src="img_peliculas/'.$fila[0].'" />
+									<img src="img_peliculas/'.$fila[0].'" alt=""/>
 									<figcaption> '.$fila[1].' </figcaption>
 								</figure>
 							</a>	
@@ -75,7 +75,7 @@
 					echo'<li>
 							<a href="articulo.php?id_juego='.$fila[0].'">
 								<figure>	
-									<img src="img_juegos/'.$fila[0].'" />
+									<img src="img_juegos/'.$fila[0].'" alt=""/>
 									<figcaption> '.$fila[1].' </figcaption>
 								</figure>
 							</a>	
@@ -107,7 +107,8 @@
 		
 <footer id="pie">
 			
-Derechos Reservados &copy; 2013-2014
+<img src="img_ori/valid-html5.png" alt="" />
+<img src="img_ori/vcss.gif" alt="" />
 		
 </footer>
 	

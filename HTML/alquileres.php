@@ -64,7 +64,7 @@
 					foreach ($con->query($peli) as $fila3){
 					echo'
 					<tr>
-						<td class="imagen"><a href="articulo.php?id_pelicula='.$fila2[0].'"><img src="'.$fila3[1].'" /></a></td>
+						<td class="imagen"><a href="articulo.php?id_pelicula='.$fila2[0].'"><img src="'.$fila3[1].'" alt="" /></a></td>
 						<td class="nombre"><a href="articulo.php?id_pelicula='.$fila2[0].'">'.$fila3[0].'</a></td>
 						<td class="cantidad">'.$fila2[1].'</td>
 					</tr>
@@ -79,7 +79,7 @@
 					foreach ($con->query($juego) as $fila5){
 					echo'
 					<tr>
-						<td class="imagen"><a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" /></a></td>
+						<td class="imagen"><a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" alt="" /></a></td>
 						<td class="nombre"><a href="articulo.php?id_juego='.$fila4[0].'"><span class="nombre">'.$fila5[0].'</span></a></td>
 						<td class="cantidad"><span>'.$fila4[1].'</span></td>
 					</tr>
@@ -113,7 +113,8 @@
 		
 <footer id="pie">
 			
-Derechos Reservados &copy; 2013-2014
+<img src="img_ori/valid-html5.png" alt="" />
+<img src="img_ori/vcss.gif" alt="" />
 		
 </footer>
 	
