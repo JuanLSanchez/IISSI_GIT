@@ -27,7 +27,7 @@
 				<p>En esta página, podemos encontrar una barra superior de navegación en la que disponemos de diferentes sitios (Inicio, Peliculas, Juegos...). Esta barra la llamaremos a partir de ahora Navegador.</p>	
 				<p>Una vez identificados, aparece a la derecha una serie de opciones como Alquileres, Devoluciones pendientes, Amigos... Esto lo identificaremos a partir de ahora como	Menu.</p>
 				<h3>Navegador.</h3>
-				<img src="img_manual/navegador.png"/>
+				<img src="img_manual/navegador.png"alt=""/>
 				<p>Esta barra nos permiter ir a diferentes sitios, todos públicos.</p>
 				<h4>Inicio.</h4>
 				<p>Esta es la página que nos encontraremos por defecto al entrar. Podemos ver diferentes listas de peliculas y videojuegos:</p>
@@ -48,7 +48,7 @@
 				<p>Breve tabla explicativa sobre los requisitos mínimos y extras para el proyecto de IISSI</p>
 				<h3>Menú - Usuario</h3>
 				<p>Cada usuario tendrá este menú en el que podrá ver la información sobre sus películas favoritas, puntuaciones realizadas, etc.</p>
-				<img src="img_manual/menu.png"/>
+				<img src="img_manual/menu.png"alt=""/>
 				<h4>Mis Alquileres</h4>
 				<p>En esta página podemos encontrar el historial de los alquileres realizados en el videoclub ORI. Cada alquiler realizado contendrá la fecha en la que se realizó y la información sobre los nombres de las películas y videojuegos, así como su cantidad alquilada.</p>
 				<h4>Devoluciones Pendientes</h4>
@@ -57,12 +57,12 @@
 				<p>Cada una de estas páginas guarda los artículos que tenemos, respectivamente como favoritos, vistos o pendientes, tanto de ver si se trata de películas, como de jugar si se tratan de juegos.</p>
 				<h4>Mis Reservas.</h4>
 				<p>Contiene la información sobre los artículos reservados por el usuario. Para reservar un artículo solo tenemos que darle al botón |Reservar|, que se encuentra en la página del artículo en cuestión. Como se ve a continuación:</p>
-				<img src="img_manual/reservar.png"/>
+				<img src="img_manual/reservar.png" alt=""/>
 				<h4>Mi perfil</h4>
 				<p>En este apartado encontraremos toda la información sobre nuestro perfil, es decir nuestro DNI, nombre, apellidos, email, etc. Además podemos ver todos los comentarios realizados, tanto de películas como de videojuegos.</p>
 				<h4>Mis Puntuaciones</h4>
 				<p>En esta página, encontramos todos los artículos, tanto películas como videojuegos, puntuados por nosotros.</p>
-				<img src="img_manual/mispuntuaciones.png"/>
+				<img src="img_manual/mispuntuaciones.png" alt=""/>
 				<h4>Mis Amigos</h4>
 				<p>Muestra todos los usuarios que son tus amigos.</p>
 				<h4>Mis Compras</h4>
@@ -82,7 +82,7 @@
 				<p>Podremos añadir comestibles a la web:</p>
 				<img src="img_manual/add_comestible.png" alt="">
 				<h4>Usuarios con Devoluciones Pendientes</h4>
-				<p>Aquí podremos ver a aquellos usuarios que tienen alquileres pendientes.</p>
+				<p>Aquí podremos ver a aquellos usuarios que tienen devoluciones pendientes. Si se clickea en el usuario se muestran los artículos que quedan por devolver.</p>
 				<h4>Alquiler, Devolución, Compras y Ofertas</h4>
 				<p>En estas páginas podremos, respectivamentes, añadir alquileres, devoluciones, compras y ofertas a la web.</p>
 				<img src="img_manual/oferta.png" alt="">
@@ -100,7 +100,6 @@
 				<p>Una vez accedido al perfil de un amigo, se nos mostrará su información pública, como nombre, email, sus películas pendientes...</p>
 				<p>El administrador dispondrá de dos botones auxiliares para modificar la información del usuario o para eliminarlo.</p>
 				<img src="img_manual/amigo.png" alt="">
-				<h4></h4>
 			</article>
 		</section>
 		<aside id="menu">
@@ -109,7 +108,8 @@
 			?>
 		</aside>
 		<footer id="pie">
-			Derechos Reservados &copy; 2013-2014
+			<img src="img_ori/valid-html5.png" alt="" />
+			<img src="img_ori/vcss.gif" alt="" />
 		</footer>
 	</div>
 </body>
