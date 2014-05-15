@@ -5,9 +5,11 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="stylesheet" href="css/general.css">
+	<?php 
+		include "cabecera.php";
+		Cabecera();
+	?>
 	<link rel="stylesheet" href="css/articulos.css">
-	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 </head>
 <body>
 	
@@ -58,7 +60,7 @@
 								<span>Hasta: </span>
 								<input type="text" size="4" name="fin_year" value="'.$fin_year.'"/>
 								<span>Genero: </span>
-								<select name="genero" value="Otro">';
+								<select name="genero">';
 													
 							if($genero == "Ninguno"){
 								echo '<option selected>Ninguno</option>';
@@ -211,7 +213,7 @@
 									foreach ( $con->query($sql2) as $fila) {
 										//if($cont>=$pagina_inicio&&$cont<$pagina_fin){
 											echo '<li class="imagen">
-													<a href="articulo.php?id_juego='.$fila[0].'"><img title="'.$fila[2].'" src="'.$fila[1].'"/></a>
+													<a href="articulo.php?id_juego='.$fila[0].'"><img alt="" title="'.$fila[2].'" src="'.$fila[1].'"/></a>
 												</li>';
 									}
 									echo "</ul>";
@@ -220,11 +222,11 @@
 											if($fila[4]=="-"){
 														$puntuacion='<td class="punt">-</td>';
 													}else{
-														$puntuacion='<td class="punt"><img src="img_ori/'.round($fila[4]).'_estrellas.png"/></td>';
+														$puntuacion='<td class="punt"><img alt="" src="img_ori/'.round($fila[4]).'_estrellas.png"/></td>';
 													}
 											echo '<table class="resumen">
 												<tr>
-													<td class="imagen" rowspan="4"><a href="articulo.php?id_juego='.$fila[0].'"><img src="'.$fila[1].'"/></a></td>
+													<td class="imagen" rowspan="4"><a href="articulo.php?id_juego='.$fila[0].'"><img alt="" src="'.$fila[1].'"/></a></td>
 													<td class="nombre"><a href="articulo.php?id_juego='.$fila[0].'">'.$fila[2].'</a></td>
 												</tr>
 												<tr>';
@@ -235,7 +237,7 @@
 								}else{
 									echo '<table>
 												<tr>
-													<td class="imagen"/>
+													<td class="imagen"></td>
 													<td class="nombre">Nombre</td>
 													<td class="ano">Año</td>
 													<td class="punt">Puntuacion</td>
@@ -243,7 +245,7 @@
 												</tr>';
 									foreach ( $con->query($sql2) as $fila) {										
 											echo '<tr>
-													<td class="imagen"><a href="articulo.php?id_juego='.$fila[0].'"><img src="'.$fila[1].'" /></a></td>
+													<td class="imagen"><a href="articulo.php?id_juego='.$fila[0].'"><img alt="" src="'.$fila[1].'" /></a></td>
 													<td class="nombre"><a href="articulo.php?id_juego='.$fila[0].'">'.$fila[2].'</a></td>
 													<td class="ano">'.$fila[3].'</td>
 													<td class="punt">'.$fila[4].'</td>
@@ -258,22 +260,22 @@
 								foreach ($con->query($sql) as $fila) {
 									$cont = $fila['0']/$pelisPorPaginas;
 								}
-								echo '</ul>
-									<ul id="paginacion">';
+								echo '<ul id="paginacion">';
 								if($pagina>1){
-									echo '<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina=1&juegos='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'"><<</a></li>
-										<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina-1).'&juegos='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'"><</a></li>';
+									echo '<li><a href="juegos.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina=1&amp;juegos='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'"><<</a></li>
+										<li><a href="juegos.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina='.($pagina-1).'&amp;juegos='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'"><</a></li>';
 								}
 								$i = 0;
 								while ($cont>$i) {
 									$i=$i+1;
-									echo '<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.$i.'&juegos='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'">'.$i.'</a></li>';
+									echo '<li><a href="juegos.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina='.$i.'&amp;juegos='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'">'.$i.'</a></li>';
 										
 								}
 								if($pagina<$cont){
-									echo '<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina+1).'&juegos='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'">></a></li>
-										<li><a href="juegos.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.ceil($cont).'&juegos='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'">>></a></li>';
+									echo '<li><a href="juegos.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina='.($pagina+1).'&amp;juegos='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'">></a></li>
+										<li><a href="juegos.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina='.ceil($cont).'&amp;juegos='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'">>></a></li>';
 								}
+								echo '</ul>';
 								CerrarConexionBD($con);
 							}else{
 								echo '</table>';

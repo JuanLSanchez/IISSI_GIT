@@ -5,7 +5,10 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="stylesheet" href="css/general.css">
+	<?php 
+		include "cabecera.php";
+		Cabecera();
+	?>
 	<link rel="stylesheet" href="css/buscasocio.css">
 </head>
 <body>
@@ -48,22 +51,24 @@
 							if(isset($_GET['busqueda'])){
 								//Iniciacion de variables
 								$con = CrearConexionBD();
-								$cad = urldecode($_GET['busqueda']);											
-																
-								$sql = "select dni, nombre from socios where 
-											upper(nombre) like upper('%".$cad."%')";
-								
-								echo '<ul>';
-								foreach ( $con->query($sql) as $fila) {
-										echo '<li>
-													<a href="perfil.php?dni='.$fila[0].'"><figure><img src="../img_socios/'.$fila[0].'" />
-													<figcaption class="nombre">'.$fila[1].'</figcaption></figure></a>
-													
-												</li>';
+								if($con){
+									$cad = urldecode($_GET['busqueda']);											
+																	
+									$sql = "select dni, nombre from socios where 
+												upper(nombre) like upper('%".$cad."%')";
+									
+									echo '<ul>';
+									foreach ( $con->query($sql) as $fila) {
+											echo '<li>
+														<a href="perfil.php?dni='.$fila[0].'"><figure><img src="../img_socios/'.$fila[0].'" />
+														<figcaption class="nombre">'.$fila[1].'</figcaption></figure></a>
+														
+													</li>';
+									}
+									echo '</ul>';	
+																	
+									CerrarConexionBD($con);
 								}
-								echo '</ul>';	
-																
-								CerrarConexionBD($con);
 							}
 							
 						?>

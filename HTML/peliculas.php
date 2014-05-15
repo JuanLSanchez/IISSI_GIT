@@ -5,9 +5,11 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="stylesheet" href="css/general.css">
+	<?php 
+		include "cabecera.php";
+		Cabecera();
+	?>
 	<link rel="stylesheet" href="css/articulos.css">
-	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 </head>
 <body>
 	
@@ -58,7 +60,7 @@
 								<span>Hasta: </span>
 								<input type="text" size="4" name="fin_year" value="'.$fin_year.'"/>
 								<span>Genero: </span>
-								<select name="genero" value="Otro">';
+								<select name="genero">';
 													
 							if($genero == "Ninguno"){
 								echo '<option selected>Ninguno</option>';
@@ -268,18 +270,18 @@
 								}
 								echo '<ul id="paginacion">';
 								if($pagina>1){
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina=1&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'"><<</a></li>
-										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina-1).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'"><</a></li>';
+									echo '<li><a href="peliculas.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina=1&amp;peliculas='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'"><<</a></li>
+										<li><a href="peliculas.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina='.($pagina-1).'&amp;peliculas='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'"><</a></li>';
 								}
 								$i = 0;
 								while ($cont>$i) {
 									$i=$i+1;
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.$i.'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'">'.$i.'</a></li>';
+									echo '<li><a href="peliculas.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina='.$i.'&amp;peliculas='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'">'.$i.'</a></li>';
 										
 								}
 								if($pagina<$cont){
-									echo '<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.($pagina+1).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'">></a></li>
-										<li><a href="peliculas.php?busqueda='.$cad.'&inicio_year='.$inicio_year.'&fin_year='.$fin_year.'&genero='.$genero.'&pagina='.ceil($cont).'&peliculas='.$pelisPorPaginas.'&orden='.$_GET['orden'].'&torden='.$_GET["torden"].'&visualizacion='.$visualizacion.'">>></a></li>';
+									echo '<li><a href="peliculas.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina='.($pagina+1).'&amp;peliculas='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'">></a></li>
+										<li><a href="peliculas.php?busqueda='.$cad.'&amp;inicio_year='.$inicio_year.'&amp;fin_year='.$fin_year.'&amp;genero='.$genero.'&amp;pagina='.ceil($cont).'&amp;peliculas='.$pelisPorPaginas.'&amp;orden='.$_GET['orden'].'&amp;torden='.$_GET["torden"].'&amp;visualizacion='.$visualizacion.'">>></a></li>';
 								}
 								echo "</ul>";
 								CerrarConexionBD($con);

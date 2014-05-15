@@ -21,10 +21,12 @@
 		CerrarConexionBD($con);
 	?>
 	
-	<link rel="stylesheet" href="css/general.css">
+	
+	<?php 
+		include "cabecera.php";
+		Cabecera();
+	?>
 	<link rel="stylesheet" href="css/articulo.css">
-	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
-
 	<script type="text/javascript" src="/js/articulo.js"></script>
 </head>
 <body>

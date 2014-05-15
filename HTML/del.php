@@ -5,9 +5,11 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="stylesheet" href="css/general.css">
+	<?php 
+		include "cabecera.php";
+		Cabecera();
+	?>
 	<link rel="stylesheet" href="css/del.css">
-	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 </head>
 <body>
 		<header id="cabecera">

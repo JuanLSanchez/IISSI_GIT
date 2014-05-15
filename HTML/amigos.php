@@ -9,7 +9,10 @@
 <meta name="description" content="Videoclub ORI">
 <meta name="keywords" content="videoclub, ori, peliculas">
 <title>Videoclub ORI</title>
-<link rel="stylesheet" href="css/general.css">
+	<?php 
+		include "cabecera.php";
+		Cabecera();
+	?>
 <link rel="stylesheet" href="css/amigos.css">
 
 </head>
@@ -40,46 +43,48 @@
 			include "conexion.php";
 			if(isset($_SESSION['dni']) && isset($_GET['dni'])){
 
-				$con = CrearConexionBD();	
-				$dni = $_GET['dni'];
-				$usuario = $_SESSION['dni'];
-				$res = 0;
-				$sql = "select dni_a_nombre(amigo2) from amigos where amigo1='$usuario' and amigo2='$dni'";
+				$con = CrearConexionBD();
+				if($con){	
+					$dni = $_GET['dni'];
+					$usuario = $_SESSION['dni'];
+					$res = 0;
+					$sql = "select dni_a_nombre(amigo2) from amigos where amigo1='$usuario' and amigo2='$dni'";
 
-				foreach ($con->query($sql) as $fila) {
-					$res = $fila[0];
-				}				
+					foreach ($con->query($sql) as $fila) {
+						$res = $fila[0];
+					}				
 
-				if($res || $dni == $usuario){
-					if($res){
-						echo '<article >					
-								<h2>Amigos de '.$res.'</h2>
-							</article>
-							<article id="amigos">			
-								<ul>';
+					if($res || $dni == $usuario){
+						if($res){
+							echo '<article >					
+									<h2>Amigos de '.$res.'</h2>
+								</article>
+								<article id="amigos">			
+									<ul>';
+						}else{
+							echo '<article >					
+									<h2>Mis Amigos</h2>
+								</article>
+								<article id="amigos">			
+									<ul>';
+						}
+
+						$sql = "select amigo2, dni_a_nombre(amigo2) from amigos where amigo1='$dni'";	
+						foreach($con->query($sql) as $fila){
+							echo'<li>
+									<a href="perfil.php?dni='.$fila[0].'">
+										<figure>								
+											<img src="img_socios/'.$fila[0].'" alt="" />									
+											<figcaption class="nombre">'.$fila[1].'</figcaption>
+										</figure>
+									</a>
+								</li>';
+						}
 					}else{
-						echo '<article >					
-								<h2>Mis Amigos</h2>
-							</article>
-							<article id="amigos">			
-								<ul>';
+						header('Location: perfil.php?dni='.$dni);
 					}
-
-					$sql = "select amigo2, dni_a_nombre(amigo2) from amigos where amigo1='$dni'";	
-					foreach($con->query($sql) as $fila){
-						echo'<li>
-								<a href="perfil.php?dni='.$fila[0].'">
-									<figure>								
-										<img src="img_socios/'.$fila[0].'" alt="" />									
-										<figcaption class="nombre">'.$fila[1].'</figcaption>
-									</figure>
-								</a>
-							</li>';
-					}
-				}else{
-					header('Location: perfil.php?dni='.$dni);
+					CerrarConexionBD($con);
 				}
-				CerrarConexionBD($con);
 					
 				}else{				
 					echo'<div class="incorrecto"><p>Tienes que estar logeado</p></div>';

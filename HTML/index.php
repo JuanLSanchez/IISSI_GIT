@@ -5,8 +5,10 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
-	<link rel="stylesheet" href="css/general.css">
+	<?php 
+		include "cabecera.php";
+		Cabecera();
+	?>
 	<link rel="stylesheet" href="css/principal.css">
 </head>
 <body>
@@ -23,7 +25,7 @@
 		<section id="seccion">
 			<div id="inicio">
 			<article >
-			<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Fecha&torden=desc&peliculas=5">
+			<a href="peliculas.php?busqueda=&amp;inicio_year=&amp;fin_year=&amp;genero=Ninguno&amp;orden=Fecha&amp;torden=desc&amp;peliculas=5">
 				<h2>Novedades Peliculas</h2>
 			</a>
 				
@@ -54,7 +56,7 @@
 
 				</article>
 				<article>
-					<a href="juegos.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Fecha&torden=desc&juegos=5">
+					<a href="juegos.php?busqueda=&amp;amp;inicio_year=&amp;amp;fin_year=&amp;amp;genero=Ninguno&amp;amp;orden=Fecha&amp;torden=desc&amp;juegos=5">
 						<h2>Novedades Juegos</h2>
 					</a>
 
@@ -81,7 +83,7 @@
 					?>
 			</article>
 			<article>
-				<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Alquileres&torden=desc&peliculas=5">
+				<a href="peliculas.php?busqueda=&amp;inicio_year=&amp;fin_year=&amp;genero=Ninguno&amp;orden=Alquileres&amp;torden=desc&amp;peliculas=5">
 					<h2> Películas mas Populares</h2>
 				</a>
 					<?php
@@ -114,7 +116,7 @@
 					
 				</article>
 				<article>
-					<a href="juegos.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Alquileres&torden=desc&juegos=5">
+					<a href="juegos.php?busqueda=&amp;inicio_year=&amp;fin_year=&amp;genero=Ninguno&amp;orden=Alquileres&amp;torden=desc&amp;juegos=5">
 						<h2>Juegos mas Populares</h2>
 					</a>
 					<ul>
@@ -144,7 +146,7 @@
 					</ul>
 				</article>
 				<article>
-					<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Puntuacion&torden=desc&peliculas=5">
+					<a href="peliculas.php?busqueda=&amp;inicio_year=&amp;fin_year=&amp;genero=Ninguno&amp;orden=Puntuacion&amp;torden=desc&amp;peliculas=5">
 						<h2> Películas mas Valoradas</h2>
 					</a>
 					<ul>
@@ -173,7 +175,7 @@
 					</ul>
 				</article>
 				<article>
-					<a href="juegos.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Puntuacion&torden=desc&juegos=5">
+					<a href="juegos.php?busqueda=&amp;inicio_year=&amp;fin_year=&amp;genero=Ninguno&amp;orden=Puntuacion&amp;torden=desc&amp;juegos=5">
 						<h2>Juegos mas Valorados</h2>
 					</a>
 					<ul>
@@ -232,8 +234,8 @@
 		</aside>
 		<footer id="pie">
 			<p>
-			    <img src="img_ori/vcss.gif" />
-			    <img src="img_ori/valid-html5.png"/>
+			    <img src="img_ori/vcss.gif" alt=""/>
+			    <img src="img_ori/valid-html5.png" alt=""/>
 			</p>
 		</footer>
 	</div>

@@ -8,7 +8,10 @@
 <meta name="description" content="Videoclub ORI">
 <meta name="keywords" content="videoclub, ori, peliculas">
 <title>Videoclub ORI</title>
-<link rel="stylesheet" href="css/general.css">
+	<?php 
+		include "cabecera.php";
+		Cabecera();
+	?>
 <link rel="stylesheet" href="css/alquileres.css">
 
 </head>
@@ -38,66 +41,66 @@
 		<?php
 		if(isset($_SESSION['dni'])){
 			include "conexion.php";
-			$con = CrearConexionBD();	
-			$dni = $_SESSION['dni'];
-			$sql = "select id_devolucion,fecha from devoluciones where dni='$dni' order by fecha desc";
-			echo'
-			<article>
-					<h2>Alquileres Realizados</h2>
-			</article>
-			<article>
-			';
-			foreach ($con->query($sql) as $fila){
-			echo'
-			
+			$con = CrearConexionBD();
+			if($con){	
+				$dni = $_SESSION['dni'];
+				$sql = "select id_devolucion,fecha from devoluciones where dni='$dni' order by fecha desc";
+				echo'
+				<article>
+						<h2>Alquileres Realizados</h2>
+				</article>
+				<article>
+				';
+				foreach ($con->query($sql) as $fila){
+				echo'
+				
 
-				<table>
-					<tr>
-						<td class="imagen">Fecha: '.$fila[1].'</td>
-						<td class="nombre">Nombre</td>
-						<td class="cantidad">Cantidad</td>
-					</tr>
-					';
-					$pelis = 'select id_pelicula, cantidad from lineas_devoluciones_peliculas where id_devolucion='.$fila[0];
-					foreach ($con->query($pelis) as $fila2){
-					$peli = 'select nombre, imagen from peliculas where id_pelicula='.$fila2[0];
-					foreach ($con->query($peli) as $fila3){
-					echo'
-					<tr>
-						<td class="imagen"><a href="articulo.php?id_pelicula='.$fila2[0].'"><img src="'.$fila3[1].'" alt="" /></a></td>
-						<td class="nombre"><a href="articulo.php?id_pelicula='.$fila2[0].'">'.$fila3[0].'</a></td>
-						<td class="cantidad">'.$fila2[1].'</td>
-					</tr>
-					';
-					}
-					}
-					
+					<table>
+						<tr>
+							<td class="imagen">Fecha: '.$fila[1].'</td>
+							<td class="nombre">Nombre</td>
+							<td class="cantidad">Cantidad</td>
+						</tr>
+						';
+						$pelis = 'select id_pelicula, cantidad from lineas_devoluciones_peliculas where id_devolucion='.$fila[0];
+						foreach ($con->query($pelis) as $fila2){
+						$peli = 'select nombre, imagen from peliculas where id_pelicula='.$fila2[0];
+						foreach ($con->query($peli) as $fila3){
+						echo'
+						<tr>
+							<td class="imagen"><a href="articulo.php?id_pelicula='.$fila2[0].'"><img src="'.$fila3[1].'" alt="" /></a></td>
+							<td class="nombre"><a href="articulo.php?id_pelicula='.$fila2[0].'">'.$fila3[0].'</a></td>
+							<td class="cantidad">'.$fila2[1].'</td>
+						</tr>
+						';
+						}
+						}
+						
 
-					$juegos = 'select id_juego,cantidad from lineas_devoluciones_juegos where id_devolucion='.$fila[0];
-					foreach ($con->query($juegos) as $fila4){
-					$juego = 'select nombre, imagen from juegos where id_juego='.$fila4[0];
-					foreach ($con->query($juego) as $fila5){
-					echo'
-					<tr>
-						<td class="imagen"><a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" alt="" /></a></td>
-						<td class="nombre"><a href="articulo.php?id_juego='.$fila4[0].'"><span class="nombre">'.$fila5[0].'</span></a></td>
-						<td class="cantidad"><span>'.$fila4[1].'</span></td>
-					</tr>
-					';
-					}
-					}
-					
+						$juegos = 'select id_juego,cantidad from lineas_devoluciones_juegos where id_devolucion='.$fila[0];
+						foreach ($con->query($juegos) as $fila4){
+						$juego = 'select nombre, imagen from juegos where id_juego='.$fila4[0];
+						foreach ($con->query($juego) as $fila5){
+						echo'
+						<tr>
+							<td class="imagen"><a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" alt="" /></a></td>
+							<td class="nombre"><a href="articulo.php?id_juego='.$fila4[0].'"><span class="nombre">'.$fila5[0].'</span></a></td>
+							<td class="cantidad"><span>'.$fila4[1].'</span></td>
+						</tr>
+						';
+						}
+						}
+						
 
-			echo'
-				</table>
-			
-			';
+				echo'
+					</table>
+				
+				';
 
-			}
-			echo'
-			</article>	
-		';
+				}
+				echo'</article>	';
 				CerrarConexionBD($con);
+			}
 				}
 			?>
 		</section>

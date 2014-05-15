@@ -5,7 +5,10 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<link rel="stylesheet" href="css/general.css">
+	<?php 
+		include "cabecera.php";
+		Cabecera();
+	?>
 	<link rel="stylesheet" href="css/perfil.css">
 </head>
 <body>
@@ -75,7 +78,23 @@
 					}						
 				}						
 			?>
-			
+			<?php //Quitar amigos
+				if(isset($_POST['dejarDeSeguir'])){
+					$con = CrearConexionBD();
+					if($con){
+						$amigo1=$_SESSION['dni'];
+						$amigo2=$_GET['dni'];
+						$sql = "delete from amigos where amigo1='$amigo1' and amigo2='$amigo2'";
+						$res=$con->exec($sql);
+						if(!$res){
+							echo '<div class="incorrecto"><p> El usuario no se ha dejado de seguir correctamente</p></div>
+								<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+						}
+						CerrarConexionBD($con);
+					}
+
+				}
+			?>
 			<?php				
 				$con = CrearConexionBD();
 				if($con){
@@ -140,21 +159,22 @@
 							</article>';						
 						
 					}elseif($amigo){//Perfil de un amigo
-						
-						foreach ($con->query($sql) as $fila) {
-							echo'<article id="iz">
-									<img src="img_socios/'.$fila[0].'" />
-								</article>
-								<article>
-									<h3>Perfil</h3>
-									<table class="de">
-										<tr><td>Nombre: '.$nombre.'</td></tr>
-										<tr><td>E-mail: '.$email.'</td></tr>
-										<tr><td>Registrado: '.$registrado.'</td></tr>
-									</table>
-								</article>';
-						}
-
+						echo'<article>
+								<form method = "POST"  action = "perfil.php?dni='.$dni.'">
+								<input type="submit" name="dejarDeSeguir" value="Dejar de Seguir"/>
+								</form>
+						</article>
+						<article id="iz">
+								<img src="img_socios/'.$dni.'" />
+							</article>
+							<article>
+								<h3>Perfil</h3>
+								<table class="de">
+									<tr><td>Nombre: '.$nombre.'</td></tr>
+									<tr><td>E-mail: '.$email.'</td></tr>
+									<tr><td>Registrado: '.$registrado.'</td></tr>
+								</table>
+							</article>';
 					}else{//perfil de no amigo
 							
 						echo '<div class="incorrecto"><p>No eres amigo</p></div>';
@@ -230,7 +250,7 @@
 					}
 				}
 				}
-				CerrarConexionBD($con)
+				CerrarConexionBD($con);
 			?>
 			
 			</section>
