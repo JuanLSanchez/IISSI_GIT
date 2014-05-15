@@ -18,19 +18,19 @@ function Menu(){
 			<li onclick="location.href=\'amigos.php?dni='.$_SESSION['dni'].'\'">Mis Amigos</li>
 			<li onclick="location.href=\'historial_compra.php?dni='.$_SESSION['dni'].'\'">Mis Compras</li>
 			<li onclick="location.href=\'devoluciones.php?dni='.$_SESSION['dni'].'\'">Devoluciones Pendientes</li>
-			<li onclick="location.href=\'pendientes.php?dni='.$_SESSION['dni'].'\'">Pendientes</li>
+			<li onclick="location.href=\'pendientes.php?dni='.$_SESSION['dni'].'\'">Pendientes Por Ver</li>
 			<li onclick="location.href=\'favoritas.php?dni='.$_SESSION['dni'].'\'">Favoritas</li>
 			<li onclick="location.href=\'vistas.php?dni='.$_SESSION['dni'].'\'">Vistas</li>
 			<li onclick="location.href=\'buscasocio.php\'">Buscar Socio</li>
 		</ul>';	
 	}else{				
 		echo '<form method="POST" action="index.php" enctype="application/x-www-form-urlencoded">
-				<div id="login">
-					<div><span>DNI: </span></div>
-					<div><input type="text" name="dni"/></div>
-					<div><span>Contraseña: </span></div>
-					<div><input type="password" name="key"/></div>
-					<input type="submit" value="Logear" class="boton"/>
+				<div id="login">				
+				<div><span>DNI: </span></div>
+				<div><input type="text" name="dni"/></div>
+				<div><span>Contraseña: </span></div>
+				<div><input type="password" name="key"/></div>
+				<input type="submit" value="Logear" class="boton"/>				
 				</div>
 			</form>';
 	}

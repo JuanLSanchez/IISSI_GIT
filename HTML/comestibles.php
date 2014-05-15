@@ -5,11 +5,9 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<?php 
-		include "cabecera.php";
-		Cabecera();
-	?>
+	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/comestibles.css">
+	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
 </head>
 <body>
 	
@@ -80,7 +78,7 @@
 										</td>';
 								}
 								
-								echo '		<td class="imagen"><img src="img_comestibles/'.$fila[0].'" /></td>
+								echo '		<td class="imagen"><img src="img_comestibles/'.$fila[0].'" alt=""/></td>
 										<td class="nombre">'.$fila[1].'</td>
 										<td class="precio">'.$fila[2].'€</td></tr>';
 
@@ -98,7 +96,8 @@
 			<?php Menu(); ?>
 		</aside>
 		<footer id="pie">
-			Derechos Reservados &copy; 2013-2014
+			<img src="img_ori/valid-html5.png" alt="" />
+			<img src="img_ori/vcss.gif" alt="" />
 		</footer>
 	</div>
 </body>

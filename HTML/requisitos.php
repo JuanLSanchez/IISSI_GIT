@@ -5,10 +5,8 @@
 	<meta name="description" content="Videoclub ORI">
 	<meta name="keywords" content="videoclub, ori, peliculas">
 	<title>Videoclub ORI</title>
-	<?php 
-		include "cabecera.php";
-		Cabecera();
-	?>
+	<link rel="icon" href="favicon.png" sizes="32x32" type="image/png">
+	<link rel="stylesheet" href="css/general.css">
 	<link rel="stylesheet" href="css/requisitos.css">
 </head>
 <body>
@@ -24,8 +22,8 @@
 		</nav>
 		<section id="seccion">
 			<article>
-				<table>
-					<h3>Requisitos.</h3>
+				<h3>Requisitos.</h3>
+				<table>					
 					<tr><td>Descripción</td><td>Ejemplos</td></tr>
 					<tr><td>Ausencia de errores de programación.</td><td>No hemos detectado ningun herror en la programación de ninguna nuestras paginas</td></tr>
 					<tr><td>Usar marcado HTML estricto.</td><td>Todas nuestras paginas estan hecha en HTML5, con marcado estricto</td></tr>
@@ -50,10 +48,10 @@
 							<li>Inserción: <a href="add.php?articulo=juego">Añadir un juego</a></li>
 							<li>Actualización: Todas las peliculas, si eres administrador, te mostraran un boton de modificar</li>
 							<li>Borrado: Todas las peliculas, si eres administrador, te mostraran un boton de modificar</li>
-							<li>Consulta: <a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Nombre&torden=asc&peliculas=5&visualizacion=extendida">Buscar peliculas</a></li>
+							<li>Consulta: <a href="peliculas.php?busqueda=&amp;inicio_year=&amp;fin_year=&amp;genero=Ninguno&amp;orden=Nombre&amp;torden=asc&amp;peliculas=5&amp;visualizacion=extendida">Buscar peliculas</a></li>
 					</ul></td></tr>
 					<tr><td>Formatear el resultado de al menos una consulta a la base de datos en una tabla HTML.</td><td>Ejemplos:<ul>
-						<li><a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Nombre&torden=asc&peliculas=5&visualizacion=extendida">Buscar peliculas</a></li>
+						<li><a href="peliculas.php?busqueda=&amp;inicio_year=&amp;fin_year=&amp;genero=Ninguno&amp;orden=Nombre&amp;torden=asc&amp;peliculas=5&amp;visualizacion=extendida">Buscar peliculas</a></li>
 						<li><a href="comestibles.php">Comestibles</a></li>
 					</ul></td></tr>
 					<tr><td>Realizar tratamiento de excepciones de acceso a bases de datos en servidor manteniendo siempre el control de la aplicación</td>
@@ -89,8 +87,8 @@
 		</aside>
 		<footer id="pie">
 			<p>
-			    <img src="img_ori/vcss.gif" />
-			    <img src="img_ori/valid-html5.png"/>
+			    <img src="img_ori/vcss.gif" alt=""/>
+			    <img src="img_ori/valid-html5.png" alt=""/>
 			</p>
 		</footer>
 	</div>
