@@ -5,10 +5,7 @@
 		<meta name="description" content="Videoclub ORI">
 		<meta name="keywords" content="videoclub, ori, peliculas">
 		<title>Videoclub ORI</title>
-	<?php 
-		include "cabecera.php";
-		Cabecera();
-	?>
+		<link rel="stylesheet" href="css/general.css">
 		<link rel="stylesheet" href="css/enumerados.css">
 		
 	</head>
@@ -119,7 +116,8 @@
 			<?php Menu(); ?>
 		</aside>
 		<footer id="pie">
-			Derechos Reservados &copy; 2013-2014
+			<img src="img_ori/valid-html5.png" alt="" />
+			<img src="img_ori/vcss.gif" alt="" />
 		</footer>
 	</div>
 	</body>
