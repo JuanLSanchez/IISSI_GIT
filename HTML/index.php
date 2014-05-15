@@ -22,88 +22,96 @@
 		</nav>
 		<section id="seccion">
 			<div id="inicio">
+			<article >
+			<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Fecha&torden=desc&peliculas=5">
+				<h2>Novedades Peliculas</h2>
+			</a>
 				
-					<?php
-
-						include "conexion.php";
-						$con = CrearConexionBD();
-						// $res = $con->query("select nombre, imagen from peliculas order by year");
-						$sql = 'select nombre, imagen, id_pelicula from peliculas order by year desc';
-						$contador = 0;
-						echo '<article >
-									<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Fecha&torden=desc&peliculas=5">
-										<h2>Novedades Peliculas</h2>
-									</a>
-									<ul>';
-						foreach ($con->query($sql) as $fila){
-							echo '<li>
-							<a href="articulo.php?id_pelicula='.$fila[2].'">
-							<figure>
-							<img src='.$fila[1].' />
-							<figcaption >'.$fila[0].'</figcaption>
-							</figure>
-							</a>
-							</li>';
-							if($contador == 4){
-								break;
-							}
-							$contador++;
+			<?php
+				include "conexion.php";
+				$con = CrearConexionBD();
+				// $res = $con->query("select nombre, imagen from peliculas order by year");
+				if($con){
+					$sql = 'select nombre, imagen, id_pelicula from peliculas order by year desc';
+					$contador = 0;
+					echo '<ul>';
+					foreach ($con->query($sql) as $fila){
+						echo '<li>
+						<a href="articulo.php?id_pelicula='.$fila[2].'">
+						<figure>
+						<img src='.$fila[1].' />
+						<figcaption >'.$fila[0].'</figcaption>
+						</figure>
+						</a>
+						</li>';
+						if($contador == 4){
+							break;
 						}
-						echo '</ul>
-							</article>
-							<article>
-								<a href="juegos.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Fecha&torden=desc&juegos=5">
-									<h2>Novedades Juegos</h2>
-								</a>
-								<ul>';
-						$sql= 'select nombre, imagen, id_juego from juegos order by year desc';
-						$contador = 0;
-						foreach ($con->query($sql) as $fila){
-							echo '<li>
-							<a href="articulo.php?id_juego='.$fila[2].'">
-							<figure>
-							<img src='.$fila[1].' />
-							<figcaption >'.$fila[0].'</figcaption>
-							</figure>
-							</a>
-							</li>';
-							if($contador == 4){
-								break;
-							}
-							$contador++;
-						}
-						echo '</ul>
-							</article>
-							<article>
-								<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Alquileres&torden=desc&peliculas=5">
-									<h2> Películas mas Populares</h2>
-								</a>
-								<ul>';
-
-						$con = CrearConexionBD();
-							$sql = "select id_pelicula, imagen, nombre, 
-								id_pelicula_a_alquileres(id_pelicula) alquileres
-								from
-									(select id_pelicula, imagen, nombre, 
-									id_pelicula_a_alquileres(id_pelicula) alquileres
-									from peliculas
-									order by alquileres desc)
-								where rownum<=5";
-							foreach ($con->query($sql) as $fila) {
-							 	echo '<li>
-										<a href="articulo.php?id_pelicula='.$fila[0].'">
-										<figure>
-										<img src='.$fila[1].' />
-										<figcaption >'.$fila[2].'</figcaption>
-										</figure>
-										</a>
-									</li>';
-							}
-
-							CerrarConexionBD($con);
+						$contador++;
+					}
+					echo '</ul>';
 					?>
+
+				</article>
+				<article>
+					<a href="juegos.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Fecha&torden=desc&juegos=5">
+						<h2>Novedades Juegos</h2>
+					</a>
+
+					<?php
+						
+					$sql= 'select nombre, imagen, id_juego from juegos order by year desc';
+					$contador = 0;
+					echo'<ul>';
+					foreach ($con->query($sql) as $fila){
+						echo '<li>
+						<a href="articulo.php?id_juego='.$fila[2].'">
+						<figure>
+						<img src='.$fila[1].' />
+						<figcaption >'.$fila[0].'</figcaption>
+						</figure>
+						</a>
+						</li>';
+						if($contador == 4){
+							break;
+						}
+						$contador++;
+					}
+					echo '</ul>';
+					?>
+			</article>
+			<article>
+				<a href="peliculas.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Alquileres&torden=desc&peliculas=5">
+					<h2> Películas mas Populares</h2>
+				</a>
+					<?php
+						
 					
-					</ul>
+
+						$sql = "select id_pelicula, imagen, nombre, 
+							id_pelicula_a_alquileres(id_pelicula) alquileres
+							from
+								(select id_pelicula, imagen, nombre, 
+								id_pelicula_a_alquileres(id_pelicula) alquileres
+								from peliculas
+								order by alquileres desc)
+							where rownum<=5";
+						echo'<ul>';
+						foreach ($con->query($sql) as $fila) {
+						 	echo '<li>
+									<a href="articulo.php?id_pelicula='.$fila[0].'">
+									<figure>
+									<img src='.$fila[1].' />
+									<figcaption >'.$fila[2].'</figcaption>
+									</figure>
+									</a>
+								</li>';
+						}
+						echo '</ul>';
+				}
+			?>
+					
+					
 				</article>
 				<article>
 					<a href="juegos.php?busqueda=&inicio_year=&fin_year=&genero=Ninguno&orden=Alquileres&torden=desc&juegos=5">
@@ -111,27 +119,26 @@
 					</a>
 					<ul>
 						<?php
-							$con = CrearConexionBD();
-							$sql = "select id_juego, imagen, nombre, 
-							id_juego_a_alquileres(id_juego) alquileres
-							from
-								(select id_juego, imagen, nombre, 
+							if($con){
+								$sql = "select id_juego, imagen, nombre, 
 								id_juego_a_alquileres(id_juego) alquileres
-								from juegos
-								order by alquileres desc)
-							where rownum<=5";
-							foreach ($con->query($sql) as $fila) {
-							 	echo '<li>
-										<a href="articulo.php?id_juego='.$fila[0].'">
-										<figure>
-										<img src='.$fila[1].' />
-										<figcaption >'.$fila[2].'</figcaption>
-										</figure>
-										</a>
-									</li>';
+								from
+									(select id_juego, imagen, nombre, 
+									id_juego_a_alquileres(id_juego) alquileres
+									from juegos
+									order by alquileres desc)
+								where rownum<=5";
+								foreach ($con->query($sql) as $fila) {
+								 	echo '<li>
+											<a href="articulo.php?id_juego='.$fila[0].'">
+											<figure>
+											<img src='.$fila[1].' />
+											<figcaption >'.$fila[2].'</figcaption>
+											</figure>
+											</a>
+										</li>';
+								}
 							}
-
-							CerrarConexionBD($con);
 						?>
 
 					</ul>
@@ -142,25 +149,26 @@
 					</a>
 					<ul>
 						<?php
-							$con = CrearConexionBD();
-							$sql = "select id_pelicula, imagen, nombre, 
-									id_pelicula_a_puntuacion(id_pelicula) puntuacion
-									from
-										(select id_pelicula, imagen, nombre, 
+							if($con){
+								$sql = "select id_pelicula, imagen, nombre, 
 										id_pelicula_a_puntuacion(id_pelicula) puntuacion
-										from peliculas
-										order by puntuacion desc)
-									where rownum<=5";
-							foreach ($con->query($sql) as $fila) {
-							 	echo '<li>
-							<a href="articulo.php?id_pelicula='.$fila[0].'">
-							<figure>
-							<img src='.$fila[1].' />
-							<figcaption >'.$fila[2].'</figcaption>
-							</figure>
-							</a>
-							</li>';
-						}
+										from
+											(select id_pelicula, imagen, nombre, 
+											id_pelicula_a_puntuacion(id_pelicula) puntuacion
+											from peliculas
+											order by puntuacion desc)
+										where rownum<=5";
+								foreach ($con->query($sql) as $fila) {
+								 	echo '<li>
+								<a href="articulo.php?id_pelicula='.$fila[0].'">
+								<figure>
+								<img src='.$fila[1].' />
+								<figcaption >'.$fila[2].'</figcaption>
+								</figure>
+								</a>
+								</li>';
+								}
+							}
 						?>
 					</ul>
 				</article>
@@ -170,7 +178,7 @@
 					</a>
 					<ul>
 						<?php
-							$con = CrearConexionBD();
+						if($con){
 							$sql = "select id_juego, imagen, nombre, 
 									id_juego_a_puntuacion(id_juego) puntuacion
 									from
@@ -188,6 +196,8 @@
 							</figure>
 							</a>
 							</li>';
+							}
+							CerrarConexionBD($con);
 						}
 						?>
 					</ul>
@@ -198,16 +208,19 @@
 			<?php
 			if(isset($_POST['dni'])){
 				$con = CrearConexionBD();
-				$dni = $_POST['dni'];
-				$key = $_POST['key'];
-				$sql = "select dni, nombre from socios where 
-						dni='$dni' and key='$key'";
-				$query = $con->query($sql);
-				if($res = $query->fetch()){
-					$_SESSION['dni'] = $res['0'];
-					$_SESSION['nombre'] = $res['1'];
-				}else{
-					echo '<div class="incorrecto"><p>Contraseña o usuario incorrectos</p></div>';
+				if($con){
+					$dni = $_POST['dni'];
+					$key = $_POST['key'];
+					$sql = "select dni, nombre from socios where 
+							upper(dni)=upper('$dni') and key='$key'";
+					$query = $con->query($sql);
+					if($res = $query->fetch()){
+						$_SESSION['dni'] = $res['0'];
+						$_SESSION['nombre'] = $res['1'];
+					}else{
+						echo '<div class="incorrecto"><p>Contraseña o usuario incorrectos</p></div>';
+					}
+					CerrarConexionBD($con);
 				}
 			}
 			if(isset($_GET['logout'])){

@@ -27,105 +27,107 @@
 						<?php
 						include "conexion.php";
 						$con = CrearConexionBD();
-						$busqueda = "";
-						$inicio_year = "";
-						$fin_year = "";
-						$genero = "Ninguno";
-						if(isset($_GET['visualizacion'])){
-							$visualizacion = $_GET['visualizacion'];
-						}else{
-							$visualizacion = 'extendida';
-						}
-						if(isset($_GET['busqueda'])){
-							$busqueda = $_GET['busqueda'];
-							$genero = $_GET['genero'];
-							if($_GET['inicio_year']!=1){
-								$inicio_year=$_GET['inicio_year'];
-							}
-							if($_GET['fin_year']!=9000){
-								$fin_year=$_GET['fin_year'];
-							}
-						}
-						echo '
-						<div class="search">
-							<input type="search" id="busqueda" name="busqueda" value="'.$busqueda.'"/>
-							<input type="submit" id="buscar" value="Buscar" />
-						</div>
-						<div>
-							<span>Desde: </span>
-							<input type="text"  size="4" name="inicio_year" value="'.$inicio_year.'"/>
-							<span>Hasta: </span>
-							<input type="text" size="4" name="fin_year" value="'.$fin_year.'"/>
-							<span>Genero: </span>
-							<select name="genero" value="Otro">';
-												
-						if($genero == "Ninguno"){
-							echo '<option selected>Ninguno</option>';
-						}else{
-							echo '<option>Ninguno</option>';	
-						}
-						$sql = "select genero from generos_juegos";
-						foreach ($con->query($sql) as $fila) {
-							if($genero == $fila[0]){
-								echo '<option selected>'.$fila[0].'</option>';
+						if($con){
+							$busqueda = "";
+							$inicio_year = "";
+							$fin_year = "";
+							$genero = "Ninguno";
+							if(isset($_GET['visualizacion'])){
+								$visualizacion = $_GET['visualizacion'];
 							}else{
-								echo '<option>'.$fila[0].'</option>';	
-							}							
-						}
+								$visualizacion = 'extendida';
+							}
+							if(isset($_GET['busqueda'])){
+								$busqueda = $_GET['busqueda'];
+								$genero = $_GET['genero'];
+								if($_GET['inicio_year']!=1){
+									$inicio_year=$_GET['inicio_year'];
+								}
+								if($_GET['fin_year']!=9000){
+									$fin_year=$_GET['fin_year'];
+								}
+							}
+							echo '
+							<div class="search">
+								<input type="search" id="busqueda" name="busqueda" value="'.$busqueda.'"/>
+								<input type="submit" id="buscar" value="Buscar" />
+							</div>
+							<div>
+								<span>Desde: </span>
+								<input type="text"  size="4" name="inicio_year" value="'.$inicio_year.'"/>
+								<span>Hasta: </span>
+								<input type="text" size="4" name="fin_year" value="'.$fin_year.'"/>
+								<span>Genero: </span>
+								<select name="genero" value="Otro">';
+													
+							if($genero == "Ninguno"){
+								echo '<option selected>Ninguno</option>';
+							}else{
+								echo '<option>Ninguno</option>';	
+							}
+							$sql = "select genero from generos_juegos";
+							foreach ($con->query($sql) as $fila) {
+								if($genero == $fila[0]){
+									echo '<option selected>'.$fila[0].'</option>';
+								}else{
+									echo '<option>'.$fila[0].'</option>';	
+								}							
+							}
 
-						echo '</select>
-						</div>
-						<div>
-							<span>Orden: </span>
-							<select name="orden">';
-						foreach (array('Nombre', 'Fecha', 'Puntuacion', 'Alquileres') as &$i) {
-							if($_GET['orden']==$i){
-								echo '<option selected>'.$i.'</option>';
-							}else{
-								echo '<option>'.$i.'</option>';
-							}
-						}
-						echo '</select>
-							<select name="torden">';
-							foreach (array('asc', 'desc') as $i) {
-								if($_GET['torden']==$i){
+							echo '</select>
+							</div>
+							<div>
+								<span>Orden: </span>
+								<select name="orden">';
+							foreach (array('Nombre', 'Fecha', 'Puntuacion', 'Alquileres') as &$i) {
+								if($_GET['orden']==$i){
 									echo '<option selected>'.$i.'</option>';
 								}else{
 									echo '<option>'.$i.'</option>';
 								}
 							}
-						echo '</select>	
-							<span>Juegos por paginas: </span>
-							<select name="juegos">';
-							$cont=5;
-							while($cont<21){
-								if($_GET["juegos"]==$cont){
-									echo "<option selected>".$cont."</option>";
-								}else{
-									echo "<option>".$cont."</option>";
+							echo '</select>
+								<select name="torden">';
+								foreach (array('asc', 'desc') as $i) {
+									if($_GET['torden']==$i){
+										echo '<option selected>'.$i.'</option>';
+									}else{
+										echo '<option>'.$i.'</option>';
+									}
 								}
-								$cont=$cont+5;
-							}
-						echo '</select>
-						</div>
-						<div>
-						<input type="radio" name="visualizacion" value="extendida" id="extendida" ';
-						if($visualizacion == 'extendida'){ echo 'checked';}
-						echo '/>
-						<label for="extendida">Extendido</label>
-						<input type="radio" name="visualizacion" value="resumen" id="resumen" ';
-						if($visualizacion == 'resumen'){ echo 'checked';}
-						echo '/>
-						<label for="resumen">Resumido</label>
-						<input type="radio" name="visualizacion" value="imagenes" id="imagenes" ';
-						if($visualizacion == 'imagenes'){ echo 'checked';}
-						echo '/>
-						<label for="imagenes">Imagenes</label>
-						</div>						
-						</form>
-						<p id="separador"> </p>';
-												
-						CerrarConexionBD($con);
+							echo '</select>	
+								<span>Juegos por paginas: </span>
+								<select name="juegos">';
+								$cont=5;
+								while($cont<21){
+									if($_GET["juegos"]==$cont){
+										echo "<option selected>".$cont."</option>";
+									}else{
+										echo "<option>".$cont."</option>";
+									}
+									$cont=$cont+5;
+								}
+							echo '</select>
+							</div>
+							<div>
+							<input type="radio" name="visualizacion" value="extendida" id="extendida" ';
+							if($visualizacion == 'extendida'){ echo 'checked';}
+							echo '/>
+							<label for="extendida">Extendido</label>
+							<input type="radio" name="visualizacion" value="resumen" id="resumen" ';
+							if($visualizacion == 'resumen'){ echo 'checked';}
+							echo '/>
+							<label for="resumen">Resumido</label>
+							<input type="radio" name="visualizacion" value="imagenes" id="imagenes" ';
+							if($visualizacion == 'imagenes'){ echo 'checked';}
+							echo '/>
+							<label for="imagenes">Imagenes</label>
+							</div>						
+							</form>
+							<p id="separador"> </p>';
+													
+							CerrarConexionBD($con);
+						}
 						?>
 					
 				</article>

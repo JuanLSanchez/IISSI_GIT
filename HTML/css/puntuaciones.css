@@ -20,6 +20,7 @@
 
 #seccion img {
     height: 150px;
+    width: 110px;
     border-radius:5px;
 }
 #seccion figure{

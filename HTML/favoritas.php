@@ -9,7 +9,7 @@
 <meta name="keywords" content="videoclub, ori, peliculas">
 <title>Videoclub ORI</title>
 <link rel="stylesheet" href="css/general.css">
-<link rel="stylesheet" href="css/favoritas.css">
+<link rel="stylesheet" href="css/pendientes.css">
 
 </head>
 

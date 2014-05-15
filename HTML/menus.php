@@ -64,6 +64,7 @@ function Navegador(){
 		<li onclick="location.href=\'comestibles.php\'">Comestibles</li>
 		<li onclick="location.href=\'informacion.php\'">Informacion</li>
 		<li onclick="location.href=\'manual.php\'">Manual</li>
+		<li onclick="location.href=\'requisitos.php\'">Requisitos y Extras</li>
 	</ul>';
 }	
 ?>

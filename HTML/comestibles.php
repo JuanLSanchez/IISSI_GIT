@@ -29,19 +29,21 @@
 					<?php
 						if(isset($_GET['eliminar']) && isset($_SESSION['dni']) && $_SESSION['dni'] == "00000000A"){
 							$con = CrearConexionBD();
-							$id = $_GET['eliminar'];
-							$sql = "delete from comestibles where id_comestible=".$id;
-							$res = $con->exec($sql);
-							if($res==1){
-								if(file_exists("img_comestibles/".$id)){
-									unlink("img_comestibles/".$id);
+							if($con){
+								$id = $_GET['eliminar'];
+								$sql = "delete from comestibles where id_comestible=".$id;
+								$res = $con->exec($sql);
+								if($res==1){
+									if(file_exists("img_comestibles/".$id)){
+										unlink("img_comestibles/".$id);
+									}
+									echo '<div class="correcto"><p>Se ha eliminado el articulo</p></div>';
+								}else{
+									echo '<div class="incorrecto"><p>No se ha eliminado el articulo</p></div>
+											<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
 								}
-								echo '<div class="correcto"><p>Se ha eliminado el articulo</p></div>';
-							}else{
-								echo '<div class="incorrecto"><p>No se ha eliminado el articulo</p></div>
-										<div class="incorrecto"><p>'.$con->errorInfo()[2].'</p></div>';
+								CerrarConexionBD($con);
 							}
-							CerrarConexionBD($con);
 						}
 
 					?>
@@ -55,34 +57,36 @@
 					</tr>
 					<?php
 						$con = CrearConexionBD();
-						$res = $con->query("select id_comestible, nombre, to_char(precio, '990.99') from comestibles");
-						$bandera = 0;
-						if(isset($_SESSION)){
-							if($_SESSION['dni'] == "00000000A"){
-								$bandera = 1;
+						if($con){
+							$res = $con->query("select id_comestible, nombre, to_char(precio, '990.99') from comestibles");
+							$bandera = 0;
+							if(isset($_SESSION['dni'])){
+								if($_SESSION['dni'] == "00000000A"){
+									$bandera = 1;
+								}
 							}
-						}
-						$cont = 0;
-						foreach ($res as $fila) {
-							echo '<tr>';
-							if($bandera){
-								echo '<td class="admin">
-										<input type="button" value="Eliminar" onClick=" window.location.href='."'comestibles.php?eliminar=".$fila[0]."'".'">
-										<input type="button" value="Modificar" onClick=" window.location.href='."'mod_comestible.php?id_comestible=".$fila[0]."'".'">
+							$cont = 0;
+							foreach ($res as $fila) {
+								echo '<tr>';
+								if($bandera){
+									echo '<td class="admin">
+											<input type="button" value="Eliminar" onClick=" window.location.href='."'comestibles.php?eliminar=".$fila[0]."'".'">
+											<input type="button" value="Modificar" onClick=" window.location.href='."'mod_comestible.php?id_comestible=".$fila[0]."'".'">
+											</td>';
+								}else{
+									echo '<td class="admin">
 										</td>';
-							}else{
-								echo '<td class="admin">
-									</td>';
-							}
-							
-							echo '		<td class="imagen"><img src="img_comestibles/'.$fila[0].'" /></td>
-									<td class="nombre">'.$fila[1].'</td>
-									<td class="precio">'.$fila[2].'€</td></tr>';
-
-							$cont++;
+								}
 								
+								echo '		<td class="imagen"><img src="img_comestibles/'.$fila[0].'" /></td>
+										<td class="nombre">'.$fila[1].'</td>
+										<td class="precio">'.$fila[2].'€</td></tr>';
+
+								$cont++;
+									
+							}
+							CerrarConexionBD($con);
 						}
-						CerrarConexionBD($con);
 						?>
 					</table>
 				</article>

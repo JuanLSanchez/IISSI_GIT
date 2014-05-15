@@ -15,15 +15,22 @@
 #seccion table{
 	border-collapse:collapse; 
 	border: none;
+	margin-bottom: 10px;
 	width:100%; 
 	
 }
-#seccion tr:first-of-type{
+#seccion tr:first-child td{
 	background: #81bdeb;
+}
+#seccion tr:first-of-type td:first-child{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+#seccion tr:first-of-type td:last-child{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 #seccion tr td {
 	text-align: center;
 	height:30px;
 }
-
-

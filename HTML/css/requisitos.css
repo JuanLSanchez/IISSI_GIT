@@ -1,0 +1,26 @@
+#seccion table{
+    width: 100%;
+}
+#seccion td:first-child{
+    width: 50%;
+    background: #0174DF;
+}
+#seccion tr:first-child td{
+    font-weight: 900;
+    text-align: center;
+    background: #FF4000;
+}
+#seccion td{
+    color:white;
+    background: #088A29;
+}
+#seccion ul{
+    list-style: none;
+}
+#seccion a{    
+    color: #013ADF;
+}
+#seccion h3{
+    text-align: center;
+    border-bottom: 2px solid #777777;
+}

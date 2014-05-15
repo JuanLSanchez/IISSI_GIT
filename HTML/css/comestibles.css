@@ -7,7 +7,7 @@
 	width: 110px;
 }
 #seccion .nombre{
-	width: 300px;	
+	width: 400px;	
 }
 #seccion .admin input{
 	display: block;
@@ -18,10 +18,13 @@
 	width:100%; 
 	
 }
-#seccion tr:first-of-type{
+#seccion tr:first-child{
 	background: #81bdeb;
 }
 #seccion tr td {
 	text-align: center;
 	height:30px;
+}
+#seccion tr td:first-child{
+    width: 40px;
 }

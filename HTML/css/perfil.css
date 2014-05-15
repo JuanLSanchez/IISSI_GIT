@@ -1,18 +1,19 @@
 #seccion #acciones ul{
 	clear: both;
-    background:#777777;
     text-align:center;
-    
+    margin: 0px;
+    background:#777777;
 }
 #seccion #acciones li{
 	display: inline-block;
+	margin: 0px;
     padding:5px;
     cursor: pointer;
-    color:#ffffff;
-   
+    color:#ffffff;   
 }
 #seccion #acciones li:hover{
-    background:#cccccc;
+    background:#81F79F;
+    color: #000000;
 }
 
 #seccion ul{
@@ -25,15 +26,10 @@
 }
 #seccion img {
 	width: 200px;
+	border-radius: 5px;
 }
-
 #seccion h3{
 	text-align: center;
-}
-#seccion #genero{
-	width:450px;
-	margin-top: 20px;
-	margin-left: 220px;
 }
 #seccion #boton{
 	margin-left: 20px;
@@ -41,45 +37,41 @@
 #seccion #comentarios{
 	clear: both;
 }
-#seccion #comentarios ul{
-	list-style: none;
-}
-.fila1{
-	background: #FB5741;
-}
-.fila2{
-	background: #FB5741;
-}
-.fila3{
+#seccion #comentarios tr td{
 	background: #81BDEB;
 }
-.fecha{
-	float:right;
+#seccion #comentarios tr:first-child{
+	font-weight: 900;
 }
-#comentarios table{
+#seccion #comentarios tr:first-child td:first-child{
+    border-top-left-radius: 5px;
+    width: 80%;    
+	background: #FB5741;
+}
+#seccion #comentarios tr:first-child td:last-child{
+    border-top-right-radius: 5px;
+    width: 100%;
+    background: #FB5741;
+    text-align: right;
+}
+#seccion #comentarios table{
+	border-collapse:collapse; 
 	margin-top: 10px;
 	width: 100%;
 	word-wrap: break-word;
     word-break:break-all;	
 }
-.de{
+#seccion .de{
 	display:block;
 	margin-left:140px;
 	float:left;	
 }	
-.autor{
+#seccion .autor{
 	margin-right: 20px;
 }
 #seccion #administracion li{
 	display: inline-block;
 }
-.boton_examinar{
-	width: 90px;
+#seccion .boton_examinar{
+	width: 100px;
 }
-
-
-
-
-
-
-
