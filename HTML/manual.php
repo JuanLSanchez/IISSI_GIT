@@ -101,7 +101,7 @@
 				<h4>Usuario</h4>
 				<p>Para ser amigo de alguien, debemos entrar en su perfil y darle al botón de añadir como amigo. Él no te agregará pero tú lo seguirás, similar a Twitter.</p>
 				<p>Una vez accedido al perfil de un amigo, se nos mostrará su información pública, como nombre, email, sus películas pendientes...</p>
-				<p>El administrador dispondrá de dos botones auxiliares para modificar la información del usuario o para eliminarlo.</p>
+				<p>El administrador dispondrá de dos botones auxiliares para modificar la información del usuario o para eliminarlo. Además cualquier usuario puede dejar de ser amigo mediante el botón |Dejar de seguir|</p>
 				<img src="img_manual/amigo.png" alt="">
 			</article>
 		</section>
