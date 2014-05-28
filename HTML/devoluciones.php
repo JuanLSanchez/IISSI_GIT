@@ -96,7 +96,7 @@
 								foreach ($con->query($juego) as $fila5){
 									echo'
 									<tr>
-										<td><a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" img="" /></a></td>
+										<td><a href="articulo.php?id_juego='.$fila4[0].'"><img src="'.$fila5[1].'" alt="" /></a></td>
 										<td><span class="nombre">'.$fila5[0].'</span></td>
 										<td><span>'.$fila4[1].'</span></td>
 									</tr>
